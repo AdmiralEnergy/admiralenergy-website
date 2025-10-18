@@ -3,51 +3,403 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Admiral Energy - Leading provider of energy solutions and solar power systems">
-    <title>Admiral Energy - Home</title>
+    <title>Admiral Energy - Backup Power System Experts | North Carolina</title>
+    <meta name="description" content="Keep your home powered—battery first, solar when it makes sense. Honest backup power guidance for North Carolina homeowners. No pitch. Just math.">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Admiral Energy - Backup Power System Experts">
+    <meta property="og:description" content="Keep your home powered—battery first, solar when it makes sense. Honest backup power guidance for North Carolina.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://admiralenergy.ai">
+    <meta property="og:image" content="https://admiralenergy.ai/public/images/share-image.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/public/images/favicon-48.png">
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'admiral-navy': '#0C2F4A',
+                        'admiral-gold': '#C9A648',
+                        'admiral-white': '#F7F5F2',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" href="public/images/favicon.png">
 </head>
-<body>
-    <header>
-        <div class="header-container">
-            <div class="logo-container">
-                <img src="public/logos/admiral-energy-logo.png" alt="Admiral Energy Logo" class="logo">
+<body class="bg-admiral-white text-gray-900 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-admiral-navy text-white sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img src="/public/logos/admiral-energy-logo.png" alt="Admiral Energy" class="h-10 w-auto">
+                    <span class="ml-3 text-xl font-bold">Admiral Energy</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="/" class="hover:text-admiral-gold transition-colors">Home</a>
+                        <a href="/about.html" class="hover:text-admiral-gold transition-colors">About</a>
+                        <a href="/services.html" class="hover:text-admiral-gold transition-colors">Services</a>
+                        <a href="/powerpair.html" class="hover:text-admiral-gold transition-colors">PowerPair</a>
+                        <a href="/case-studies.html" class="hover:text-admiral-gold transition-colors">Case Studies</a>
+                        <a href="/contact.html" class="bg-admiral-gold text-admiral-navy px-4 py-2 rounded-md hover:bg-yellow-400 transition-colors font-semibold">Contact</a>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white hover:text-admiral-gold">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="powerpair.html">PowerPair</a></li>
-                    <li><a href="case-studies.html">Case Studies</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
         </div>
-    </header>
+        
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="md:hidden hidden bg-admiral-navy border-t border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 hover:bg-gray-700 rounded-md">Home</a>
+                <a href="/about.html" class="block px-3 py-2 hover:bg-gray-700 rounded-md">About</a>
+                <a href="/services.html" class="block px-3 py-2 hover:bg-gray-700 rounded-md">Services</a>
+                <a href="/powerpair.html" class="block px-3 py-2 hover:bg-gray-700 rounded-md">PowerPair</a>
+                <a href="/case-studies.html" class="block px-3 py-2 hover:bg-gray-700 rounded-md">Case Studies</a>
+                <a href="/contact.html" class="block px-3 py-2 bg-admiral-gold text-admiral-navy rounded-md font-semibold">Contact</a>
+            </div>
+        </div>
+    </nav>
 
-    <main>
-        <section class="hero">
-            <h1>Welcome to Admiral Energy</h1>
-            <p>Powering Your Future with Sustainable Energy Solutions</p>
-            <a href="contact.html" class="cta-button">Get Started</a>
-        </section>
+    <!-- Urgency Banner -->
+    <div id="urgency-banner" class="bg-admiral-gold text-admiral-navy py-3 px-4 text-center">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <div class="flex-1">
+                <span class="font-semibold">⚡ Federal 30% ITC runs through Dec 31, 2025; Duke PowerPair continues after. We'll show the math.</span>
+                <a href="#incentives" class="ml-2 underline hover:no-underline">See incentives ↓</a>
+            </div>
+            <button id="close-banner" class="ml-4 text-admiral-navy hover:text-gray-700">✕</button>
+        </div>
+    </div>
 
-        <section class="section">
-            <h2>Our Mission</h2>
-            <p>At Admiral Energy, we are committed to providing innovative and sustainable energy solutions that power homes and businesses while protecting our planet for future generations.</p>
-        </section>
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-admiral-navy to-blue-900 text-white py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">Keep Your Home Running. No Matter What.</h1>
+            <p class="text-xl md:text-2xl mb-8 text-blue-100">Backup Power Systems for North Carolina—battery first, solar when it makes sense.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/contact.html" class="bg-admiral-gold text-admiral-navy px-8 py-4 rounded-lg font-semibold text-lg hover:bg-yellow-400 transition-colors">Get Your Backup Plan</a>
+                <a href="#approach" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-admiral-navy transition-colors">How It Works ↓</a>
+            </div>
+        </div>
+    </section>
 
-        <section class="section">
-            <h2>Why Choose Admiral Energy?</h2>
-            <p>With years of experience in the energy sector, we deliver reliable, cost-effective, and environmentally friendly energy solutions tailored to your needs.</p>
-        </section>
-    </main>
+    <!-- The Honest Approach Section -->
+    <section id="approach" class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-admiral-navy mb-4">The Honest Approach</h2>
+                <p class="text-xl text-gray-600">No pitch. Just math.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-admiral-gold text-2xl mr-3">✓</span>
+                            <span class="text-lg">We tell you if it doesn't pencil out</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-admiral-gold text-2xl mr-3">✓</span>
+                            <span class="text-lg">We show the actual math (backup runtime, costs)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-admiral-gold text-2xl mr-3">✓</span>
+                            <span class="text-lg">We tell you when to wait vs act</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-admiral-gold text-2xl mr-3">✓</span>
+                            <span class="text-lg">No door-to-door, no pressure tactics</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold text-admiral-navy mb-4">Our Simple Process</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <span class="bg-admiral-navy text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">1</span>
+                            <span>Call for honest consultation</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="bg-admiral-navy text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">2</span>
+                            <span>Receive detailed feasibility report</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="bg-admiral-navy text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">3</span>
+                            <span>Professional installation (if it makes sense)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <footer>
-        <p>&copy; 2024 Admiral Energy. All rights reserved.</p>
-        <p>Leading the way in sustainable energy solutions</p>
+    <!-- Current Incentives Section -->
+    <section id="incentives" class="py-16 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-admiral-navy mb-4">Current Incentives</h2>
+                <p class="text-gray-600">As of October 2025</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold text-admiral-navy mb-3">Federal Investment Tax Credit (ITC)</h3>
+                    <p class="text-3xl font-bold text-admiral-gold mb-2">30%</p>
+                    <p class="text-gray-600 mb-4">Available through December 31, 2025</p>
+                    <p class="text-sm text-gray-500">Applies to solar + battery systems</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold text-admiral-navy mb-3">Duke PowerPair Program</h3>
+                    <p class="text-3xl font-bold text-admiral-gold mb-2">$9,000</p>
+                    <p class="text-gray-600 mb-4">Continues after federal ITC expires</p>
+                    <p class="text-sm text-gray-500">Battery systems only, specific requirements apply</p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <a href="/powerpair.html" class="text-admiral-navy underline hover:no-underline font-semibold">Get the full PowerPair breakdown →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Battery vs Generator Comparison -->
+    <section id="compare" class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-admiral-navy mb-4">Battery vs. Generator</h2>
+                <p class="text-gray-600">The honest comparison</p>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full bg-white rounded-lg shadow-md overflow-hidden">
+                    <thead class="bg-admiral-navy text-white">
+                        <tr>
+                            <th class="py-3 px-4 text-left">Feature</th>
+                            <th class="py-3 px-4 text-center">Battery Backup</th>
+                            <th class="py-3 px-4 text-center">Generator</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr>
+                            <td class="py-3 px-4 font-semibold">Noise</td>
+                            <td class="py-3 px-4 text-center text-green-600">Silent</td>
+                            <td class="py-3 px-4 text-center text-red-600">Loud (70+ dB)</td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="py-3 px-4 font-semibold">Maintenance</td>
+                            <td class="py-3 px-4 text-center text-green-600">Minimal</td>
+                            <td class="py-3 px-4 text-center text-red-600">Regular service required</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-semibold">Startup Time</td>
+                            <td class="py-3 px-4 text-center text-green-600">Instant</td>
+                            <td class="py-3 px-4 text-center text-yellow-600">15-30 seconds</td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="py-3 px-4 font-semibold">Runtime</td>
+                            <td class="py-3 px-4 text-center text-yellow-600">8-24 hours typical</td>
+                            <td class="py-3 px-4 text-center text-green-600">Unlimited (with fuel)</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-semibold">10-Year Total Cost</td>
+                            <td class="py-3 px-4 text-center text-green-600">$15k-30k</td>
+                            <td class="py-3 px-4 text-center text-yellow-600">$12k-25k</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proof Section -->
+    <section id="proof" class="py-16 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-admiral-navy mb-4">Real Results</h2>
+                <p class="text-gray-600">From real North Carolina homeowners</p>
+            </div>
+            
+            <div class="bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto">
+                <div class="flex items-start space-x-4">
+                    <img src="/public/images/customer-photo-placeholder.jpg" alt="Customer" class="w-16 h-16 rounded-full object-cover">
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-admiral-navy text-lg mb-2">The Johnson Family - Matthews, NC</h3>
+                        <p class="text-gray-700 mb-4 italic">"When Hurricane Helene knocked out power for 3 days, our Tesla Powerwall kept everything running. Refrigerator, Wi-Fi, even the coffee maker. Our neighbors were impressed—and envious. David at Admiral Energy was honest from day one about what we needed and what we didn't."</p>
+                        <div class="text-sm text-gray-500">
+                            <span class="font-semibold">System:</span> Tesla Powerwall 2 + 20kW Solar Array<br>
+                            <span class="font-semibold">Backup Runtime:</span> 2.5 days during outage
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-6">
+                    <a href="/case-studies.html" class="text-admiral-navy underline hover:no-underline font-semibold">Read the full case study →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How We Work Section -->
+    <section id="model" class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-admiral-navy mb-4">How We Work</h2>
+                <p class="text-gray-600">Different from typical solar companies</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="bg-admiral-navy text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">🧭</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-admiral-navy mb-3">Admiral Energy = Advisor</h3>
+                    <p class="text-gray-600">We're independent consultants, not installers. No pressure to sell—we can (and do) tell you when to wait.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-admiral-navy text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">🔧</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-admiral-navy mb-3">Licensed Partners = Execution</h3>
+                    <p class="text-gray-600">We work with REACH Solar's vetted installation network—10,000+ installs across 32 states.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-admiral-navy text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">🎯</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-admiral-navy mb-3">You Stay In Control</h3>
+                    <p class="text-gray-600">One point of contact (David) throughout the entire process. No handoffs to random salespeople.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Questions Section -->
+    <section id="faq-or-chat" class="py-16 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-admiral-navy mb-4">Quick Questions?</h2>
+            <p class="text-gray-600 mb-8">Ask The Admiral—our AI assistant trained on North Carolina solar and battery regulations</p>
+            
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="text-gray-500 mb-4">The Admiral chat widget will be embedded here</p>
+                <div class="bg-gray-100 p-8 rounded border-2 border-dashed border-gray-300">
+                    <p class="text-gray-600">📋 Placeholder for The Admiral chat widget</p>
+                    <p class="text-sm text-gray-500 mt-2">iframe or custom embed will go here</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ready CTA Section -->
+    <section id="cta" class="py-16 bg-admiral-navy text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to Get Started?</h2>
+            <p class="text-xl mb-8 text-blue-100">Book a free, no-pressure consultation. We'll run the numbers for your home.</p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/contact.html" class="bg-admiral-gold text-admiral-navy px-8 py-4 rounded-lg font-semibold text-lg hover:bg-yellow-400 transition-colors">Book Free Consultation</a>
+                <a href="mailto:david@admiralenergy.ai" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-admiral-navy transition-colors">Email David Directly</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <img src="/public/logos/admiral-energy-logo.png" alt="Admiral Energy" class="h-8 w-auto">
+                        <span class="ml-3 text-xl font-bold">Admiral Energy</span>
+                    </div>
+                    <p class="text-gray-300 mb-4">Backup Power System Experts for North Carolina. Battery first, solar when it makes sense.</p>
+                    <p class="text-sm text-gray-400">No pitch. Just math. Be the Admiral of Your Energy.</p>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="/about.html" class="hover:text-admiral-gold transition-colors">About</a></li>
+                        <li><a href="/services.html" class="hover:text-admiral-gold transition-colors">Services</a></li>
+                        <li><a href="/powerpair.html" class="hover:text-admiral-gold transition-colors">PowerPair</a></li>
+                        <li><a href="/case-studies.html" class="hover:text-admiral-gold transition-colors">Case Studies</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>Kings Mountain, NC</li>
+                        <li><a href="mailto:david@admiralenergy.ai" class="hover:text-admiral-gold transition-colors">david@admiralenergy.ai</a></li>
+                        <li><a href="/contact.html" class="hover:text-admiral-gold transition-colors">Book Consultation</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Admiral Energy. All rights reserved. | Website by Admiral Energy</p>
+            </div>
+        </div>
     </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close urgency banner
+        const closeBanner = document.getElementById('close-banner');
+        const urgencyBanner = document.getElementById('urgency-banner');
+
+        if (closeBanner && urgencyBanner) {
+            closeBanner.addEventListener('click', () => {
+                urgencyBanner.style.display = 'none';
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>

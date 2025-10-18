@@ -3,44 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Page not found - Admiral Energy">
-    <title>404 - Page Not Found | Admiral Energy</title>
+    <title>Page Not Found - Admiral Energy</title>
+    <meta name="description" content="The page you're looking for doesn't exist. Find backup power information and honest solar guidance at Admiral Energy.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/public/images/favicon-48.png">
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'admiral-navy': '#0C2F4A',
+                        'admiral-gold': '#C9A648',
+                        'admiral-white': '#F7F5F2',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" href="public/images/favicon.png">
 </head>
-<body>
-    <header>
-        <div class="header-container">
-            <div class="logo-container">
-                <img src="public/logos/admiral-energy-logo.png" alt="Admiral Energy Logo" class="logo">
+<body class="bg-admiral-white text-gray-900 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-admiral-navy text-white sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <img src="/public/logos/admiral-energy-logo.png" alt="Admiral Energy" class="h-10 w-auto">
+                    <span class="ml-3 text-xl font-bold">Admiral Energy</span>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="/" class="hover:text-admiral-gold transition-colors">Home</a>
+                        <a href="/about.html" class="hover:text-admiral-gold transition-colors">About</a>
+                        <a href="/services.html" class="hover:text-admiral-gold transition-colors">Services</a>
+                        <a href="/powerpair.html" class="hover:text-admiral-gold transition-colors">PowerPair</a>
+                        <a href="/case-studies.html" class="hover:text-admiral-gold transition-colors">Case Studies</a>
+                        <a href="/contact.html" class="bg-admiral-gold text-admiral-navy px-4 py-2 rounded-md hover:bg-yellow-400 transition-colors font-semibold">Contact</a>
+                    </div>
+                </div>
+                
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white hover:text-admiral-gold">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="powerpair.html">PowerPair</a></li>
-                    <li><a href="case-studies.html">Case Studies</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
         </div>
-    </header>
+        
+        <div id="mobile-menu" class="md:hidden hidden bg-admiral-navy border-t border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 hover:bg-gray-700 rounded-md">Home</a>
+                <a href="/about.html" class="block px-3 py-2 hover:bg-gray-700 rounded-md">About</a>
+                <a href="/services.html" class="block px-3 py-2 hover:bg-gray-700 rounded-md">Services</a>
+                <a href="/powerpair.html" class="block px-3 py-2 hover:bg-gray-700 rounded-md">PowerPair</a>
+                <a href="/case-studies.html" class="block px-3 py-2 hover:bg-gray-700 rounded-md">Case Studies</a>
+                <a href="/contact.html" class="block px-3 py-2 bg-admiral-gold text-admiral-navy rounded-md font-semibold">Contact</a>
+            </div>
+        </div>
+    </nav>
 
-    <main>
-        <section class="error-404">
-            <h1>404</h1>
-            <h2>Oops! Page Not Found</h2>
-            <p>The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
-            <p style="margin-top: 2rem;">
-                <a href="index.html" class="cta-button">Go to Homepage</a>
-            </p>
-        </section>
-    </main>
+    <!-- 404 Content -->
+    <section class="py-20 bg-white min-h-screen flex items-center">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-8">
+                <div class="text-8xl font-bold text-admiral-gold mb-4">404</div>
+                <h1 class="text-4xl md:text-5xl font-bold text-admiral-navy mb-6">Page Not Found</h1>
+                <p class="text-xl text-gray-600 mb-8">Looks like this page got lost in a power outage. Let's get you back on course.</p>
+            </div>
+            
+            <div class="bg-gray-50 p-8 rounded-lg mb-8">
+                <h2 class="text-2xl font-semibold text-admiral-navy mb-6">Where Would You Like to Go?</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <a href="/" class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow text-left">
+                        <h3 class="font-semibold text-admiral-navy mb-2">🏠 Homepage</h3>
+                        <p class="text-sm text-gray-600">Learn about backup power systems</p>
+                    </a>
+                    
+                    <a href="/services.html" class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow text-left">
+                        <h3 class="font-semibold text-admiral-navy mb-2">🔋 Services</h3>
+                        <p class="text-sm text-gray-600">Battery & solar system options</p>
+                    </a>
+                    
+                    <a href="/powerpair.html" class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow text-left">
+                        <h3 class="font-semibold text-admiral-navy mb-2">⚡ PowerPair</h3>
+                        <p class="text-sm text-gray-600">$9,000 Duke Energy incentive</p>
+                    </a>
+                    
+                    <a href="/about.html" class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow text-left">
+                        <h3 class="font-semibold text-admiral-navy mb-2">👨‍✈️ About</h3>
+                        <p class="text-sm text-gray-600">Meet David, our founder</p>
+                    </a>
+                    
+                    <a href="/case-studies.html" class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow text-left">
+                        <h3 class="font-semibold text-admiral-navy mb-2">📊 Case Studies</h3>
+                        <p class="text-sm text-gray-600">Real customer results</p>
+                    </a>
+                    
+                    <a href="/contact.html" class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow text-left">
+                        <h3 class="font-semibold text-admiral-navy mb-2">📞 Contact</h3>
+                        <p class="text-sm text-gray-600">Book your free consultation</p>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/" class="bg-admiral-gold text-admiral-navy px-8 py-4 rounded-lg font-semibold text-lg hover:bg-yellow-400 transition-colors">Go to Homepage</a>
+                <a href="/contact.html" class="border-2 border-admiral-navy text-admiral-navy px-8 py-4 rounded-lg font-semibold text-lg hover:bg-admiral-navy hover:text-white transition-colors">Get Help</a>
+            </div>
+            
+            <div class="mt-12 p-6 bg-blue-50 rounded-lg">
+                <h3 class="text-lg font-semibold text-admiral-navy mb-2">Still can't find what you need?</h3>
+                <p class="text-gray-600 mb-4">Email David directly with your questions:</p>
+                <a href="mailto:david@admiralenergy.ai" class="text-admiral-navy font-semibold underline hover:no-underline">david@admiralenergy.ai</a>
+            </div>
+        </div>
+    </section>
 
-    <footer>
-        <p>&copy; 2024 Admiral Energy. All rights reserved.</p>
-        <p>Leading the way in sustainable energy solutions</p>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <img src="/public/logos/admiral-energy-logo.png" alt="Admiral Energy" class="h-8 w-auto">
+                        <span class="ml-3 text-xl font-bold">Admiral Energy</span>
+                    </div>
+                    <p class="text-gray-300 mb-4">Backup Power System Experts for North Carolina. Battery first, solar when it makes sense.</p>
+                    <p class="text-sm text-gray-400">No pitch. Just math. Be the Admiral of Your Energy.</p>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="/about.html" class="hover:text-admiral-gold transition-colors">About</a></li>
+                        <li><a href="/services.html" class="hover:text-admiral-gold transition-colors">Services</a></li>
+                        <li><a href="/powerpair.html" class="hover:text-admiral-gold transition-colors">PowerPair</a></li>
+                        <li><a href="/case-studies.html" class="hover:text-admiral-gold transition-colors">Case Studies</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>Kings Mountain, NC</li>
+                        <li><a href="mailto:david@admiralenergy.ai" class="hover:text-admiral-gold transition-colors">david@admiralenergy.ai</a></li>
+                        <li><a href="/contact.html" class="hover:text-admiral-gold transition-colors">Book Consultation</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Admiral Energy. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    </script>
 </body>
 </html>
