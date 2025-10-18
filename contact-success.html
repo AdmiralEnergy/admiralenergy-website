@@ -3,44 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Thank you for contacting Admiral Energy">
-    <title>Thank You - Admiral Energy</title>
+    <title>Message Sent - Thank You | Admiral Energy</title>
+    <meta name="description" content="Thank you for contacting Admiral Energy. We'll get back to you within 24 hours with honest backup power guidance.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/public/images/favicon-48.png">
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'admiral-navy': '#0C2F4A',
+                        'admiral-gold': '#C9A648',
+                        'admiral-white': '#F7F5F2',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" href="public/images/favicon.png">
 </head>
-<body>
-    <header>
-        <div class="header-container">
-            <div class="logo-container">
-                <img src="public/logos/admiral-energy-logo.png" alt="Admiral Energy Logo" class="logo">
+<body class="bg-admiral-white text-gray-900 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-admiral-navy text-white sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <img src="/public/logos/admiral-energy-logo.png" alt="Admiral Energy" class="h-10 w-auto">
+                    <span class="ml-3 text-xl font-bold">Admiral Energy</span>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="/" class="hover:text-admiral-gold transition-colors">Home</a>
+                        <a href="/about.html" class="hover:text-admiral-gold transition-colors">About</a>
+                        <a href="/services.html" class="hover:text-admiral-gold transition-colors">Services</a>
+                        <a href="/powerpair.html" class="hover:text-admiral-gold transition-colors">PowerPair</a>
+                        <a href="/case-studies.html" class="hover:text-admiral-gold transition-colors">Case Studies</a>
+                        <a href="/contact.html" class="bg-admiral-gold text-admiral-navy px-4 py-2 rounded-md hover:bg-yellow-400 transition-colors font-semibold">Contact</a>
+                    </div>
+                </div>
+                
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white hover:text-admiral-gold">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="powerpair.html">PowerPair</a></li>
-                    <li><a href="case-studies.html">Case Studies</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
         </div>
-    </header>
+        
+        <div id="mobile-menu" class="md:hidden hidden bg-admiral-navy border-t border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 hover:bg-gray-700 rounded-md">Home</a>
+                <a href="/about.html" class="block px-3 py-2 hover:bg-gray-700 rounded-md">About</a>
+                <a href="/services.html" class="block px-3 py-2 hover:bg-gray-700 rounded-md">Services</a>
+                <a href="/powerpair.html" class="block px-3 py-2 hover:bg-gray-700 rounded-md">PowerPair</a>
+                <a href="/case-studies.html" class="block px-3 py-2 hover:bg-gray-700 rounded-md">Case Studies</a>
+                <a href="/contact.html" class="block px-3 py-2 bg-admiral-gold text-admiral-navy rounded-md font-semibold">Contact</a>
+            </div>
+        </div>
+    </nav>
 
-    <main>
-        <section class="success-message">
-            <h1>Thank You!</h1>
-            <p>Your message has been successfully sent.</p>
-            <p>One of our energy experts will contact you within 24 hours to discuss your energy needs.</p>
-            <p style="margin-top: 2rem;">
-                <a href="index.html" class="cta-button">Return to Home</a>
-            </p>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 Admiral Energy. All rights reserved.</p>
-        <p>Leading the way in sustainable energy solutions</p>
-    </footer>
-</body>
-</html>
+    <!-- Success Message -->
+    <section class="py-20 bg-white min-h-screen flex items-center">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="bg-green-100 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-8">
+                <svg class="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            
+            <h1 class="text-4xl md:text-5xl font-bold text-admiral-navy mb-6">Message Sent Successfully!</h1>
+            <p class="text-xl text-gray-600 mb-8">Thank you for reaching out to Admiral Energy. We've received your message and will get back to you within 24 hours.</p>
+            
+            <div class="bg-gray-50 p-8 rounded-lg mb-8 max-w-2xl mx-auto">
+                <h2 class="text-2xl font-semibold text-admiral-navy mb-4">What Happens Next?</h2>
+                <div class="space-y-4 text-left">
+                    <div class="flex items-start">
+                        <span class="bg-admiral-navy text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3 mt-1">1</span>
+                        <div>
+                            <h3 class="font-semibold">David Reviews Your Information</h3>
+                            <p class="text-gray-600">We'll analyze your situation and prepare honest guidance tailored to your needs.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <span class="bg-admiral-navy text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3 mt-1">2</span>
+                        <div>
+                            <h3 class="font-semibold">Personal Response Within 24 Hours</h3>
+                            <p class="text-gray-600">You'll receive a detailed response addressing your specific questions and situation.</p>
+                        

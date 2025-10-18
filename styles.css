@@ -1,221 +1,187 @@
-/* Admiral Energy Website Styles */
+/* Admiral Energy Custom Styles */
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* System font stack for performance */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  line-height: 1.6;
-  color: #333;
-  background-color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
-/* Header and Navigation */
-header {
-  background-color: #003366;
-  color: #fff;
-  padding: 1rem 2rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+/* Smooth scrolling for the entire document */
+html {
+    scroll-behavior: smooth;
 }
 
-.header-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Focus styles for accessibility */
+a:focus,
+button:focus {
+    outline: 2px solid #C9A648;
+    outline-offset: 2px;
 }
 
-.logo-container {
-  display: flex;
-  align-items: center;
+/* Utility classes for reusable components */
+.section-padding {
+    @apply py-16 px-4 sm:px-6 lg:px-8;
 }
 
-.logo {
-  height: 50px;
-  width: auto;
+.container-max {
+    @apply max-w-6xl mx-auto;
 }
 
-nav ul {
-  display: flex;
-  list-style: none;
-  gap: 2rem;
+.btn-primary {
+    @apply bg-admiral-gold text-admiral-navy px-8 py-4 rounded-lg font-semibold text-lg hover:bg-yellow-400 transition-colors;
 }
 
-nav a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: 500;
-  transition: opacity 0.3s;
+.btn-secondary {
+    @apply border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-admiral-navy transition-colors;
 }
 
-nav a:hover {
-  opacity: 0.8;
+/* Card styles for consistent design */
+.card {
+    @apply bg-white p-6 rounded-lg shadow-md;
 }
 
-/* Main Content */
-main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
+.card-hover {
+    @apply bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow;
 }
 
-.hero {
-  text-align: center;
-  padding: 4rem 2rem;
-  background: linear-gradient(135deg, #003366 0%, #0066cc 100%);
-  color: #fff;
-  border-radius: 8px;
-  margin-bottom: 3rem;
+/* Section headers */
+.section-header {
+    @apply text-3xl md:text-4xl font-bold text-admiral-navy mb-4;
 }
 
-.hero h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+.section-subheader {
+    @apply text-gray-600 mb-8;
 }
 
-.hero p {
-  font-size: 1.25rem;
-  margin-bottom: 2rem;
+/* Feature list styles */
+.feature-list {
+    @apply space-y-4;
 }
 
-.cta-button {
-  display: inline-block;
-  padding: 1rem 2rem;
-  background-color: #ff6600;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 4px;
-  font-weight: 600;
-  transition: background-color 0.3s;
+.feature-item {
+    @apply flex items-start;
 }
 
-.cta-button:hover {
-  background-color: #cc5200;
+.feature-check {
+    @apply text-admiral-gold text-2xl mr-3 flex-shrink-0;
 }
 
-/* Content Sections */
-.section {
-  margin-bottom: 3rem;
+/* Process steps */
+.process-step {
+    @apply flex items-center mb-3;
 }
 
-.section h2 {
-  font-size: 2rem;
-  color: #003366;
-  margin-bottom: 1rem;
+.process-number {
+    @apply bg-admiral-navy text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3 flex-shrink-0;
 }
 
-.section p {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  margin-bottom: 1rem;
+/* Table styles for comparison tables */
+.comparison-table {
+    @apply w-full bg-white rounded-lg shadow-md overflow-hidden;
 }
 
-/* Contact Form */
-.contact-form {
-  max-width: 600px;
-  margin: 0 auto;
+.comparison-table thead {
+    @apply bg-admiral-navy text-white;
 }
 
+.comparison-table th {
+    @apply py-3 px-4 text-left font-semibold;
+}
+
+.comparison-table td {
+    @apply py-3 px-4;
+}
+
+.comparison-table tbody tr:nth-child(even) {
+    @apply bg-gray-50;
+}
+
+/* Testimonial styles */
+.testimonial {
+    @apply bg-white p-8 rounded-lg shadow-md;
+}
+
+.testimonial-content {
+    @apply text-gray-700 mb-4 italic text-lg;
+}
+
+.testimonial-author {
+    @apply font-semibold text-admiral-navy;
+}
+
+.testimonial-details {
+    @apply text-sm text-gray-500 mt-2;
+}
+
+/* Hero gradient overlay for better text readability */
+.hero-gradient {
+    background: linear-gradient(135deg, #0C2F4A 0%, #1e40af 100%);
+}
+
+/* Banner styles */
+.urgency-banner {
+    background: linear-gradient(90deg, #C9A648 0%, #d4af37 100%);
+}
+
+/* Navigation improvements */
+.nav-link {
+    @apply hover:text-admiral-gold transition-colors duration-200;
+}
+
+/* Form styles for consistency */
 .form-group {
-  margin-bottom: 1.5rem;
+    @apply mb-6;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  color: #003366;
+/* Loading states */
+.loading {
+    @apply opacity-50 pointer-events-none;
 }
 
-.form-group input,
-.form-group textarea,
-.form-group select {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-family: inherit;
+/* Success/error message styles */
+.message-success {
+    @apply bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-md;
 }
 
-.form-group textarea {
-  min-height: 150px;
-  resize: vertical;
+.message-error {
+    @apply bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-md;
 }
 
-.submit-button {
-  background-color: #003366;
-  color: #fff;
-  padding: 1rem 2rem;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s;
+/* Mobile optimizations */
+@media (max-width: 640px) {
+    .hero-title {
+        font-size: 2.5rem;
+        line-height: 1.1;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.25rem;
+    }
+    
+    .section-header {
+        font-size: 2rem;
+    }
 }
 
-.submit-button:hover {
-  background-color: #0066cc;
+/* Print styles */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    body {
+        color: black !important;
+        background: white !important;
+    }
+}-input {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-admiral-gold focus:border-admiral-gold;
 }
 
-/* Success Message */
-.success-message {
-  text-align: center;
-  padding: 3rem 2rem;
+.form-textarea {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-admiral-gold focus:border-admiral-gold min-h-32 resize-y;
 }
 
-.success-message h1 {
-  color: #28a745;
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+.form-label {
+    @apply block text-sm font-semibold text-gray-700 mb-2;
 }
 
-/* 404 Page */
-.error-404 {
-  text-align: center;
-  padding: 4rem 2rem;
-}
-
-.error-404 h1 {
-  font-size: 4rem;
-  color: #003366;
-  margin-bottom: 1rem;
-}
-
-/* Footer */
-footer {
-  background-color: #003366;
-  color: #fff;
-  padding: 2rem;
-  margin-top: 4rem;
-  text-align: center;
-}
-
-footer p {
-  margin-bottom: 0.5rem;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  nav ul {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .hero h1 {
-    font-size: 2rem;
-  }
-
-  .hero p {
-    font-size: 1rem;
-  }
-
-  .section h2 {
-    font-size: 1.5rem;
-  }
-}
+.form
