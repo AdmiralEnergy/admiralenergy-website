@@ -201,46 +201,121 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-admiral-navy mb-4">Battery vs. Generator</h2>
-                <p class="text-gray-600">The honest comparison</p>
+                <p class="text-gray-600">The honest comparison—you decide what matters</p>
             </div>
             
-            <div class="overflow-x-auto">
+            <!-- Comparison Table -->
+            <div class="overflow-x-auto mb-8">
                 <table class="w-full bg-white rounded-lg shadow-md overflow-hidden">
                     <thead class="bg-admiral-navy text-white">
                         <tr>
                             <th class="py-3 px-4 text-left">Feature</th>
                             <th class="py-3 px-4 text-center">Battery Backup</th>
                             <th class="py-3 px-4 text-center">Generator</th>
+                            <th class="py-3 px-4 text-left">What This Means</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
+                        <!-- Noise -->
                         <tr>
                             <td class="py-3 px-4 font-semibold">Noise</td>
-                            <td class="py-3 px-4 text-center text-green-600">Silent</td>
-                            <td class="py-3 px-4 text-center text-red-600">Loud (70+ dB)</td>
+                            <td class="py-3 px-4 text-center">Silent</td>
+                            <td class="py-3 px-4 text-center">70+ dB (loud)</td>
+                            <td class="py-3 px-4 text-sm text-gray-600">Batteries win if you value peace and quiet</td>
                         </tr>
+                        
+                        <!-- Maintenance -->
                         <tr class="bg-gray-50">
                             <td class="py-3 px-4 font-semibold">Maintenance</td>
-                            <td class="py-3 px-4 text-center text-green-600">Minimal</td>
-                            <td class="py-3 px-4 text-center text-red-600">Regular service required</td>
+                            <td class="py-3 px-4 text-center">Minimal</td>
+                            <td class="py-3 px-4 text-center">Oil changes, testing</td>
+                            <td class="py-3 px-4 text-sm text-gray-600">Batteries: set-and-forget. Generators: annual service</td>
                         </tr>
+                        
+                        <!-- Startup -->
                         <tr>
                             <td class="py-3 px-4 font-semibold">Startup Time</td>
-                            <td class="py-3 px-4 text-center text-green-600">Instant</td>
-                            <td class="py-3 px-4 text-center text-yellow-600">15-30 seconds</td>
+                            <td class="py-3 px-4 text-center">Instant</td>
+                            <td class="py-3 px-4 text-center">15-30 seconds</td>
+                            <td class="py-3 px-4 text-sm text-gray-600">Both fast enough for most needs</td>
                         </tr>
+                        
+                        <!-- Runtime -->
                         <tr class="bg-gray-50">
                             <td class="py-3 px-4 font-semibold">Runtime</td>
-                            <td class="py-3 px-4 text-center text-yellow-600">8-24 hours typical</td>
-                            <td class="py-3 px-4 text-center text-green-600">Unlimited (with fuel)</td>
+                            <td class="py-3 px-4 text-center">8-24 hours</td>
+                            <td class="py-3 px-4 text-center">Unlimited (with fuel)</td>
+                            <td class="py-3 px-4 text-sm text-gray-600">Generators win for multi-day outages</td>
                         </tr>
+                        
+                        <!-- Upfront Cost -->
                         <tr>
+                            <td class="py-3 px-4 font-semibold">Upfront Cost</td>
+                            <td class="py-3 px-4 text-center">$13k-17k</td>
+                            <td class="py-3 px-4 text-center">$5k-15k</td>
+                            <td class="py-3 px-4 text-sm text-gray-600">Generators cheaper initially</td>
+                        </tr>
+                        
+                        <!-- 10-Year Total Cost -->
+                        <tr class="bg-gray-50">
                             <td class="py-3 px-4 font-semibold">10-Year Total Cost</td>
-                            <td class="py-3 px-4 text-center text-green-600">$15k-30k</td>
-                            <td class="py-3 px-4 text-center text-yellow-600">$12k-25k</td>
+                            <td class="py-3 px-4 text-center">$15k-30k</td>
+                            <td class="py-3 px-4 text-center">$12k-25k</td>
+                            <td class="py-3 px-4 text-sm text-gray-600">Generators still cheaper (maintenance included)</td>
+                        </tr>
+                        
+                        <!-- Fuel -->
+                        <tr>
+                            <td class="py-3 px-4 font-semibold">Fuel/Energy</td>
+                            <td class="py-3 px-4 text-center">Charges from grid</td>
+                            <td class="py-3 px-4 text-center">Propane/gas required</td>
+                            <td class="py-3 px-4 text-sm text-gray-600">Batteries work if grid recovers; generators need fuel delivery</td>
+                        </tr>
+                        
+                        <!-- Incentives -->
+                        <tr class="bg-gray-50">
+                            <td class="py-3 px-4 font-semibold">Tax Credits</td>
+                            <td class="py-3 px-4 text-center">30% federal (if solar)</td>
+                            <td class="py-3 px-4 text-center">None</td>
+                            <td class="py-3 px-4 text-sm text-gray-600">With incentives, battery cost drops to $10k-21k</td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            
+            <!-- Bottom Line Summary -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Battery Bottom Line -->
+                <div class="bg-blue-50 border-l-4 border-admiral-navy p-6 rounded">
+                    <h3 class="font-semibold text-admiral-navy mb-3">Battery Backup Makes Sense If:</h3>
+                    <ul class="space-y-2 text-sm text-gray-700">
+                        <li>✓ You want silent, automatic backup</li>
+                        <li>✓ Outages are typically 1-2 days</li>
+                        <li>✓ You're adding solar (maximizes incentives)</li>
+                        <li>✓ You value low maintenance</li>
+                        <li>✓ HOA/neighborhood restricts generators</li>
+                    </ul>
+                </div>
+                
+                <!-- Generator Bottom Line -->
+                <div class="bg-yellow-50 border-l-4 border-yellow-600 p-6 rounded">
+                    <h3 class="font-semibold text-gray-900 mb-3">Generator Makes Sense If:</h3>
+                    <ul class="space-y-2 text-sm text-gray-700">
+                        <li>✓ You need multi-day backup capacity</li>
+                        <li>✓ Lower upfront cost is priority</li>
+                        <li>✓ You don't mind noise/maintenance</li>
+                        <li>✓ You can store propane/gas safely</li>
+                        <li>✓ You're not adding solar</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Honest Note -->
+            <div class="mt-8 text-center">
+                <p class="text-gray-600 italic">
+                    Our take: Batteries + solar make sense for most homeowners we work with—but generators are perfectly valid if your priorities are different. 
+                    <a href="/contact.html" class="text-admiral-navy underline hover:no-underline font-semibold">Let's run your specific numbers</a>.
+                </p>
             </div>
         </div>
     </section>
