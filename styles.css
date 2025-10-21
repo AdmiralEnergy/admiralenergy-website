@@ -1,190 +1,45 @@
-/* Admiral Energy Custom Styles */
+/*
+ * Admiral Energy - Custom Styles
+ * Version: 2.0
+ * Works with: Tailwind CSS 3.x
+ * Browser Support: Modern browsers (ES6+)
+ * Brand: "No pitch. Just math."
+ */
+
+/* ==========================================================================
+   Base Resets & Defaults
+   ========================================================================== */
+
+html {
+  scroll-behavior: smooth;
+}
 
 /* System font stack for performance */
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
-/* Smooth scrolling for the entire document */
-html {
-    scroll-behavior: smooth;
+/* Ensure consistent box-sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-/* Focus styles for accessibility */
-a:focus,
-button:focus {
-    outline: 2px solid #C9A648;
-    outline-offset: 2px;
+/* ==========================================================================
+   Form Elements
+   ========================================================================== */
+
+/* Form Labels */
+.ae-label {
+  display: block;
+  font-size: 0.875rem; /* 14px */
+  font-weight: 600;
+  color: #0C2F4A; /* Admiral Navy */
+  margin-bottom: 0.5rem;
 }
 
-/* Utility classes for reusable components */
-.section-padding {
-    @apply py-16 px-4 sm:px-6 lg:px-8;
-}
-
-.container-max {
-    @apply max-w-6xl mx-auto;
-}
-
-.btn-primary {
-    @apply bg-admiral-gold text-admiral-navy px-8 py-4 rounded-lg font-semibold text-lg hover:bg-yellow-400 transition-colors;
-}
-
-.btn-secondary {
-    @apply border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-admiral-navy transition-colors;
-}
-
-/* Card styles for consistent design */
-.card {
-    @apply bg-white p-6 rounded-lg shadow-md;
-}
-
-.card-hover {
-    @apply bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow;
-}
-
-/* Section headers */
-.section-header {
-    @apply text-3xl md:text-4xl font-bold text-admiral-navy mb-4;
-}
-
-.section-subheader {
-    @apply text-gray-600 mb-8;
-}
-
-/* Feature list styles */
-.feature-list {
-    @apply space-y-4;
-}
-
-.feature-item {
-    @apply flex items-start;
-}
-
-.feature-check {
-    @apply text-admiral-gold text-2xl mr-3 flex-shrink-0;
-}
-
-/* Process steps */
-.process-step {
-    @apply flex items-center mb-3;
-}
-
-.process-number {
-    @apply bg-admiral-navy text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3 flex-shrink-0;
-}
-
-/* Table styles for comparison tables */
-.comparison-table {
-    @apply w-full bg-white rounded-lg shadow-md overflow-hidden;
-}
-
-.comparison-table thead {
-    @apply bg-admiral-navy text-white;
-}
-
-.comparison-table th {
-    @apply py-3 px-4 text-left font-semibold;
-}
-
-.comparison-table td {
-    @apply py-3 px-4;
-}
-
-.comparison-table tbody tr:nth-child(even) {
-    @apply bg-gray-50;
-}
-
-/* Testimonial styles */
-.testimonial {
-    @apply bg-white p-8 rounded-lg shadow-md;
-}
-
-.testimonial-content {
-    @apply text-gray-700 mb-4 italic text-lg;
-}
-
-.testimonial-author {
-    @apply font-semibold text-admiral-navy;
-}
-
-.testimonial-details {
-    @apply text-sm text-gray-500 mt-2;
-}
-
-/* Hero gradient overlay for better text readability */
-.hero-gradient {
-    background: linear-gradient(135deg, #0C2F4A 0%, #1e40af 100%);
-}
-
-/* Banner styles */
-.urgency-banner {
-    background: linear-gradient(90deg, #C9A648 0%, #d4af37 100%);
-}
-
-/* Navigation improvements */
-.nav-link {
-    @apply hover:text-admiral-gold transition-colors duration-200;
-}
-
-/* Form styles for consistency */
-.form-group {
-    @apply mb-6;
-}
-
-/* Loading states */
-.loading {
-    @apply opacity-50 pointer-events-none;
-}
-
-/* Success/error message styles */
-.message-success {
-    @apply bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-md;
-}
-
-.message-error {
-    @apply bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-md;
-}
-
-/* Mobile optimizations */
-@media (max-width: 640px) {
-    .hero-title {
-        font-size: 2.5rem;
-        line-height: 1.1;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.25rem;
-    }
-    
-    .section-header {
-        font-size: 2rem;
-    }
-}
-
-/* Print styles */
-@media print {
-    .no-print {
-        display: none !important;
-    }
-    
-    body {
-        color: black !important;
-        background: white !important;
-    }
-}-input {
-    @apply w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-admiral-gold focus:border-admiral-gold;
-}
-
-.form-textarea {
-    @apply w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-admiral-gold focus:border-admiral-gold min-h-32 resize-y;
-}
-
-.form-label {
-    @apply block text-sm font-semibold text-gray-700 mb-2;
-}
-
-/* Form controls — 2025-10-21 (Enhanced with visible borders) */
+/* Text Inputs (text, email, tel, etc.) */
 .ae-input {
   display: block;
   width: 100%;
@@ -198,62 +53,78 @@ button:focus {
   transition: all 150ms ease-in-out;
 }
 
-.ae-input:focus {
-  outline: none;
-  border-color: #C9A648; /* admiral-gold */
-  box-shadow: 0 0 0 3px rgba(201, 166, 72, 0.1); /* subtle gold glow */
-}
-
 .ae-input::placeholder {
-  color: #9ca3af; /* gray-400 - visible but subtle */
+  color: #9ca3af; /* gray-400 */
   opacity: 1;
 }
 
+.ae-input:hover:not(:focus):not(:disabled) {
+  border-color: #9ca3af; /* gray-400 */
+}
+
+.ae-input:focus {
+  outline: none;
+  border-color: #C9A648; /* Admiral Gold */
+  box-shadow: 0 0 0 3px rgba(201, 166, 72, 0.1);
+}
+
+.ae-input:disabled {
+  background-color: #f3f4f6; /* gray-100 */
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Select Dropdowns */
 .ae-select {
   display: block;
   width: 100%;
-  padding: 0.75rem 1rem;
-  border: 2px solid #d1d5db; /* gray-300 - visible border */
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
+  border: 2px solid #d1d5db; /* gray-300 */
   border-radius: 0.5rem;
   background-color: white;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230C2F4A' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-position: right 0.75rem center;
+  background-repeat: no-repeat;
   font-size: 1rem;
   line-height: 1.5;
   color: #1f2937; /* gray-800 */
-  transition: all 150ms ease-in-out;
   cursor: pointer;
-  appearance: none; /* Remove default arrow */
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-  background-position: right 0.5rem center;
-  background-repeat: no-repeat;
-  background-size: 1.5em 1.5em;
-  padding-right: 2.5rem;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  transition: all 150ms ease-in-out;
+}
+
+.ae-select:hover:not(:focus):not(:disabled) {
+  border-color: #9ca3af; /* gray-400 */
 }
 
 .ae-select:focus {
   outline: none;
-  border-color: #C9A648; /* admiral-gold */
+  border-color: #C9A648; /* Admiral Gold */
   box-shadow: 0 0 0 3px rgba(201, 166, 72, 0.1);
 }
 
+.ae-select:disabled {
+  background-color: #f3f4f6; /* gray-100 */
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Textarea */
 .ae-textarea {
   display: block;
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 2px solid #d1d5db; /* gray-300 - visible border */
+  border: 2px solid #d1d5db; /* gray-300 */
   border-radius: 0.5rem;
   background-color: white;
   font-size: 1rem;
   line-height: 1.5;
   color: #1f2937; /* gray-800 */
-  transition: all 150ms ease-in-out;
-  resize: vertical; /* Allow vertical resize only */
+  resize: vertical;
   min-height: 120px;
-}
-
-.ae-textarea:focus {
-  outline: none;
-  border-color: #C9A648; /* admiral-gold */
-  box-shadow: 0 0 0 3px rgba(201, 166, 72, 0.1);
+  transition: all 150ms ease-in-out;
 }
 
 .ae-textarea::placeholder {
@@ -261,34 +132,360 @@ button:focus {
   opacity: 1;
 }
 
-.ae-label {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #334155; /* slate-700 */
-  margin-bottom: 0.5rem;
+.ae-textarea:hover:not(:focus):not(:disabled) {
+  border-color: #9ca3af; /* gray-400 */
 }
 
-.ae-help {
-  display: block;
-  font-size: 0.875rem;
-  color: #64748b; /* slate-500 */
-  margin-top: 0.5rem;
+.ae-textarea:focus {
+  outline: none;
+  border-color: #C9A648; /* Admiral Gold */
+  box-shadow: 0 0 0 3px rgba(201, 166, 72, 0.1);
 }
 
-/* Disabled state */
-.ae-input:disabled,
-.ae-select:disabled,
 .ae-textarea:disabled {
   background-color: #f3f4f6; /* gray-100 */
-  border-color: #e5e7eb; /* gray-200 */
   cursor: not-allowed;
   opacity: 0.6;
 }
 
-/* Invalid state */
+/* Helper Text */
+.ae-help {
+  font-size: 0.75rem; /* 12px */
+  line-height: 1.4;
+  color: #6b7280; /* gray-500 */
+  margin-top: 0.25rem;
+}
+
+/* ==========================================================================
+   Form Validation States
+   ========================================================================== */
+
+/* Error State */
+.ae-input.error,
+.ae-select.error,
+.ae-textarea.error {
+  border-color: #ef4444; /* red-500 */
+  background-color: #fef2f2; /* red-50 */
+}
+
+.ae-input.error:focus,
+.ae-select.error:focus,
+.ae-textarea.error:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* Success State */
+.ae-input.success,
+.ae-select.success,
+.ae-textarea.success {
+  border-color: #10b981; /* green-500 */
+  background-color: #f0fdf4; /* green-50 */
+}
+
+.ae-input.success:focus,
+.ae-select.success:focus,
+.ae-textarea.success:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* Warning State */
+.ae-input.warning,
+.ae-select.warning,
+.ae-textarea.warning {
+  border-color: #f59e0b; /* amber-500 */
+  background-color: #fffbeb; /* amber-50 */
+}
+
+.ae-input.warning:focus,
+.ae-select.warning:focus,
+.ae-textarea.warning:focus {
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}
+
+/* Invalid state (native HTML5 validation) */
 .ae-input:invalid:not(:placeholder-shown),
 .ae-select:invalid:not(:placeholder-shown),
 .ae-textarea:invalid:not(:placeholder-shown) {
   border-color: #ef4444; /* red-500 */
+}
+
+/* ==========================================================================
+   Custom Utilities
+   ========================================================================== */
+
+/* Custom Shadow Utilities */
+.admiral-shadow {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.admiral-shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.admiral-shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Custom Transition Utility */
+.admiral-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Smooth Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.admiral-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* ==========================================================================
+   Accessibility
+   ========================================================================== */
+
+/* Enhanced Focus Visibility */
+*:focus-visible {
+  outline: 2px solid #C9A648; /* Admiral Gold */
+  outline-offset: 2px;
+}
+
+/* Remove default focus outline for mouse users */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Maintain specific focus styles for links and buttons */
+a:focus,
+button:focus {
+  outline: 2px solid #C9A648;
+  outline-offset: 2px;
+}
+
+/* Skip to Main Content Link (for screen readers) */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background-color: #0C2F4A; /* Admiral Navy */
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  z-index: 100;
+  border-radius: 0 0 4px 0;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Screen Reader Only Text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ==========================================================================
+   Responsive Adjustments
+   ========================================================================== */
+
+/* Mobile Optimizations (prevent iOS zoom on input focus) */
+@media (max-width: 768px) {
+  .ae-input,
+  .ae-select,
+  .ae-textarea {
+    font-size: 16px; /* Prevents iOS zoom */
+  }
+  
+  /* Adjust padding for smaller screens */
+  .ae-input,
+  .ae-select,
+  .ae-textarea {
+    padding: 0.625rem 0.875rem;
+  }
+  
+  .ae-select {
+    padding-right: 2.25rem;
+  }
+}
+
+/* Tablet and up: Optimize for larger touch targets */
+@media (min-width: 769px) {
+  .ae-input,
+  .ae-select,
+  .ae-textarea {
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: 2.5rem;
+    line-height: 1.1;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.25rem;
+  }
+  
+  .section-header {
+    font-size: 2rem;
+  }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+  /* Hide non-essential elements */
+  nav,
+  footer,
+  .no-print,
+  button[type="submit"],
+  .skip-link {
+    display: none !important;
+  }
+  
+  /* Ensure form fields are visible */
+  .ae-input,
+  .ae-select,
+  .ae-textarea {
+    border: 1px solid #000;
+    background-color: transparent;
+    color: #000;
+  }
+  
+  /* Print-friendly colors */
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
+  
+  /* Ensure links are visible */
+  a {
+    text-decoration: underline;
+    color: #000 !important;
+  }
+  
+  /* Page breaks */
+  section {
+    page-break-inside: avoid;
+  }
+  
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+}
+
+/* ==========================================================================
+   Additional Enhancements
+   ========================================================================== */
+
+/* Smooth color transitions for interactive elements */
+a,
+button {
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+/* Prevent text selection on buttons */
+button {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
+/* Custom scrollbar (optional, for webkit browsers) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0C2F4A; /* Admiral Navy */
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C9A648; /* Admiral Gold */
+}
+
+/* Form autofill styling (override browser defaults) */
+.ae-input:-webkit-autofill,
+.ae-select:-webkit-autofill,
+.ae-textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset;
+  box-shadow: 0 0 0 1000px white inset;
+  -webkit-text-fill-color: #1f2937;
+}
+
+/* Loading state for form submission */
+.ae-loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.ae-loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border: 2px solid #C9A648;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .ae-input,
+  .ae-select,
+  .ae-textarea {
+    border-width: 3px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
