@@ -184,4 +184,9 @@ button:focus {
     @apply block text-sm font-semibold text-gray-700 mb-2;
 }
 
-.form
+/* Form controls — 2025-10-21 */
+.ae-input, .ae-select, .ae-textarea {
+  @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-800 placeholder-slate-400 shadow-sm focus:border-admiral-gold focus:ring-2 focus:ring-admiral-gold/20 outline-none;
+}
+.ae-label { @apply block text-slate-700 font-medium mb-1; }
+.ae-help  { @apply text-sm text-slate-500; }

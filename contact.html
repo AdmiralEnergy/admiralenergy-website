@@ -132,97 +132,94 @@
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-admiral-navy mb-4">Send Us a Message</h2>
-                <p class="text-gray-600">Tell us about your backup power needs and we'll get back to you within 24 hours</p>
             </div>
             
-            <div class="bg-white p-8 rounded-lg shadow-md">
-                <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/contact-success.html">
-                    <!-- Honeypot field for spam protection -->
-                    <p class="hidden">
-                        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
-                    </p>
-                    
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <!-- Name -->
-                        <div class="form-group">
-                            <label for="name" class="form-label">Full Name *</label>
-                            <input type="text" id="name" name="name" required class="form-input">
-                        </div>
-                        
-                        <!-- Email -->
-                        <div class="form-group">
-                            <label for="email" class="form-label">Email Address *</label>
-                            <input type="email" id="email" name="email" required class="form-input">
-                        </div>
-                        
-                        <!-- Phone -->
-                        <div class="form-group">
-                            <label for="phone" class="form-label">Phone Number</label>
-                            <input type="tel" id="phone" name="phone" class="form-input">
-                        </div>
-                        
-                        <!-- City -->
-                        <div class="form-group">
-                            <label for="city" class="form-label">City, NC</label>
-                            <input type="text" id="city" name="city" placeholder="e.g., Charlotte, Raleigh, Asheville" class="form-input">
-                        </div>
-                    </div>
-                    
-                    <!-- Interest -->
-                    <div class="form-group">
-                        <label for="interest" class="form-label">What interests you most? *</label>
-                        <select id="interest" name="interest" required class="form-input">
-                            <option value="">Please select...</option>
-                            <option value="battery-backup">Battery backup system only</option>
-                            <option value="solar-battery">Solar + battery system</option>
-                            <option value="powerpair">Duke PowerPair program</option>
-                            <option value="consultation">General consultation</option>
-                            <option value="other">Other/Not sure</option>
-                        </select>
-                    </div>
-                    
-                    <!-- Monthly Bill -->
-                    <div class="form-group">
-                        <label for="monthly-bill" class="form-label">Approximate monthly electricity bill</label>
-                        <select id="monthly-bill" name="monthly-bill" class="form-input">
-                            <option value="">Select range...</option>
-                            <option value="under-100">Under $100</option>
-                            <option value="100-150">$100 - $150</option>
-                            <option value="150-200">$150 - $200</option>
-                            <option value="200-300">$200 - $300</option>
-                            <option value="over-300">Over $300</option>
-                        </select>
-                    </div>
-                    
-                    <!-- Urgency -->
-                    <div class="form-group">
-                        <label for="timeline" class="form-label">Timeline for installation</label>
-                        <select id="timeline" name="timeline" class="form-input">
-                            <option value="">Select timeline...</option>
-                            <option value="asap">As soon as possible</option>
-                            <option value="1-3-months">1-3 months</option>
-                            <option value="3-6-months">3-6 months</option>
-                            <option value="6-12-months">6-12 months</option>
-                            <option value="just-researching">Just researching</option>
-                        </select>
-                    </div>
-                    
-                    <!-- Message -->
-                    <div class="form-group">
-                        <label for="message" class="form-label">Tell us about your situation</label>
-                        <textarea id="message" name="message" placeholder="What's your biggest concern about power outages? Any specific questions about battery backup or solar? Have you gotten quotes from other companies?" class="form-textarea"></textarea>
-                    </div>
-                    
-                    <!-- Submit Button -->
-                    <div class="text-center">
-                        <button type="submit" class="bg-admiral-gold text-admiral-navy px-8 py-4 rounded-lg font-semibold text-lg hover:bg-yellow-400 transition-colors">Send Message</button>
-                    </div>
-                    
-                    <p class="text-sm text-gray-500 text-center mt-4">
-                        By submitting this form, you agree to receive email communication from Admiral Energy. We never share your information.
-                    </p>
-                </form>
-            </div>
+            <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/contact-success.html" class="mx-auto max-w-4xl rounded-2xl bg-white/90 p-6 md:p-8 shadow-md ring-1 ring-black/5">
+              <input type="hidden" name="form-name" value="contact">
+              <p class="hidden">
+                <label>Don't fill this out: <input name="bot-field"></label>
+              </p>
+
+              <p class="text-center text-slate-600 mb-6">
+                Tell us about your backup power needs and we'll get back to you within 24 hours
+              </p>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <!-- Full Name -->
+                <div>
+                  <label for="fullName" class="ae-label">Full Name *</label>
+                  <input id="fullName" name="Full Name" type="text" required autocomplete="name" class="ae-input" placeholder="Jane Doe">
+                </div>
+
+                <!-- Email -->
+                <div>
+                  <label for="email" class="ae-label">Email Address *</label>
+                  <input id="email" name="Email" type="email" required autocomplete="email" class="ae-input" placeholder="you@example.com">
+                </div>
+
+                <!-- Phone -->
+                <div>
+                  <label for="phone" class="ae-label">Phone Number</label>
+                  <input id="phone" name="Phone" type="tel" inputmode="tel" autocomplete="tel" class="ae-input" placeholder="(555) 555-5555">
+                </div>
+
+                <!-- City -->
+                <div>
+                  <label for="city" class="ae-label">City, NC</label>
+                  <input id="city" name="City" type="text" class="ae-input" placeholder="e.g., Charlotte, Raleigh, Asheville">
+                </div>
+
+                <!-- Interest -->
+                <div>
+                  <label for="interest" class="ae-label">What interests you most? *</label>
+                  <select id="interest" name="Interest" required class="ae-select">
+                    <option value="" disabled selected>Please select...</option>
+                    <option>Battery Backup Only</option>
+                    <option>Solar + Battery</option>
+                    <option>PowerPair / Incentives Guidance</option>
+                    <option>Service / Troubleshooting</option>
+                  </select>
+                </div>
+
+                <!-- Bill -->
+                <div>
+                  <label for="bill" class="ae-label">Approximate monthly electricity bill</label>
+                  <select id="bill" name="Monthly Bill" class="ae-select">
+                    <option value="" disabled selected>Select range...</option>
+                    <option>&lt; $100</option>
+                    <option>$100–$150</option>
+                    <option>$150–$250</option>
+                    <option>$250–$350</option>
+                    <option>$350+</option>
+                  </select>
+                </div>
+
+                <!-- Timeline -->
+                <div class="md:col-span-2 md:max-w-sm">
+                  <label for="timeline" class="ae-label">Timeline for installation</label>
+                  <select id="timeline" name="Timeline" class="ae-select">
+                    <option value="" disabled selected>Select timeline...</option>
+                    <option>ASAP (0–30 days)</option>
+                    <option>1–3 months</option>
+                    <option>3–6 months</option>
+                    <option>Just researching</option>
+                  </select>
+                </div>
+
+                <!-- Message -->
+                <div class="md:col-span-2">
+                  <label for="message" class="ae-label">Tell us about your situation</label>
+                  <textarea id="message" name="Message" rows="5" class="ae-textarea" placeholder="What's your biggest concern about power outages? Any specific questions about battery backup or solar? Have you gotten quotes from other companies?"></textarea>
+                  <p class="ae-help mt-2">By submitting this form, you agree to receive email communication from Admiral Energy. We never share your information.</p>
+                </div>
+              </div>
+
+              <div class="mt-6 flex justify-center">
+                <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-admiral-gold px-8 py-3 text-admiral-navy font-semibold shadow hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-admiral-gold/40">
+                  Send Message
+                </button>
+              </div>
+            </form>
         </div>
     </section>
 
