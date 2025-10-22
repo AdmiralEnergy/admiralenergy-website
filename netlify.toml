@@ -9,13 +9,6 @@
 
 # Redirect rules
 [[redirects]]
-  # Force static serving of contact success page with query parameter
-  from = "/contact-success.html"
-  to = "/contact-success.html"
-  status = 200
-  force = true
-
-[[redirects]]
   # Redirect landing subdomain to PowerPair page
   from = "https://landing.admiralenergy.ai/*"
   to = "https://admiralenergy.ai/powerpair.html"
@@ -23,11 +16,16 @@
   force = true
 
 [[redirects]]
-  # Handle form success page alternate path
+  # Legacy contact-success redirects to new thank-you page
+  from = "/contact-success.html"
+  to = "/thank-you.html"
+  status = 301
+
+[[redirects]]
+  # Legacy contact-success alternate path
   from = "/contact-success"
-  to = "/contact-success.html"
-  status = 200
-  force = true
+  to = "/thank-you.html"
+  status = 301
 
 [[redirects]]
   # Handle 404s with custom page
