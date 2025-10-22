@@ -1,5 +1,6 @@
 // public/scripts/admiral-chat-ui.js
 (function () {
+  const ADMIRAL_DEBUG = (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
   const FN_URL = "/.netlify/functions/admiral-chat";
 
   // Feature flag via meta
@@ -116,7 +117,13 @@
     const messages = [...history.slice(-8), { role: 'user', content: userText }];
     try {
       const res = await fetch(FN_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages }) });
-      if (!res.ok) { console.error('Function error', await res.text()); return "I hit a server hiccup. Try again in a moment."; }
+      if (!res.ok) {
+        const txt = await res.text();
+        console.error('Function error', txt);
+        return ADMIRAL_DEBUG
+          ? `Function error (${res.status}): ${txt}`
+          : "I hit a server hiccup. Try again in a moment.";
+      }
       const data = await res.json();
       return data.reply || "…";
     } catch (e) { console.error(e); return "Network issue—try again."; }

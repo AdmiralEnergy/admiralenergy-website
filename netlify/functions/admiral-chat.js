@@ -40,7 +40,7 @@ exports.handler = async (event) => {
 
     if (!res.ok) {
       const text = await res.text();
-      return { statusCode: res.status, headers: corsHeaders(event.headers?.origin), body: JSON.stringify({ error: 'OpenAI error', detail: text }) };
+      return { statusCode: res.status, headers: corsHeaders(event.headers?.origin), body: JSON.stringify({ error: 'OpenAI error', status: res.status, detail: text }) };
     }
 
     const data = await res.json();
