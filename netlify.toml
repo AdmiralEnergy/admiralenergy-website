@@ -16,13 +16,27 @@
   force = true
 
 [[redirects]]
-  # Legacy contact-success redirects to new thank-you page
+  # Force static serving of /thank-you.html (prevent Netlify form handler interception)
+  from = "/thank-you.html"
+  to = "/thank-you.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  # Redirect /thank-you (no extension) to full path
+  from = "/thank-you"
+  to = "/thank-you.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  # Legacy redirect: old contact-success path to new thank-you page
   from = "/contact-success.html"
   to = "/thank-you.html"
   status = 301
 
 [[redirects]]
-  # Legacy contact-success alternate path
+  # Legacy redirect: old contact-success alternate path
   from = "/contact-success"
   to = "/thank-you.html"
   status = 301
