@@ -16,10 +16,11 @@
   force = true
 
 [[redirects]]
-  # Handle form success
+  # Handle form success page (allow both /contact-success and /contact-success.html)
   from = "/contact-success"
   to = "/contact-success.html"
   status = 200
+  force = false
 
 [[redirects]]
   # Handle 404s with custom page
