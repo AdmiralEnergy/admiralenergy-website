@@ -16,19 +16,18 @@
   force = true
 
 [[redirects]]
-  # Legacy contact-success redirects to new thank-you page
-  from = "/contact-success.html"
-  to = "/thank-you.html"
-  status = 301
-
-[[redirects]]
-  # Legacy contact-success alternate path
   from = "/contact-success"
-  to = "/thank-you.html"
-  status = 301
+  to = "/contact-success.html"
+  status = 200
+  force = true
 
 [[redirects]]
-  # Handle 404s with custom page
+  from = "/contact-success.html"
+  to = "/contact-success.html"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/*"
   to = "/404.html"
   status = 404
