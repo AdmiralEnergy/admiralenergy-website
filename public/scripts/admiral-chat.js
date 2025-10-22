@@ -10,26 +10,11 @@
     } catch (_) { /* noop */ }
   }
 
-  // Create floating button
-  function createFloatingButton() {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.setAttribute('aria-label', 'Chat with The Admiral');
-    btn.className = [
-      "fixed", "bottom-5", "right-5", "z-50",
-      "rounded-full", "shadow-lg", "ring-1", "ring-black/10",
-      "bg-admiral-gold", "text-admiral-navy",
-      "px-4", "py-3", "font-semibold", "hover:bg-yellow-400",
-      "transition"
-    ].join(' ');
-    btn.innerHTML = "💬 Chat with The Admiral";
-    btn.addEventListener('click', () => openPanel('floating'));
-    document.body.appendChild(btn);
-  }
-
-  // Panel (simple, JS-rendered)
+  // Globals for panel
   let panel, overlay;
-  function buildPanel() {
+
+  function ensurePanelBuilt() {
+    if (overlay && panel) return;
     overlay = document.createElement('div');
     overlay.className = "fixed inset-0 z-50 hidden";
     overlay.setAttribute('role', 'dialog');
@@ -74,17 +59,23 @@
     document.body.appendChild(overlay);
 
     // wire buttons
-    panel.querySelector('#admiralCloseBtn').addEventListener('click', closePanel);
+    const closeBtn = panel.querySelector('#admiralCloseBtn');
     const open = panel.querySelector('#admiralOpenLink');
     const pp = panel.querySelector('#admiralPowerPairLink');
-    open.href = GPT_URL;
-    pp.href = GPT_URL;
 
-    open.addEventListener('click', () => pushEvent('admiral_chat_open_link', { page: 'home', link: 'custom_gpt' }));
-    pp.addEventListener('click', () => pushEvent('admiral_chat_open_link', { page: 'home', link: 'custom_gpt' }));
+    closeBtn && closeBtn.addEventListener('click', closePanel);
+    if (open) {
+      open.href = GPT_URL;
+      open.addEventListener('click', () => pushEvent('admiral_chat_open_link', { page: 'home', link: 'custom_gpt' }));
+    }
+    if (pp) {
+      pp.href = GPT_URL;
+      pp.addEventListener('click', () => pushEvent('admiral_chat_open_link', { page: 'home', link: 'custom_gpt' }));
+    }
   }
 
   function openPanel(source) {
+    ensurePanelBuilt();
     pushEvent('admiral_chat_opened', { source: source || 'unknown', page: 'home' });
     overlay && overlay.classList.remove('hidden');
   }
@@ -93,17 +84,23 @@
     overlay && overlay.classList.add('hidden');
   }
 
-  // Enhance any inline triggers
-  function wireInlineTriggers() {
-    document.querySelectorAll('[data-admiral-chat]').forEach(el => {
-      el.addEventListener('click', (e) => {
-        e.preventDefault();
-        openPanel('inline');
-      });
-    });
+  function createFloatingButton() {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Chat with The Admiral');
+    btn.className = [
+      "fixed", "bottom-5", "right-5", "z-50",
+      "rounded-full", "shadow-lg", "ring-1", "ring-black/10",
+      "bg-admiral-gold", "text-admiral-navy",
+      "px-4", "py-3", "font-semibold", "hover:bg-yellow-400",
+      "transition"
+    ].join(' ');
+    btn.innerHTML = "💬 Chat with The Admiral";
+    btn.addEventListener('click', () => openPanel('floating'));
+    document.body.appendChild(btn);
   }
 
-  // Replace placeholder in the FAQ/Chat section if present
+  // Enhance inline placeholder content (if present)
   function enhanceInlinePlaceholder() {
     const host = document.getElementById('faq-or-chat');
     if (!host) return;
@@ -127,11 +124,18 @@
     `;
   }
 
-  // Init
+  // EVENT DELEGATION for inline triggers (works for injected elements)
+  document.addEventListener('click', function (e) {
+    const trigger = e.target && (e.target.closest && e.target.closest('[data-admiral-chat]'));
+    if (trigger) {
+      e.preventDefault();
+      openPanel('inline');
+    }
+  });
+
   document.addEventListener('DOMContentLoaded', () => {
-    buildPanel();
+    // Build lazily; panel will be constructed on first open as well
     createFloatingButton();
-    wireInlineTriggers();
     enhanceInlinePlaceholder();
   });
 })();
