@@ -20,6 +20,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/public/logos/ae-apple-180.png" />
     <link rel="manifest" href="/public/logos/site.webmanifest" />
     <meta name="theme-color" content="#0c2f4a" />
+    <meta name="admiral-chat-enabled" content="true" />
 
     <!-- Social -->
     <meta property="og:image" content="/public/logos/admiral-energy-share.png" />
@@ -404,10 +405,14 @@
             <p class="text-gray-600 mb-8">Ask The Admiral—our AI assistant trained on North Carolina solar and battery regulations</p>
             
             <div class="bg-white p-6 rounded-lg shadow-md">
-                <p class="text-gray-500 mb-4">The Admiral chat widget will be embedded here</p>
-                <div class="bg-gray-100 p-8 rounded border-2 border-dashed border-gray-300">
-                    <p class="text-gray-600">📋 Placeholder for The Admiral chat widget</p>
-                    <p class="text-sm text-gray-500 mt-2">iframe or custom embed will go here</p>
+                <div class="bg-gray-100 p-8 rounded border-2 border-dashed border-gray-300" data-admiral-placeholder>
+                    <!-- Replaced by admiral-chat.js at runtime -->
+                    <p class="text-gray-600">Loading The Admiral…</p>
+                    <noscript>
+                        <p class="text-gray-600 mt-2">
+                            JavaScript is off. <a href="https://chatgpt.com/g/g-68e9759437b8819199422ed61feba90b-the-admiral-your-solar-advisor" target="_blank" rel="noopener" class="text-admiral-navy underline font-semibold">Open The Admiral</a>.
+                        </p>
+                    </noscript>
                 </div>
             </div>
         </div>
@@ -499,8 +504,8 @@
             });
         });
     </script>
+
+    <script defer src="/public/scripts/admiral-chat-ui.js"></script>
 </body>
 </html>
-
-
 
