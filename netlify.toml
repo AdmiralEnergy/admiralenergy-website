@@ -20,16 +20,15 @@
   force = true
 
 [[redirects]]
-  # Force static serving of /thank-you.html (and variants) to prevent Netlify form handler interception
-  # Keep this rule ahead of the catch-all redirect
+  # Serve the static thank-you file for any /thank-you.html variant (with query strings)
   from = "/thank-you.html*"
   to = "/thank-you.html"
   status = 200
   force = true
 
 [[redirects]]
-  # Redirect /thank-you (no extension) to full path
-  from = "/thank-you"
+  # Also catch /thank-you (no extension) with or without query strings in previews
+  from = "/thank-you*"
   to = "/thank-you.html"
   status = 200
   force = true
