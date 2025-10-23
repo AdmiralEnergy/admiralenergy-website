@@ -10,7 +10,7 @@
     <link rel="canonical" href="https://admiralenergy.ai/thank-you.html" />
     
     <!-- Prevent accidental indexing of success page -->
-    <meta name="robots" content="noindex, nofollow" />
+    <meta name="robots" content="noindex,follow" />
     
     <!-- Icons / PWA -->
     <link rel="icon" type="image/png" sizes="16x16" href="/public/logos/ae-favicon-16.png" />
@@ -204,6 +204,15 @@
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenu.classList.toggle('hidden');
         });
+    </script>
+
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'admiral_thankyou_view',
+      path: location.pathname + location.search,
+      timestamp: Date.now()
+    });
     </script>
 
 </body>
