@@ -20,29 +20,29 @@
   force = true
 
 [[redirects]]
-  # Serve the static thank-you file for any /thank-you.html variant (with query strings)
+  # Serve the thank-you page for /thank-you.html* (with query strings)
   from = "/thank-you.html*"
-  to = "/thank-you.html"
+  to = "/thank-you/"
   status = 200
   force = true
 
 [[redirects]]
-  # Also catch /thank-you (no extension) with or without query strings in previews
+  # Serve the thank-you page for /thank-you* (with or without query strings)
   from = "/thank-you*"
-  to = "/thank-you.html"
+  to = "/thank-you/"
   status = 200
   force = true
 
 [[redirects]]
   # Legacy redirect: old contact-success path to new thank-you page
   from = "/contact-success.html"
-  to = "/thank-you.html"
+  to = "/thank-you/"
   status = 301
 
 [[redirects]]
   # Legacy redirect: old contact-success alternate path
   from = "/contact-success"
-  to = "/thank-you.html"
+  to = "/thank-you/"
   status = 301
 
 [[redirects]]

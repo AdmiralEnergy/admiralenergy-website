@@ -1,0 +1,17 @@
+{
+  "name": "admiralenergy-website",
+  "version": "1.0.0",
+  "description": "Admiral Energy static website with Netlify serverless functions",
+  "private": true,
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'Static site - no build required'"
+  },
+  "dependencies": {
+    "twilio": "^5.0.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18"
+  }
+}

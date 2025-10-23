@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Your Free Quote | Admiral Energy NC</title>
+    <meta name="description" content="Request a free backup power quote from Admiral Energy. Honest guidance on battery and solar systems for North Carolina homeowners.">
+    
+    <link rel="canonical" href="https://admiralenergy.ai/quote.html" />
+    
+    <!-- Icons / PWA -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/public/logos/ae-favicon-16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/public/logos/ae-favicon-32.png" />
+    <link rel="icon" href="/public/logos/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/public/logos/ae-apple-180.png" />
+    <link rel="manifest" href="/public/logos/site.webmanifest" />
+    <meta name="theme-color" content="#0c2f4a" />
+
+    <!-- Social -->
+    <meta property="og:image" content="/public/logos/admiral-energy-share.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="/public/logos/admiral-energy-share.png" />
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'admiral-navy': '#0C2F4A',
+                        'admiral-gold': '#C9A648',
+                        'admiral-white': '#F7F5F2',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N6HRP34Z');</script>
+    <!-- End Google Tag Manager -->
+</head>
+<body class="bg-admiral-white text-gray-900 font-sans">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6HRP34Z"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
+    <!-- Navigation -->
+    <nav class="bg-admiral-navy text-white sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <img src="/public/logos/ae-logo-horiz-bg.png" alt="Admiral Energy" class="h-8 md:h-9 w-auto rounded-lg p-0.5 shadow-sm ring-1 ring-black/5">
+                    <span class="ml-3 text-xl font-bold">Admiral Energy</span>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="/" class="hover:text-admiral-gold transition-colors">Home</a>
+                        <a href="/about.html" class="hover:text-admiral-gold transition-colors">About</a>
+                        <a href="/services.html" class="hover:text-admiral-gold transition-colors">Services</a>
+                        <a href="/powerpair.html" class="hover:text-admiral-gold transition-colors">PowerPair</a>
+                        <a href="/case-studies.html" class="hover:text-admiral-gold transition-colors">Case Studies</a>
+                        <a href="/contact.html" class="bg-admiral-gold text-admiral-navy px-4 py-2 rounded-md hover:bg-yellow-400 transition-colors font-semibold">Contact</a>
+                    </div>
+                </div>
+                
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white hover:text-admiral-gold">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mobile-menu" class="md:hidden hidden bg-admiral-navy border-t border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 hover:bg-gray-700 rounded-md">Home</a>
+                <a href="/about.html" class="block px-3 py-2 hover:bg-gray-700 rounded-md">About</a>
+                <a href="/services.html" class="block px-3 py-2 hover:bg-gray-700 rounded-md">Services</a>
+                <a href="/powerpair.html" class="block px-3 py-2 hover:bg-gray-700 rounded-md">PowerPair</a>
+                <a href="/case-studies.html" class="block px-3 py-2 hover:bg-gray-700 rounded-md">Case Studies</a>
+                <a href="/contact.html" class="block px-3 py-2 bg-admiral-gold text-admiral-navy rounded-md font-semibold">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-admiral-navy to-blue-900 text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Get Your Free Quote</h1>
+            <p class="text-xl text-blue-100">Quick form • Honest guidance • No pressure</p>
+        </div>
+    </section>
+
+    <!-- Quote Form -->
+    <section class="py-16 bg-white">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+            <form 
+                name="admiral-contact" 
+                method="POST" 
+                action="/thank-you/?ok=1" 
+                accept-charset="UTF-8"
+                data-netlify="true" 
+                netlify-honeypot="bot-field"
+                class="bg-white/90 p-6 md:p-8 rounded-2xl shadow-md ring-1 ring-black/5">
+                
+                <!-- Hidden fields for Netlify -->
+                <input type="hidden" name="form-name" value="admiral-contact">
+                
+                <!-- Honeypot -->
+                <p class="hidden">
+                    <label>Don't fill this out: <input name="bot-field"></label>
+                </p>
+
+                <p class="text-center text-slate-600 mb-6">
+                    Tell us about your backup power needs and we'll respond within 24 hours
+                </p>
+
+                <div class="space-y-5">
+                    <!-- Full Name -->
+                    <div>
+                        <label for="fullName" class="ae-label">Full Name *</label>
+                        <input 
+                            id="fullName" 
+                            name="Full Name" 
+                            type="text" 
+                            required 
+                            autocomplete="name" 
+                            class="ae-input" 
+                            placeholder="Jane Doe">
+                    </div>
+
+                    <!-- Email -->
+                    <div>
+                        <label for="email" class="ae-label">Email Address *</label>
+                        <input 
+                            id="email" 
+                            name="Email" 
+                            type="email" 
+                            required 
+                            autocomplete="email" 
+                            class="ae-input" 
+                            placeholder="you@example.com">
+                    </div>
+
+                    <!-- Phone -->
+                    <div>
+                        <label for="phone" class="ae-label">Phone Number *</label>
+                        <input 
+                            id="phone" 
+                            name="Phone" 
+                            type="tel" 
+                            required
+                            inputmode="tel" 
+                            autocomplete="tel" 
+                            class="ae-input" 
+                            placeholder="+1 (555) 555-5555">
+                        <p class="ae-help">Please use E.164 format (e.g., +18335551234) for SMS verification</p>
+                        
+                        <!-- OTP Verification UI (Progressive Enhancement) -->
+                        <div id="otp-container" class="mt-3 hidden">
+                            <button 
+                                type="button" 
+                                id="send-otp-btn"
+                                class="text-sm bg-admiral-navy text-white px-4 py-2 rounded-md hover:bg-blue-900 transition-colors">
+                                Verify Phone by Text
+                            </button>
+                            
+                            <div id="otp-input-container" class="mt-3 hidden">
+                                <label for="otp-code" class="ae-label">Enter 6-digit code</label>
+                                <input 
+                                    id="otp-code" 
+                                    type="text" 
+                                    maxlength="6" 
+                                    pattern="[0-9]{6}"
+                                    class="ae-input w-32" 
+                                    placeholder="123456">
+                                <button 
+                                    type="button" 
+                                    id="verify-otp-btn"
+                                    class="ml-2 text-sm bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors">
+                                    Confirm
+                                </button>
+                                <p id="otp-status" class="text-sm mt-2"></p>
+                            </div>
+                            
+                            <div id="otp-verified" class="mt-3 hidden">
+                                <span class="inline-flex items-center text-sm text-green-600 font-semibold">
+                                    <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Phone Verified
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <!-- Hidden field for verified status -->
+                        <input type="hidden" id="phone-verified" name="phone_verified" value="0">
+                    </div>
+
+                    <!-- Zip/City -->
+                    <div>
+                        <label for="location" class="ae-label">Zip Code or City, NC</label>
+                        <input 
+                            id="location" 
+                            name="Location" 
+                            type="text" 
+                            class="ae-input" 
+                            placeholder="28086 or Kings Mountain, NC">
+                    </div>
+
+                    <!-- Message -->
+                    <div>
+                        <label for="message" class="ae-label">Tell us about your needs (optional)</label>
+                        <textarea 
+                            id="message" 
+                            name="Message" 
+                            rows="4" 
+                            class="ae-textarea" 
+                            placeholder="What's driving your interest in backup power? Any specific concerns or questions?"></textarea>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex justify-center">
+                    <button 
+                        type="submit" 
+                        id="submit-btn"
+                        class="inline-flex items-center justify-center rounded-xl bg-admiral-gold px-8 py-3 text-admiral-navy font-semibold shadow hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-admiral-gold/40 transition-all">
+                        Send My Request
+                    </button>
+                </div>
+                
+                <p class="ae-help text-center mt-4">
+                    By submitting, you agree to receive email communication from Admiral Energy. We never share your information.
+                </p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <img src="/public/logos/ae-logo-horiz-bg.png" alt="Admiral Energy" class="h-7 w-auto rounded-md p-0.5 shadow-sm ring-1 ring-black/5">
+                        <span class="ml-3 text-xl font-bold">Admiral Energy</span>
+                    </div>
+                    <p class="text-gray-300 mb-4">Backup Power System Experts for North Carolina. Battery first, solar when it makes sense.</p>
+                    <p class="text-sm text-gray-400">No pitch. Just math. Be the Admiral of Your Energy.</p>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="/about.html" class="hover:text-admiral-gold transition-colors">About</a></li>
+                        <li><a href="/services.html" class="hover:text-admiral-gold transition-colors">Services</a></li>
+                        <li><a href="/powerpair.html" class="hover:text-admiral-gold transition-colors">PowerPair</a></li>
+                        <li><a href="/case-studies.html" class="hover:text-admiral-gold transition-colors">Case Studies</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>Kings Mountain, NC</li>
+                        <li><a href="mailto:david@admiralenergy.ai" class="hover:text-admiral-gold transition-colors">david@admiralenergy.ai</a></li>
+                        <li><a href="/contact.html" class="hover:text-admiral-gold transition-colors">Book Consultation</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Admiral Energy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // UTM Parameter Capture
+        (function() {
+            const params = new URLSearchParams(location.search);
+            const form = document.querySelector('form[name="admiral-contact"]');
+            if (!form) return;
+            
+            const utms = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+            utms.forEach(k => {
+                const v = params.get(k);
+                if (v) {
+                    let input = form.querySelector('input[name="' + k + '"]');
+                    if (!input) {
+                        input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = k;
+                        form.appendChild(input);
+                    }
+                    input.value = v;
+                }
+            });
+        })();
+
+        // Form Submission Event
+        const form = document.querySelector('form[name="admiral-contact"]');
+        if (form) {
+            form.addEventListener('submit', function() {
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: 'admiral_contact_submit',
+                    formName: 'admiral-contact',
+                    timestamp: Date.now()
+                });
+            });
+        }
+
+        // OTP Module (Progressive Enhancement)
+        (async function initOTP() {
+            const otpContainer = document.getElementById('otp-container');
+            const sendOtpBtn = document.getElementById('send-otp-btn');
+            const verifyOtpBtn = document.getElementById('verify-otp-btn');
+            const otpInputContainer = document.getElementById('otp-input-container');
+            const otpVerified = document.getElementById('otp-verified');
+            const otpStatus = document.getElementById('otp-status');
+            const phoneInput = document.getElementById('phone');
+            const phoneVerifiedInput = document.getElementById('phone-verified');
+
+            // Check if OTP is available
+            try {
+                const checkResponse = await fetch('/.netlify/functions/send-otp', { method: 'OPTIONS' });
+                if (checkResponse.ok || checkResponse.status === 405) {
+                    // OTP endpoint exists, show the UI
+                    otpContainer.classList.remove('hidden');
+                }
+            } catch (err) {
+                // OTP not available, gracefully degrade
+                console.log('OTP verification not available');
+            }
+
+            // Send OTP
+            sendOtpBtn.addEventListener('click', async function() {
+                const phone = phoneInput.value.trim();
+                if (!phone) {
+                    otpStatus.textContent = 'Please enter a phone number first';
+                    otpStatus.className = 'text-sm mt-2 text-red-600';
+                    return;
+                }
+
+                sendOtpBtn.disabled = true;
+                sendOtpBtn.textContent = 'Sending...';
+
+                try {
+                    const response = await fetch('/.netlify/functions/send-otp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ phone })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.ok) {
+                        otpInputContainer.classList.remove('hidden');
+                        otpStatus.textContent = 'Code sent! Check your phone.';
+                        otpStatus.className = 'text-sm mt-2 text-green-600';
+                    } else {
+                        otpStatus.textContent = data.error || 'Failed to send code. You can still submit the form.';
+                        otpStatus.className = 'text-sm mt-2 text-red-600';
+                        sendOtpBtn.disabled = false;
+                        sendOtpBtn.textContent = 'Verify Phone by Text';
+                    }
+                } catch (err) {
+                    otpStatus.textContent = 'Network error. You can still submit the form.';
+                    otpStatus.className = 'text-sm mt-2 text-red-600';
+                    sendOtpBtn.disabled = false;
+                    sendOtpBtn.textContent = 'Verify Phone by Text';
+                }
+            });
+
+            // Verify OTP
+            verifyOtpBtn.addEventListener('click', async function() {
+                const phone = phoneInput.value.trim();
+                const code = document.getElementById('otp-code').value.trim();
+
+                if (!code || code.length !== 6) {
+                    otpStatus.textContent = 'Please enter a 6-digit code';
+                    otpStatus.className = 'text-sm mt-2 text-red-600';
+                    return;
+                }
+
+                verifyOtpBtn.disabled = true;
+                verifyOtpBtn.textContent = 'Verifying...';
+
+                try {
+                    const response = await fetch('/.netlify/functions/verify-otp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ phone, code })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.ok) {
+                        phoneVerifiedInput.value = '1';
+                        otpInputContainer.classList.add('hidden');
+                        otpVerified.classList.remove('hidden');
+                        otpStatus.textContent = '';
+                    } else {
+                        otpStatus.textContent = 'Invalid code. Try again or submit without verification.';
+                        otpStatus.className = 'text-sm mt-2 text-red-600';
+                        verifyOtpBtn.disabled = false;
+                        verifyOtpBtn.textContent = 'Confirm';
+                    }
+                } catch (err) {
+                    otpStatus.textContent = 'Verification failed. You can still submit the form.';
+                    otpStatus.className = 'text-sm mt-2 text-red-600';
+                    verifyOtpBtn.disabled = false;
+                    verifyOtpBtn.textContent = 'Confirm';
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
