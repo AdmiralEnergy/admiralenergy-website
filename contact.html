@@ -236,14 +236,15 @@
                 <p class="text-xl text-slate-700 mb-3">What You'll Get: <span class="text-admiral-gold font-semibold">Custom backup power analysis</span> • <span class="text-admiral-gold font-semibold">Honest ROI calculation</span> • <span class="text-admiral-gold font-semibold">Zero pressure</span></p>
                 <p class="text-sm text-slate-600"><span class="mr-3">Takes 2 minutes</span> <span>• We'll respond within 24 hours with an honest assessment</span></p>
             </div>
-            
-            <form 
-              name="admiral-contact" 
-              method="POST" 
-              data-netlify="true"
-              netlify-honeypot="bot-field"
-              action="/thank-you.html"
-              class="mx-auto max-w-4xl rounded-2xl bg-white/90 p-6 md:p-8 shadow-md ring-1 ring-black/5">
+<!-- Netlify form submission uses query parameter to bypass automatic handler -->
+<form
+  name="admiral-contact"
+  method="POST"
+  action="/thank-you.html?ok=1"
+  accept-charset="UTF-8"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  class="mx-auto max-w-4xl rounded-2xl bg-white/90 p-6 md:p-8 shadow-md ring-1 ring-black/5">
               <input type="hidden" name="form-name" value="admiral-contact">
               <p class="hidden">
                 <label>Don't fill this out: <input name="bot-field"></label>
@@ -604,6 +605,36 @@
         // TODO (PRIORITY): Replace placeholder testimonials with real customer quotes and permissions
         // TODO: Add actual license/certification numbers to trust signals
         // TODO: Set up Google Analytics tracking events for form interactions and scroll depth
+    </script>
+
+    <script>
+(function(){
+  const params = new URLSearchParams(location.search);
+  const form = document.querySelector('form[name="admiral-contact"]');
+  if (!form) return;
+  const utms = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
+  utms.forEach(k => {
+    const v = params.get(k);
+    if (v) {
+      let input = form.querySelector('input[name="'+k+'"]');
+      if (!input) {
+        input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = k;
+        form.appendChild(input);
+      }
+      input.value = v;
+    }
+  });
+  window.dataLayer = window.dataLayer || [];
+  form.addEventListener('submit', function(){
+    window.dataLayer.push({
+      event: 'admiral_contact_submit',
+      formName: 'admiral-contact',
+      timestamp: Date.now()
+    });
+  });
+})();
     </script>
 </body>
 </html>
