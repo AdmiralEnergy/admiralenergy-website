@@ -46,6 +46,20 @@
   status = 301
 
 [[redirects]]
+  # Legacy contact with extension (and any query string)
+  from = "/contact.html*"
+  to = "/quote.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  # Legacy contact pretty URL (and any query string)
+  from = "/contact*"
+  to = "/quote.html"
+  status = 301
+  force = true
+
+[[redirects]]
   # Handle 404s with custom page
   from = "/*"
   to = "/404.html"
