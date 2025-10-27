@@ -207,12 +207,60 @@
     </script>
 
     <script>
+    // Keep existing admiral_thankyou_view event
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: 'admiral_thankyou_view',
       path: location.pathname + location.search,
       timestamp: Date.now()
     });
+    </script>
+
+    <script>
+      // Helper: read URL parameters safely
+      function qp(n){return new URLSearchParams(location.search).get(n)||''}
+
+      // Avoid duplicate pushes if this script is ever included twice
+      (function(){
+        if (window.__aeLeadPushed) return;
+        window.__aeLeadPushed = true;
+
+        const evId = 'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+        window.dataLayer = window.dataLayer || [];
+        dataLayer.push({ ecommerce: null }); // clear any prior ecommerce object
+
+        dataLayer.push({
+          event: "generate_lead",                 // Custom conversion event for Reddit/GTM
+          // Optional user matching (leave blank if not collecting here; Reddit hashes if provided)
+          user_data: {
+            email_address: "",
+            phone_number: ""
+          },
+          // Reddit template expects an ecommerce-like object; we model a lead as a $0 item
+          ecommerce: {
+            value: 0,
+            currency: "USD",
+            items: [{
+              item_id: "lead_form",
+              item_name: "Solar Consultation",
+              item_category: "Lead",
+              price: 0,
+              quantity: 1
+            }]
+          },
+          // Useful context (for future mapping/QA)
+          lead_context: {
+            page_url: location.href,
+            page_title: document.title,
+            event_id: evId,
+            utm_source: qp('utm_source'),
+            utm_medium: qp('utm_medium'),
+            utm_campaign: qp('utm_campaign'),
+            utm_term: qp('utm_term'),
+            utm_content: qp('utm_content')
+          }
+        });
+      })();
     </script>
 
 </body>
