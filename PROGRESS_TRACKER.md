@@ -468,7 +468,99 @@ Before moving to Phase 2:
 
 ---
 
-## 📝 Session Notes
+## � PHASE 4: Future Enhancements
+
+### Task 4.1: Integrate Native Admiral Chatbot (Custom GPT)
+**Status**: 📋 PLANNED  
+**Priority**: HIGH (Business Value)  
+**Estimated Time**: 2-3 hours research + 2-3 hours implementation  
+**Files to Edit**: `index.html`, potentially new `/public/scripts/admiral-gpt.js`
+
+**Goal**: Replace current OpenAI API chat with custom Admiral GPT embed
+
+**Custom GPT URL**: https://chatgpt.com/g/g-68e9759437b8819199422ed61feba90b-the-admiral-your-solar-advisor
+
+**What to Do**:
+- [ ] Research OpenAI GPT embed options (iframe vs API vs widget)
+- [ ] Evaluate ChatGPT Terms of Service for commercial embedding
+- [ ] Design UI integration on homepage (inline vs popup vs sidebar)
+- [ ] Create mobile-responsive design (collapsible on small screens)
+- [ ] Implement with feature flag for gradual rollout
+- [ ] Add analytics tracking for GPT interactions
+- [ ] Test conversation quality and context retention
+- [ ] Compare performance vs current OpenAI function
+- [ ] Document integration in TRACKING_CONFIGURATION.md
+- [ ] Plan migration path from admiral-chat.js
+
+**Success Criteria**:
+- GPT loads on homepage without errors
+- Mobile UX is smooth (no content overlap)
+- Conversations maintained across page views (if possible)
+- Analytics track chat opens, messages sent, conversions
+- Performance impact <500ms on page load
+- Fallback if GPT unavailable
+
+**Dependencies**:
+- OpenAI GPT API access (may need ChatGPT Plus/Team)
+- Design mockup approval
+- Mobile testing on real devices
+
+**Risks**:
+- OpenAI may not allow commercial embeds (check TOS)
+- ChatGPT API limits or rate limiting
+- User experience may differ from current chat
+- Additional costs vs current OpenAI API implementation
+
+**Alternatives**:
+- Keep current OpenAI function implementation
+- Hybrid: GPT on homepage, API function on other pages
+- Link to external ChatGPT conversation (simplest, least integrated)
+
+**Prompt to Start**:
+```
+"Start Task 4.1: Research and plan Admiral GPT integration on homepage"
+```
+
+---
+
+### Task 4.2: Integrate analytics-helper.js
+**Status**: 📋 PLANNED  
+**Estimated Time**: 45 minutes
+
+**What to Do**:
+- Add script tag to all 8 HTML files
+- Test scroll depth tracking
+- Test click tracking (phone, email, Calendly)
+- Verify UTM persistence
+- Document in TRACKING_CONFIGURATION.md
+
+---
+
+### Task 4.3: A/B Testing Infrastructure
+**Status**: 📋 PLANNED  
+**Estimated Time**: 2 hours
+
+**What to Do**:
+- Research A/B testing tools (Google Optimize successor)
+- Implement variant tracking
+- Test form variations
+- Document test results
+
+---
+
+### Task 4.4: Progressive Web App Features
+**Status**: 📋 PLANNED  
+**Estimated Time**: 3 hours
+
+**What to Do**:
+- Enhance service worker
+- Add offline support
+- Implement push notifications
+- Test PWA install prompt
+
+---
+
+## �📝 Session Notes
 
 ### Session 1 - October 30, 2025
 **Completed**:
@@ -483,16 +575,27 @@ Before moving to Phase 2:
 
 ---
 
-### Session 2 - [DATE]
+### Session 2 - October 30, 2025 (Later)
 **Completed**:
-- [Task IDs]
+- Emergency Fix 1: Netlify Forms capture issue
+- Emergency Fix 2: Thank-you page injection
+- Emergency Fix 3: Form selector conflict
+- Emergency Fix 4: GA4 tracking enhancement
+- Task 1.1: ARIA labels (accessibility)
+- Created comprehensive documentation (TRACKING_CONFIGURATION, NETLIFY_FORMS_GUIDE, etc.)
+- Created PROJECT_MASTER_MEMORY.md (master architecture document)
+- Archived old diagnostic files
+- Added ChatGPT integration to roadmap (Task 4.1)
 
 **Notes**:
-- [Any issues or decisions]
+- All tracking operational (GA4, Reddit Pixel, Netlify Forms)
+- Form capturing submissions correctly (4 total)
+- Documentation consolidated and organized
+- Architecture decisions documented for future developers
 
 **Next Session Should Start With**:
 ```
-"Continue Admiral Energy optimization from Task [X.X]"
+"Continue Admiral Energy optimization from Task 1.2: Semantic HTML"
 ```
 
 ---

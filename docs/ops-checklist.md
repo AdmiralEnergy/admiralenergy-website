@@ -1,12 +1,25 @@
-# Admiral Energy - Quote Form Operations Checklist
+# Admiral Energy - Operations & Deployment Checklist
 
-## Post-Merge Deployment Steps
+**Purpose**: Environment setup, deployment, and verification procedures  
+**Last Updated**: October 30, 2025
+
+---
+
+## 🚀 Initial Setup (One-Time)
 
 ### 1. Set Netlify Environment Variables
 
 Navigate to: **Netlify Dashboard → Site Settings → Environment Variables**
 
 Set the following for **both Production and Deploy Preview contexts**:
+
+#### Admiral Chat (OpenAI)
+```
+OPENAI_API_KEY = [Your OpenAI API Key]
+ADMIRAL_SYSTEM_PROMPT = [Optional custom system prompt]
+```
+
+**Note:** If `OPENAI_API_KEY` is not set, the chatbot will show a friendly error message.
 
 #### Twilio SMS Verification (Optional)
 ```
@@ -16,13 +29,6 @@ VERIFY_SERVICE_SID = [Your Twilio Verify Service SID]
 ```
 
 **Note:** If these are not set, the OTP feature will gracefully degrade and the form will still work without SMS verification.
-
-#### Chatbot (If Using)
-```
-OPENAI_API_KEY = [Your OpenAI API Key]
-```
-
-**Note:** If this is not set, the chatbot will show a friendly error message and stay on the page (no navigation away).
 
 ---
 

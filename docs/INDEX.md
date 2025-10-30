@@ -1,40 +1,52 @@
 # Admiral Energy - Documentation Index
 
-**Last Updated**: October 30, 2025
+**Last Updated**: October 30, 2025  
+**⚠️ CRITICAL: Always read [PROJECT_MASTER_MEMORY.md](PROJECT_MASTER_MEMORY.md) FIRST**
 
 ---
 
-## 📚 Quick Navigation
+## 🎯 START HERE
+
+### For Any Developer/LLM Working on This Project
+
+**1. Read First** (MANDATORY):
+- [� PROJECT_MASTER_MEMORY.md](PROJECT_MASTER_MEMORY.md) - Single source of truth for architecture
+
+**2. Then Check**:
+- [PROGRESS_TRACKER.md](../PROGRESS_TRACKER.md) - Current task and roadmap
+- This INDEX.md - Find specific topic documentation
+
+**3. Before Making Changes**:
+- Run impact assessment questions (in PROJECT_MASTER_MEMORY.md)
+- Review related documentation below
+- Check if changes affect multiple files
+
+---
+
+## 📚 Core Documentation (Active)
 
 ### 🚀 Getting Started
-- [README.md](../README.md) - Project overview, architecture, and setup
-- [ops-checklist.md](ops-checklist.md) - Deployment and environment setup
+- [PROJECT_MASTER_MEMORY.md](PROJECT_MASTER_MEMORY.md) - **READ THIS FIRST** - Architecture, patterns, lessons learned
+- [README.md](../README.md) - Project overview and setup
+- [QUICK_START.md](../QUICK_START.md) - Developer onboarding
+- [ops-checklist.md](ops-checklist.md) - Deployment procedures
 
-### 📋 Progress & Planning
-- [PROGRESS_TRACKER.md](../PROGRESS_TRACKER.md) - Task tracking and optimization roadmap
-- [OPTIMIZATION_PROMPT.md](../OPTIMIZATION_PROMPT.md) - Sequential optimization guidelines
-- [SESSION_SUMMARY_2025-10-30.md](SESSION_SUMMARY_2025-10-30.md) - Latest session achievements
+### 📋 Planning & Progress
+- [PROGRESS_TRACKER.md](../PROGRESS_TRACKER.md) - Task roadmap and status
+- [OPTIMIZATION_PROMPT.md](OPTIMIZATION_PROMPT.md) - Sequential optimization guidelines (reference)
 
 ### 🔧 Technical Implementation
 
-#### Forms & Tracking
-- [NETLIFY_FORMS_GUIDE.md](NETLIFY_FORMS_GUIDE.md) - Complete forms implementation guide
-- [TRACKING_CONFIGURATION.md](TRACKING_CONFIGURATION.md) - GTM, GA4, Reddit Pixel setup
+#### **Critical Systems** (Change with Caution)
+- [NETLIFY_FORMS_GUIDE.md](NETLIFY_FORMS_GUIDE.md) - Form implementation (hidden template pattern)
+- [TRACKING_CONFIGURATION.md](TRACKING_CONFIGURATION.md) - GTM/GA4/Reddit Pixel setup
 
-#### Chatbot
-- [2025-10-22_Chatbot_Implementation_Guide.md](2025-10-22_Chatbot_Implementation_Guide.md) - AI chat widget setup
-- [checklist-chatbot.md](checklist-chatbot.md) - Chatbot deployment checklist
+#### Chatbot & Features  
+- [2025-10-22_Chatbot_Implementation_Guide.md](2025-10-22_Chatbot_Implementation_Guide.md) - Current OpenAI chat
+- [checklist-chatbot.md](checklist-chatbot.md) - Chatbot deployment steps
 
-#### Diagnostics
-- [DIAGNOSTIC_REPORT.md](DIAGNOSTIC_REPORT.md) - Form submission issue analysis (1,088 lines)
-- [FORM_DIAGNOSIS_SUMMARY.md](FORM_DIAGNOSIS_SUMMARY.md) - Quick diagnostic reference
-
-### 📊 Status Reports
-- [2025-10-22_AdmiralEnergy_Status.md](2025-10-22_AdmiralEnergy_Status.md) - Project status snapshot
-- [2025-10-22_Progress_and_Priorities.md](2025-10-22_Progress_and_Priorities.md) - Development priorities
-
-### 🔍 Audits
-- [GTM-Audit-2025-10-26.md](GTM-Audit-2025-10-26.md) - Google Tag Manager configuration review
+### 📦 Archive
+- [_archive/2025-10/](_archive/2025-10/) - Old session summaries, diagnostics, status reports
 
 ---
 
@@ -70,23 +82,27 @@
 
 ## 🏆 Recent Achievements (October 30, 2025)
 
-### Emergency Fixes Completed ✅
-1. **Netlify Forms Capture** - Fixed missing hidden template (11+ leads recovered)
-2. **Thank-You Page Injection** - Removed Netlify default card
-3. **Form Selector Conflict** - Fixed event listener targeting
-4. **GA4 Tracking Enhancement** - Added conversion context
+### ✅ Emergency Fixes Completed
+1. **Netlify Forms Capture** - Hidden template pattern (11+ leads recovered)
+2. **Thank-You Page Injection** - JavaScript submission handler
+3. **Form Selector Conflict** - getElementById fix
+4. **GA4 Tracking Enhancement** - Rich conversion context
 
-### Documentation Created ✅
-- Complete tracking configuration guide
-- Netlify Forms implementation patterns
-- Troubleshooting and verification steps
-- Session summary with lessons learned
+### ✅ Documentation Created
+- **PROJECT_MASTER_MEMORY.md** - Master architecture document (single source of truth)
+- **TRACKING_CONFIGURATION.md** - Complete tracking setup
+- **NETLIFY_FORMS_GUIDE.md** - Implementation patterns
+- **Consolidated & Archived** - Old reports moved to _archive/
 
-### Tracking Operational ✅
-- Google Tag Manager: GTM-N6HRP34Z configured
-- Google Analytics 4: G-RX78MRB03L tracking conversions
-- Reddit Pixel: a2_hpzbegj1w700 with dual-tag setup
-- Netlify Forms: admiral-contact capturing all 11 fields
+### ✅ Systems Operational
+- Google Tag Manager: GTM-N6HRP34Z ✅
+- Google Analytics 4: G-RX78MRB03L ✅
+- Reddit Pixel: a2_hpzbegj1w700 ✅
+- Netlify Forms: admiral-contact (11 fields) ✅
+
+### 🎯 Next Priority
+- **Task 1.2**: Semantic HTML + skip-to-main link
+- **Task 4.1**: Research ChatGPT integration for homepage
 
 ---
 
@@ -111,35 +127,36 @@
 
 ## 🔄 Document Versions
 
-| Document | Last Updated | Status |
-|----------|--------------|--------|
-| TRACKING_CONFIGURATION.md | Oct 30, 2025 | ✅ Current |
-| NETLIFY_FORMS_GUIDE.md | Oct 30, 2025 | ✅ Current |
-| SESSION_SUMMARY_2025-10-30.md | Oct 30, 2025 | ✅ Current |
-| PROGRESS_TRACKER.md | Oct 30, 2025 | ✅ Current |
-| README.md | Oct 30, 2025 | ✅ Current |
-| DIAGNOSTIC_REPORT.md | Oct 22, 2025 | 📋 Archived |
-| 2025-10-22_Chatbot_Implementation_Guide.md | Oct 22, 2025 | 📋 Reference |
+| Document | Purpose | Last Updated | Status |
+|----------|---------|--------------|--------|
+| PROJECT_MASTER_MEMORY.md | **Architecture master** | Oct 30, 2025 | ✅ Active |
+| TRACKING_CONFIGURATION.md | GTM/GA4/Reddit setup | Oct 30, 2025 | ✅ Active |
+| NETLIFY_FORMS_GUIDE.md | Form implementation | Oct 30, 2025 | ✅ Active |
+| PROGRESS_TRACKER.md | Task roadmap | Oct 30, 2025 | ✅ Active |
+| README.md | Project overview | Oct 30, 2025 | ✅ Active |
+| OPTIMIZATION_PROMPT.md | Guidelines (reference) | Oct 30, 2025 | 📋 Reference |
+| 2025-10-22_Chatbot_Implementation_Guide.md | Chat setup | Oct 22, 2025 | 📋 Reference |
+| _archive/2025-10/* | Old reports | Oct 22-30, 2025 | 📦 Archived |
 
 ---
 
-## 🎯 Next Steps
+## 🎯 Quick Actions
 
-### Immediate (Recommended)
-- [ ] Enable email notifications for form submissions
-- [ ] Publish GTM container (if in preview mode)
-- [ ] Mark `generate_lead` as Key Event in GA4
+### Starting Work
+1. **Read**: [PROJECT_MASTER_MEMORY.md](PROJECT_MASTER_MEMORY.md)
+2. **Check**: [PROGRESS_TRACKER.md](../PROGRESS_TRACKER.md) → Find ⏭️ NEXT UP task
+3. **Review**: Related documentation for that task
 
-### Phase 1 Optimization (In Progress)
-- [x] Task 1.1: ARIA labels (DONE)
-- [ ] Task 1.2: Semantic HTML (NEXT)
-- [ ] Task 1.3: Standardize navigation
-- [ ] Tasks 1.4-1.8: Remaining critical fixes
+### Making Changes
+1. **Ask**: Will this affect forms, tracking, or multiple pages?
+2. **Check**: Impact assessment in PROJECT_MASTER_MEMORY.md
+3. **Test**: After changes, run `.\check-deployment.ps1`
+4. **Update**: Relevant documentation
 
-### Documentation Maintenance
-- [ ] Update this index monthly
-- [ ] Archive outdated session summaries
-- [ ] Review and consolidate diagnostic docs
+### Troubleshooting
+- **Forms**: See [NETLIFY_FORMS_GUIDE.md](NETLIFY_FORMS_GUIDE.md) → Troubleshooting
+- **Tracking**: See [TRACKING_CONFIGURATION.md](TRACKING_CONFIGURATION.md) → Debugging
+- **Architecture**: See [PROJECT_MASTER_MEMORY.md](PROJECT_MASTER_MEMORY.md) → Troubleshooting Guide
 
 ---
 
