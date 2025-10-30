@@ -122,6 +122,13 @@
       }
     });
 
+    // ESC key to close chat
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && overlay && !overlay.classList.contains('hidden')) {
+        closePanel();
+      }
+    });
+
     // Initial button state
     sendBtn.disabled = true;
 
