@@ -98,6 +98,23 @@ admiralenergy-website/
 - **North Carolina focused** - Duke Energy, interconnection timelines, local incentives
 - **Math-first guidance** - Battery ROI calculations, avoiding solar overselling
 - **Privacy-conscious** - No chat history stored, anonymous by default
+
+### 2. **Netlify Forms with OTP Verification**
+- **11-field contact form** with progressive enhancement
+- **Twilio SMS OTP** for phone number verification (optional)
+- **Graceful degradation** - Works without JavaScript/OTP
+- **Hidden template pattern** - Ensures Netlify build bot detects all fields
+- **JavaScript submission** - Prevents default thank-you injection, enables custom tracking
+
+### 3. **Comprehensive Analytics & Conversion Tracking**
+- **Google Tag Manager (GTM)**: Container GTM-N6HRP34Z
+- **Google Analytics 4 (GA4)**: Property G-RX78MRB03L
+- **Reddit Pixel**: a2_hpzbegj1w700 with dual-tag setup
+- **Event-driven architecture**: dataLayer events for all conversions
+- **UTM parameter preservation**: Full attribution tracking across session
+- **Key Event**: `generate_lead` fires on thank-you page with rich context
+
+**See**: [docs/TRACKING_CONFIGURATION.md](docs/TRACKING_CONFIGURATION.md) for detailed setup
 - **Implementation**: `public/scripts/admiral-chat*.js` + `netlify/functions/admiral-chat.js`
 
 ### 2. **OTP-Verified Contact Form**
@@ -273,6 +290,78 @@ VERIFY_SERVICE_SID=VA...
 ---
 
 ## ⚠️ Known Issues & Solutions
+
+### Issue: Netlify Forms Not Capturing Submissions (RESOLVED ✅)
+
+**Problem**: Forms appeared to work (users reached thank-you page) but submissions weren't captured by Netlify. 11+ leads lost between Oct 26-30, 2025.
+
+**Root Cause**: Missing hidden static form template. Netlify's build bot requires a static HTML form with `netlify` attribute to detect fields at build time.
+
+**Solution**:
+```html
+<!-- Hidden template for Netlify build detection -->
+<form name="admiral-contact" netlify netlify-honeypot="bot-field" hidden>
+  <input type="text" name="Full Name" />
+  <input type="email" name="Email" />
+  <!-- All 11 fields listed here -->
+</form>
+
+<!-- Visible form with data-netlify -->
+<form id="admiral-contact-form" name="admiral-contact" 
+      method="POST" data-netlify="true">
+  <!-- User-facing fields -->
+</form>
+```
+
+**Verification**: Check form appears in Netlify Forms dashboard with all 11 fields registered.
+
+---
+
+### Issue: Netlify Default Thank-You Page Injection (RESOLVED ✅)
+
+**Problem**: Using `action="/thank-you.html"` caused Netlify to inject their default success card after the closing `</html>` tag, preventing custom tracking code from firing.
+
+**Root Cause**: Netlify's form handler intercepts form submissions and injects default UI when `action` attribute is present.
+
+**Solution**: JavaScript form submission with manual redirect
+```javascript
+const form = document.getElementById('admiral-contact-form');
+form.addEventListener('submit', function(e) {
+  e.preventDefault(); // Prevent Netlify's default behavior
+  
+  // Submit via fetch
+  fetch('/', {
+    method: 'POST',
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams(new FormData(form)).toString()
+  })
+  .then(() => {
+    // Manual redirect preserves query params for tracking
+    window.location.href = '/thank-you.html' + window.location.search;
+  });
+});
+```
+
+**Result**: Form data captured by Netlify, user sees custom thank-you page with GA4 tracking, no injection.
+
+---
+
+### Issue: Form Selector Conflict (RESOLVED ✅)
+
+**Problem**: Event listener attached to hidden template form instead of visible form.
+
+**Root Cause**: `querySelector('form[name="admiral-contact"]')` selected first matching form (the hidden template).
+
+**Solution**: Use unique ID selector
+```javascript
+// ❌ Wrong - selects hidden form
+const form = document.querySelector('form[name="admiral-contact"]');
+
+// ✅ Correct - selects visible form by ID
+const form = document.getElementById('admiral-contact-form');
+```
+
+---
 
 ### Issue: Twilio Trial Account Limitations
 
