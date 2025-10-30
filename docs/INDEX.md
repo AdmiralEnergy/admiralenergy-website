@@ -40,6 +40,7 @@
 #### **Critical Systems** (Change with Caution)
 - [NETLIFY_FORMS_GUIDE.md](NETLIFY_FORMS_GUIDE.md) - Form implementation (hidden template pattern)
 - [TRACKING_CONFIGURATION.md](TRACKING_CONFIGURATION.md) - GTM/GA4/Reddit Pixel setup
+- [GA4_TRACKING_IMPLEMENTATION.md](GA4_TRACKING_IMPLEMENTATION.md) - **NEW** 15-event tracking system overview
 
 #### Chatbot & Features  
 - [2025-10-22_Chatbot_Implementation_Guide.md](2025-10-22_Chatbot_Implementation_Guide.md) - Current OpenAI chat
@@ -67,10 +68,10 @@
 4. Test with [check-deployment.ps1](../check-deployment.ps1)
 
 ### Configure Tracking
-1. Read [TRACKING_CONFIGURATION.md](TRACKING_CONFIGURATION.md)
-2. Follow GTM tag setup instructions
-3. Test with GA4 Realtime
-4. Verify with browser console
+1. Read [GA4_TRACKING_IMPLEMENTATION.md](GA4_TRACKING_IMPLEMENTATION.md) for complete event overview
+2. Reference [TRACKING_CONFIGURATION.md](TRACKING_CONFIGURATION.md) for GTM setup details
+3. Test with GA4 DebugView and GTM Preview mode
+4. Verify with browser console for dataLayer events
 
 ### Continue Optimization
 1. Open [PROGRESS_TRACKER.md](../PROGRESS_TRACKER.md)
