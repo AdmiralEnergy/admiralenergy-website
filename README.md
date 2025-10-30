@@ -2,16 +2,24 @@
 
 > **Battery-first backup power solutions for North Carolina homeowners**
 
-A static website with Netlify serverless functions, featuring an AI-powered chat assistant, OTP-verified contact forms, and math-first solar guidance.
+A static website with Netlify serverless functions, featuring an AI-powered chat assistant with lead capture, OTP-verified contact forms, and math-first solar guidance.
 
 🌐 **Live Site**: [https://admiralenergy.ai](https://admiralenergy.ai)  
 📦 **Hosting**: Netlify  
-🔧 **Tech Stack**: Vanilla HTML/CSS/JS + Tailwind CDN + Netlify Functions
+🔧 **Tech Stack**: Vanilla HTML/CSS/JS + Tailwind CDN + Netlify Functions  
+📊 **Analytics**: Google Analytics 4 + Google Tag Manager  
+🤖 **AI**: OpenAI GPT-4o-mini with Duke Energy knowledge base  
+📱 **Mobile**: Fully responsive, touch-optimized chat interface
+
+**Last Updated:** October 30, 2025  
+**Version:** 2.1.0  
+**Status:** ✅ Production Ready
 
 ---
 
 ## 📋 Table of Contents
 
+- [Recent Updates](#recent-updates)
 - [Architecture Overview](#architecture-overview)
 - [Project Structure](#project-structure)
 - [Key Features](#key-features)
@@ -19,8 +27,35 @@ A static website with Netlify serverless functions, featuring an AI-powered chat
 - [Development](#development)
 - [Deployment](#deployment)
 - [Environment Variables](#environment-variables)
+- [Documentation](#documentation)
 - [Known Issues & Solutions](#known-issues--solutions)
 - [Contributing](#contributing)
+
+---
+
+## 🆕 Recent Updates (October 30, 2025)
+
+### Chat UI Improvements
+- ✅ ESC key now closes chat
+- ✅ Fixed scrolling issues (proper flexbox pattern with max-height)
+- ✅ Send button now activates when clicking suggested prompts
+- ✅ Concise bot responses (2-4 sentences max, conversational tone)
+
+### Lead Capture System (NEW)
+- ✅ AI detects buying intent and offers consultation
+- ✅ Yes/No buttons replace text input (lower friction)
+- ✅ Inline lead form (name, email, phone)
+- ✅ Captures conversation context with lead
+- ✅ Integrated with Netlify Forms (no custom backend needed)
+- ✅ GA4 tracking for all lead sources
+
+### Documentation Overhaul
+- 📄 **SESSION-LOG-2025-10-30.md** - Complete session work log
+- 📄 **ARCHITECTURE.md** - Full system architecture with diagrams
+- 📄 **GTM-TRACKING-REFERENCE.md** - Complete analytics guide
+- 📄 **LEAD-CAPTURE-GUIDE.md** - Lead system documentation
+
+See `/docs/` folder for detailed documentation.
 
 ---
 
@@ -31,8 +66,19 @@ This is a **static site with serverless functions** architecture:
 - **Frontend**: Pure HTML/CSS/JavaScript with Tailwind CSS (CDN)
 - **Backend**: Netlify serverless functions (Node.js 18)
 - **Forms**: Netlify Forms with optional Twilio OTP verification
-- **AI Chat**: OpenAI GPT-4o-mini via serverless proxy
+- **AI Chat**: OpenAI GPT-4o-mini via serverless proxy + knowledge base
+- **Lead Capture**: In-chat form with Yes/No buttons → Netlify Forms
+- **Analytics**: GTM container with 9 tracked events → GA4
 - **Deployment**: Continuous deployment from GitHub to Netlify
+
+### Data Flow - Chat Lead Capture
+```
+User asks about pricing → Bot detects intent → Shows Yes/No buttons
+   ↓ (clicks "Yes")
+Inline form appears (name, email, phone) → User submits
+   ↓
+Netlify Forms captures + GA4 tracks → Success message + conversation continues
+```
 
 ### Design Philosophy
 
@@ -40,6 +86,7 @@ This is a **static site with serverless functions** architecture:
 - ✅ **Progressive enhancement** - Works without JavaScript for core content
 - ✅ **Math-first messaging** - Honest guidance, not sales pressure
 - ✅ **Battery-first approach** - Solar when it makes financial sense
+- ✅ **Conversational AI** - Helpful advisor, not pushy salesperson
 
 ---
 
@@ -47,7 +94,7 @@ This is a **static site with serverless functions** architecture:
 
 ```
 admiralenergy-website/
-├── index.html              # Homepage - Core messaging
+├── index.html              # Homepage - Trust pillars, video placeholder
 ├── about.html              # Company story and values
 ├── services.html           # Service offerings and process
 ├── case-studies.html       # Customer success stories
@@ -72,11 +119,17 @@ admiralenergy-website/
 │       ├── admiral-chat.js       # OpenAI chat proxy
 │       ├── send-otp.js           # Twilio OTP sender
 │       └── verify-otp.js         # Twilio OTP verifier
+│       ├── capture-lead.js       # Optional lead endpoint (not currently used)
+│       └── knowledge-base.js     # Shared Duke Energy knowledge base
 │
 ├── docs/                   # Project documentation
-│   ├── ops-checklist.md          # Operational procedures
-│   ├── checklist-chatbot.md      # Chat implementation guide
-│   └── GTM-Audit-2025-10-26.md   # Analytics audit
+│   ├── SESSION-LOG-2025-10-30.md       # Oct 30 session work log
+│   ├── ARCHITECTURE.md                  # Full system architecture
+│   ├── GTM-TRACKING-REFERENCE.md        # Complete analytics guide
+│   ├── LEAD-CAPTURE-GUIDE.md            # Lead system documentation
+│   ├── MOBILE-OPTIMIZATION-SUMMARY.md   # Mobile optimization details
+│   ├── ops-checklist.md                 # Operational procedures
+│   └── 2025-10-22_Chatbot_Implementation_Guide.md  # Original chat setup
 │
 ├── netlify.toml            # Netlify configuration
 ├── package.json            # Node.js dependencies
@@ -93,50 +146,48 @@ admiralenergy-website/
 
 ## ✨ Key Features
 
-### 1. **Admiral Chat Assistant**
+### 1. **Admiral Chat Assistant with Lead Capture**
 - **AI-powered** chat widget using OpenAI GPT-4o-mini
-- **North Carolina focused** - Duke Energy, interconnection timelines, local incentives
-- **Math-first guidance** - Battery ROI calculations, avoiding solar overselling
-- **Privacy-conscious** - No chat history stored, anonymous by default
+- **Duke Energy knowledge base** - 9 topics covering NC-specific info
+- **Intent detection** - Bot recognizes buying signals (price, timeline, interest)
+- **Yes/No buttons** - One-click consultation offers (no typing required)
+- **Inline lead form** - Name, email, phone capture with conversation context
+- **Netlify Forms integration** - All leads in dashboard with email notifications
+- **GA4 tracking** - Every lead tracked with source attribution
+- **Session management** - Fresh chat on page load, persists during session
+- **Close methods** - × button, backdrop click, or ESC key
+- **Responsive design** - Full-screen mobile, card-style desktop
+- **Implementation**: `public/scripts/admiral-chat-ui.js` (555 lines) + `netlify/functions/admiral-chat.js`
 
-### 2. **Netlify Forms with OTP Verification**
-- **11-field contact form** with progressive enhancement
-- **Twilio SMS OTP** for phone number verification (optional)
-- **Graceful degradation** - Works without JavaScript/OTP
-- **Hidden template pattern** - Ensures Netlify build bot detects all fields
-- **JavaScript submission** - Prevents default thank-you injection, enables custom tracking
-
-### 3. **Comprehensive Analytics & Conversion Tracking**
-- **Google Tag Manager (GTM)**: Container GTM-N6HRP34Z
-- **Google Analytics 4 (GA4)**: Property G-RX78MRB03L
-- **Reddit Pixel**: a2_hpzbegj1w700 with dual-tag setup
-- **Event-driven architecture**: dataLayer events for all conversions
-- **UTM parameter preservation**: Full attribution tracking across session
-- **Key Event**: `generate_lead` fires on thank-you page with rich context
-
-**See**: [docs/TRACKING_CONFIGURATION.md](docs/TRACKING_CONFIGURATION.md) for detailed setup
-- **Implementation**: `public/scripts/admiral-chat*.js` + `netlify/functions/admiral-chat.js`
-
-### 2. **OTP-Verified Contact Form**
+### 2. **OTP-Verified Quote Form**
 - **Twilio Verify API** integration for phone number validation
 - **Graceful degradation** - Form works even if OTP fails
 - **Spam prevention** - Reduces fake submissions
-- **Trial account note**: Only sends to verified numbers in dev
+- **GA4 events** - form_start, phone_verified, generate_lead
 - **Implementation**: `quote.html` + `netlify/functions/send-otp.js` + `verify-otp.js`
 
-### 3. **Performance Optimizations**
-- **Immutable asset caching** - 1 year cache for images/logos/icons
-- **Security headers** - XSS protection, frame denial, CSP-ready
-- **CDN delivery** - Netlify Edge CDN for global performance
-- **Lazy loading** - Images load on scroll
-- **Progressive Web App** - Manifest and service worker ready
+### 3. **Comprehensive Analytics (GTM/GA4)**
+- **Google Tag Manager**: Container GTM-N6HRP34Z
+- **Google Analytics 4**: Property G-RX78MRB03L
+- **9 tracked events**: chat_opened, chat_message_sent, chat_reply_received, chat_closed, generate_lead (2 sources), form_start, phone_verified, exit_intent
+- **Conversion tracking**: generate_lead marked as key event
+- **UTM preservation**: Full attribution across session
+- **See**: `/docs/GTM-TRACKING-REFERENCE.md` for complete setup
 
-### 4. **SEO & Analytics**
-- **Google Tag Manager** integration (GTM-N6HRP34Z)
-- **Open Graph** meta tags for social sharing
-- **Semantic HTML** for accessibility and SEO
-- **Custom 404** page with navigation
-- **Sitemap-ready** structure
+### 4. **Performance & Security**
+- **No build step** - Instant editing, no compilation
+- **CDN delivery** - Netlify Edge CDN for global performance
+- **Immutable caching** - 1 year cache for static assets
+- **HTTPS enforced** - Automatic SSL via Netlify
+- **Security headers** - XSS protection, frame denial
+- **API key protection** - All keys in Netlify environment variables
+
+### 5. **Mobile-First Design**
+- **Responsive chat** - Full-screen on mobile, card on desktop (max 90vh)
+- **Touch-optimized** - 44px+ touch targets, proper scrolling
+- **Accessible** - ARIA labels, keyboard navigation (ESC, Enter, Tab)
+- **Color contrast** - WCAG AA compliant
+- **See**: `/docs/MOBILE-OPTIMIZATION-SUMMARY.md` for details
 
 ---
 
@@ -504,12 +555,49 @@ test: Testing updates
 
 ---
 
-## 📚 Additional Resources
+## 📚 Documentation
 
+Complete project documentation is available in `/docs/`:
+
+### Essential Reading
+- **[SESSION-LOG-2025-10-30.md](docs/SESSION-LOG-2025-10-30.md)** - Latest session work log (Oct 30, 2025)
+  - All chat UI improvements
+  - Lead capture system implementation
+  - Testing checklist
+  - Deployment instructions
+
+- **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** - Full system architecture
+  - Technology stack
+  - Architecture diagrams
+  - Data flow documentation
+  - Security & performance details
+  - Complete file structure
+
+- **[GTM-TRACKING-REFERENCE.md](docs/GTM-TRACKING-REFERENCE.md)** - Complete analytics guide
+  - All 9 tracked events with implementation details
+  - GTM configuration templates
+  - GA4 setup recommendations
+  - Testing procedures
+  - Troubleshooting guide
+
+- **[LEAD-CAPTURE-GUIDE.md](docs/LEAD-CAPTURE-GUIDE.md)** - Lead system documentation
+  - User flow explanation
+  - Netlify Forms integration
+  - Email notification setup
+  - Zapier integration options
+
+### Additional Resources
+- **[MOBILE-OPTIMIZATION-SUMMARY.md](docs/MOBILE-OPTIMIZATION-SUMMARY.md)** - Mobile optimization details
+- **[2025-10-22_Chatbot_Implementation_Guide.md](docs/2025-10-22_Chatbot_Implementation_Guide.md)** - Original chat setup
+- **[ops-checklist.md](docs/ops-checklist.md)** - Operational procedures
+
+### Quick Links
 - **Netlify Docs**: [docs.netlify.com](https://docs.netlify.com)
 - **Twilio Verify**: [twilio.com/docs/verify](https://www.twilio.com/docs/verify)
 - **OpenAI API**: [platform.openai.com/docs](https://platform.openai.com/docs)
 - **Tailwind CSS**: [tailwindcss.com/docs](https://tailwindcss.com/docs)
+- **GTM Support**: [support.google.com/tagmanager](https://support.google.com/tagmanager)
+- **GA4 Support**: [support.google.com/analytics](https://support.google.com/analytics)
 
 ---
 
@@ -521,13 +609,17 @@ Private repository - © 2025 Admiral Energy. All rights reserved.
 
 ## 🆘 Support
 
-- **Technical Issues**: Check `docs/ops-checklist.md`
-- **Chat Issues**: See `docs/checklist-chatbot.md`
-- **Analytics**: Review `docs/GTM-Audit-2025-10-26.md`
-- **Questions**: Contact Admiral Energy development team
+- **Getting Started**: Read [SESSION-LOG-2025-10-30.md](docs/SESSION-LOG-2025-10-30.md) for latest changes
+- **Technical Architecture**: See [ARCHITECTURE.md](docs/ARCHITECTURE.md)
+- **Analytics Questions**: Review [GTM-TRACKING-REFERENCE.md](docs/GTM-TRACKING-REFERENCE.md)
+- **Lead Capture**: Check [LEAD-CAPTURE-GUIDE.md](docs/LEAD-CAPTURE-GUIDE.md)
+- **Mobile Issues**: Reference [MOBILE-OPTIMIZATION-SUMMARY.md](docs/MOBILE-OPTIMIZATION-SUMMARY.md)
+- **General Help**: Contact Admiral Energy development team
 
 ---
 
 **Last Updated**: October 30, 2025  
+**Version**: 2.1.0  
 **Node Version**: 18  
-**Netlify CLI**: 23.9.5+
+**Netlify CLI**: 23.9.5+  
+**Status**: ✅ Production Ready - All features tested and documented
