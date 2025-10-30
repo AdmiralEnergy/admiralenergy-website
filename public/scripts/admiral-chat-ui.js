@@ -47,16 +47,19 @@
     panel = document.createElement('div');
     panel.className = "absolute bottom-6 right-6 w-[420px] max-w-[95vw] bg-white rounded-xl shadow-2xl ring-1 ring-black/10 flex flex-col";
     panel.innerHTML = `
-      <div class="flex items-center justify-between px-4 pt-4">
-        <h3 class="text-base font-bold text-admiral-navy">The Admiral — NC Solar & Backup Advisor</h3>
-        <button type="button" aria-label="Close" class="text-gray-500 hover:text-gray-700" id="admiralCloseBtn">✕</button>
+      <div class="flex items-center justify-between px-4 pt-4 pb-2 border-b border-gray-100">
+        <div>
+          <h3 class="text-base font-bold text-admiral-navy">The Admiral</h3>
+          <p class="text-xs text-gray-500">NC Solar & Backup Power Advisor</p>
+        </div>
+        <button type="button" aria-label="Close" class="text-gray-500 hover:text-gray-700 text-xl leading-none" id="admiralCloseBtn">✕</button>
       </div>
-      <div class="px-4 text-xs text-gray-500">Ask about PowerPair, battery sizing, outage coverage, interconnection steps, or ROI math.</div>
-      <div id="admiralLog" class="mt-3 px-4 h-[320px] overflow-y-auto space-y-3"></div>
-      <div class="p-4 border-t border-gray-200">
+      <div id="admiralLog" class="flex-1 px-4 py-3 h-[380px] overflow-y-auto space-y-3"></div>
+      <div id="admiralSuggestions" class="px-4 py-2 flex flex-wrap gap-2 border-t border-gray-100"></div>
+      <div class="p-4 border-t border-gray-200 bg-gray-50">
         <form id="admiralForm" class="flex items-end gap-2">
-          <textarea id="admiralInput" rows="2" placeholder="Type your question…" class="flex-1 rounded-lg border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-admiral-gold/30"></textarea>
-          <button id="admiralSend" type="submit" class="rounded-lg bg-admiral-gold text-admiral-navy font-semibold px-4 py-2 hover:bg-yellow-400 transition">Send</button>
+          <textarea id="admiralInput" rows="2" placeholder="Ask about battery backup, solar ROI, or Duke PowerPair…" class="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-admiral-gold/30 resize-none"></textarea>
+          <button id="admiralSend" type="submit" class="rounded-lg bg-admiral-gold text-admiral-navy font-semibold px-4 py-2 hover:bg-yellow-400 transition text-sm">Send</button>
         </form>
       </div>
     `;
@@ -67,11 +70,20 @@
 
     logEl = panel.querySelector('#admiralLog');
     inputEl = panel.querySelector('#admiralInput');
+    const suggestionsEl = panel.querySelector('#admiralSuggestions');
     panel.querySelector('#admiralCloseBtn').addEventListener('click', closePanel);
     panel.querySelector('#admiralForm').addEventListener('submit', onSubmit);
 
-    // Hydrate previous thread
-    for (const m of loadThread()) appendMessage(m.role, m.content);
+    // Hydrate previous thread OR show welcome
+    const thread = loadThread();
+    if (thread.length === 0) {
+      // First time - show welcome message
+      appendWelcomeMessage();
+      showSuggestedPrompts(suggestionsEl);
+    } else {
+      // Returning user - restore conversation
+      for (const m of thread) appendMessage(m.role, m.content);
+    }
     scrollLog();
 
     // Delegated inline opener
@@ -85,15 +97,27 @@
     e.preventDefault();
     const text = (inputEl.value || "").trim();
     if (!text) return;
+    
+    // Clear suggested prompts if visible
+    const suggestionsEl = document.querySelector('#admiralSuggestions');
+    if (suggestionsEl) suggestionsEl.innerHTML = '';
+    
     appendMessage('user', text);
     inputEl.value = "";
     scrollLog();
     pushEvent('chat_message_sent', { page: window.location.pathname });
 
+    // Show typing indicator
+    const typingId = showTypingIndicator();
+
     const reply = await askTheAdmiral(text);
+    
+    // Remove typing indicator
+    removeTypingIndicator(typingId);
+    
     appendMessage('assistant', reply || "…");
     scrollLog();
-    pushEvent('admiral_chat_reply_received', { page: 'home' });
+    pushEvent('admiral_chat_reply_received', { page: window.location.pathname });
   }
 
   function appendMessage(role, content) {
@@ -111,6 +135,71 @@
   }
 
   function scrollLog(){ try { logEl.scrollTop = logEl.scrollHeight; } catch {} }
+
+  function showTypingIndicator() {
+    if (!logEl) return null;
+    const id = 'typing-' + Date.now();
+    const wrap = document.createElement('div');
+    wrap.id = id;
+    wrap.className = "flex justify-start";
+    const bubble = document.createElement('div');
+    bubble.className = "max-w-[85%] rounded-lg bg-gray-100 text-gray-800 px-3 py-2";
+    bubble.innerHTML = '<div class="flex gap-1"><span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span><span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></span><span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></span></div>';
+    wrap.appendChild(bubble);
+    logEl.appendChild(wrap);
+    scrollLog();
+    return id;
+  }
+
+  function removeTypingIndicator(id) {
+    if (!id) return;
+    const el = document.getElementById(id);
+    if (el) el.remove();
+  }
+
+  function appendWelcomeMessage() {
+    if (!logEl) return;
+    const wrap = document.createElement('div');
+    wrap.className = "flex justify-start";
+    const bubble = document.createElement('div');
+    bubble.className = "max-w-[85%] rounded-lg bg-admiral-navy text-white px-4 py-3 text-sm leading-relaxed";
+    bubble.innerHTML = `
+      <div class="font-semibold mb-1">👋 Welcome! I'm The Admiral</div>
+      <div>I'm here to help NC homeowners with honest, math-first guidance on:</div>
+      <ul class="mt-2 space-y-1 text-xs">
+        <li>• Battery backup systems (Duke PowerPair)</li>
+        <li>• Solar ROI calculations</li>
+        <li>• Outage coverage planning</li>
+        <li>• Interconnection timelines</li>
+      </ul>
+      <div class="mt-2 text-xs opacity-90">What questions do you have?</div>
+    `;
+    wrap.appendChild(bubble);
+    logEl.appendChild(wrap);
+  }
+
+  function showSuggestedPrompts(container) {
+    if (!container) return;
+    const prompts = [
+      "How much does PowerPair cost?",
+      "Will solar save me money?",
+      "What can a battery backup power?",
+      "How long does Duke interconnection take?"
+    ];
+    
+    prompts.forEach(prompt => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = "text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-full transition";
+      btn.textContent = prompt;
+      btn.addEventListener('click', () => {
+        inputEl.value = prompt;
+        container.innerHTML = ''; // Clear suggestions after click
+        inputEl.focus();
+      });
+      container.appendChild(btn);
+    });
+  }
 
   async function askTheAdmiral(userText) {
     const history = loadThread().filter(m => m.role === 'user' || m.role === 'assistant');
