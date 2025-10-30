@@ -137,9 +137,9 @@
     <section class="py-16 bg-white">
         <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
             <form 
+                id="admiral-contact-form"
                 name="admiral-contact" 
                 method="POST" 
-                action="/thank-you.html"
                 data-netlify="true" 
                 netlify-honeypot="bot-field"
                 class="bg-white/90 p-6 md:p-8 rounded-2xl shadow-md ring-1 ring-black/5">
@@ -355,12 +355,33 @@
         // Form Submission Event
         const form = document.querySelector('form[name="admiral-contact"]');
         if (form) {
-            form.addEventListener('submit', function() {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevent default Netlify redirect
+                
+                // Push dataLayer event
                 window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
                     event: 'admiral_contact_submit',
                     formName: 'admiral-contact',
                     timestamp: Date.now()
+                });
+
+                // Submit form data via fetch
+                const formData = new FormData(form);
+                
+                fetch('/', {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: new URLSearchParams(formData).toString()
+                })
+                .then(() => {
+                    // Redirect to custom thank-you page with query params preserved
+                    const queryString = window.location.search;
+                    window.location.href = '/thank-you.html' + queryString;
+                })
+                .catch((error) => {
+                    console.error('Form submission error:', error);
+                    alert('There was an error submitting the form. Please try again.');
                 });
             });
         }
