@@ -15,11 +15,28 @@ const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
 const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
 const VERIFY_SERVICE_SID = process.env.VERIFY_SERVICE_SID;
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Content-Type': 'application/json'
+};
+
 exports.handler = async (event, context) => {
+  // Handle preflight OPTIONS request
+  if (event.httpMethod === 'OPTIONS') {
+    return { 
+      statusCode: 200, 
+      headers: corsHeaders, 
+      body: 'ok' 
+    };
+  }
+
   // Only allow POST
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
+      headers: corsHeaders,
       body: JSON.stringify({ ok: false, error: 'Method not allowed' })
     };
   }
@@ -28,11 +45,11 @@ exports.handler = async (event, context) => {
   if (!VERIFY_SERVICE_SID || !TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN) {
     return {
       statusCode: 503,
-      headers: { 'Content-Type': 'application/json' },
+      headers: corsHeaders,
       body: JSON.stringify({ 
         ok: false, 
         reason: 'VERIFY_SERVICE_NOT_CONFIGURED',
-        error: 'SMS verification is not available at this time' 
+        message: 'SMS verification is not configured yet. Your request was still submitted.' 
       })
     };
   }
@@ -44,7 +61,7 @@ exports.handler = async (event, context) => {
     if (!phone || !/^\+\d{10,15}$/.test(phone)) {
       return {
         statusCode: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers: corsHeaders,
         body: JSON.stringify({ 
           ok: false, 
           error: 'Invalid phone format' 
@@ -55,7 +72,7 @@ exports.handler = async (event, context) => {
     if (!code || !/^\d{6}$/.test(code)) {
       return {
         statusCode: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers: corsHeaders,
         body: JSON.stringify({ 
           ok: false, 
           error: 'Invalid code format. Must be 6 digits.' 
@@ -83,13 +100,13 @@ exports.handler = async (event, context) => {
     if (response.ok && data.status === 'approved') {
       return {
         statusCode: 200,
-        headers: { 'Content-Type': 'application/json' },
+        headers: corsHeaders,
         body: JSON.stringify({ ok: true })
       };
     } else {
       return {
         statusCode: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers: corsHeaders,
         body: JSON.stringify({ 
           ok: false, 
           error: data.status === 'pending' ? 'Invalid code' : (data.message || 'Verification failed') 
@@ -100,7 +117,7 @@ exports.handler = async (event, context) => {
     console.error('Verify OTP error:', err);
     return {
       statusCode: 500,
-      headers: { 'Content-Type': 'application/json' },
+      headers: corsHeaders,
       body: JSON.stringify({ 
         ok: false, 
         error: 'Internal server error' 
