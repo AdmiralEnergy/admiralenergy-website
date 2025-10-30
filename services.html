@@ -539,6 +539,30 @@
 
     <!-- JavaScript -->
     <script>
+        // Exit Intent Tracking
+        let exitIntentFired = false;
+        let pageLoadTime = Date.now();
+        
+        document.addEventListener('mouseleave', function(e) {
+            // Only fire if mouse leaves from top of page (indicating tab switch or close)
+            if (e.clientY <= 0 && !exitIntentFired) {
+                exitIntentFired = true;
+                const timeOnPage = Math.round((Date.now() - pageLoadTime) / 1000); // seconds
+                
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: 'exit_intent',
+                    page_url: window.location.href,
+                    time_on_page: timeOnPage,
+                    page_title: document.title
+                });
+                console.log('✅ exit_intent event pushed to dataLayer', {
+                    page_url: window.location.href,
+                    time_on_page: timeOnPage
+                });
+            }
+        });
+
         // Mobile menu toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');

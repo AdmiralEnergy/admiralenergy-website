@@ -352,9 +352,53 @@
             });
         })();
 
+        // Exit Intent Tracking
+        let exitIntentFired = false;
+        let pageLoadTime = Date.now();
+        
+        document.addEventListener('mouseleave', function(e) {
+            // Only fire if mouse leaves from top of page (indicating tab switch or close)
+            if (e.clientY <= 0 && !exitIntentFired) {
+                exitIntentFired = true;
+                const timeOnPage = Math.round((Date.now() - pageLoadTime) / 1000); // seconds
+                
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: 'exit_intent',
+                    page_url: window.location.href,
+                    time_on_page: timeOnPage,
+                    page_title: document.title
+                });
+                console.log('✅ exit_intent event pushed to dataLayer', {
+                    page_url: window.location.href,
+                    time_on_page: timeOnPage
+                });
+            }
+        });
+
         // Form Submission Event
         const form = document.getElementById('admiral-contact-form');
         if (form) {
+            // Track form start (when user focuses on first visible field)
+            const formFields = form.querySelectorAll('input:not([type="hidden"]), textarea');
+            let formStarted = false;
+            
+            if (formFields[0]) {
+                formFields[0].addEventListener('focus', function() {
+                    if (!formStarted) {
+                        formStarted = true;
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                            event: 'form_start',
+                            form_name: 'admiral-contact',
+                            page_url: window.location.href,
+                            timestamp: Date.now()
+                        });
+                        console.log('✅ form_start event pushed to dataLayer');
+                    }
+                }, { once: true });
+            }
+            
             form.addEventListener('submit', function(e) {
                 e.preventDefault(); // Prevent default Netlify redirect
                 
