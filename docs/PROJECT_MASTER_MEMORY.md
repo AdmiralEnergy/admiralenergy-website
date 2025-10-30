@@ -1,7 +1,7 @@
 # PROJECT MASTER MEMORY - ADMIRAL ENERGY WEBSITE
 
 **Critical: Always read this file FIRST when working on this project**  
-**Last Updated**: October 30, 2025  
+**Last Updated**: October 30, 2025 (Evening - Chat Enhancement)  
 **Next Review**: November 15, 2025
 
 ---
@@ -31,7 +31,9 @@
 - **Frontend**: Pure HTML/CSS/JS + Tailwind CSS (CDN)
 - **Backend**: Netlify Serverless Functions (Node.js 18)
 - **Forms**: Netlify Forms with Twilio OTP verification
-- **Chat**: OpenAI GPT-4o-mini (admiral-chat function)
+- **Chat**: OpenAI GPT-4o-mini with RAG (Retrieval-Augmented Generation) pattern
+  - Knowledge Base: 9 Duke Energy topics (PowerPair, programs, territories, HOA rights, etc.)
+  - Pattern: User query → keyword search → inject relevant knowledge → enhanced AI response
 - **Tracking**: GTM → GA4 + Reddit Pixel
 - **Hosting**: Netlify with continuous deployment from GitHub
 
@@ -39,7 +41,8 @@
 1. **No Build Step**: Direct HTML editing for rapid iteration (trade-off: code duplication)
 2. **Progressive Enhancement**: Core content works without JavaScript
 3. **Static-First**: Serverless functions only for interactive features
-4. **Brand Colors**: Admiral Navy (#0C2F4A), Gold (#C9A648), White (#F7F5F2)
+4. **RAG for Chat**: Knowledge base provides factual grounding, reduces AI hallucinations
+5. **Brand Colors**: Admiral Navy (#0C2F4A), Gold (#C9A648), White (#F7F5F2)
 
 ### Architecture Constraints
 - **8 HTML Files**: All navigation/footer duplicated (no templating system)
@@ -67,7 +70,8 @@ admiralenergy-website/
 ├── _headers                # Root-level caching rules
 │
 ├── netlify/functions/      # Serverless backend
-│   ├── admiral-chat.js     # AI chat (OpenAI GPT-4o-mini)
+│   ├── admiral-chat.js     # AI chat (OpenAI GPT-4o-mini with RAG)
+│   ├── knowledge-base.js   # Chat knowledge repository (9 Duke Energy topics)
 │   ├── send-otp.js         # Twilio SMS verification
 │   └── verify-otp.js       # OTP validation
 │
