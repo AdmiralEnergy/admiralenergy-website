@@ -125,16 +125,12 @@
     // Initial button state
     sendBtn.disabled = true;
 
-    // Hydrate previous thread OR show welcome
-    const thread = loadThread();
-    if (thread.length === 0) {
-      // First time - show welcome message
-      appendWelcomeMessage();
-      showSuggestedPrompts(suggestionsEl);
-    } else {
-      // Returning user - restore conversation
-      for (const m of thread) appendMessage(m.role, m.content);
-    }
+    // Clear chat history on page load - fresh start each visit
+    localStorage.removeItem(THREAD_KEY);
+    
+    // Always show welcome message (fresh session)
+    appendWelcomeMessage();
+    showSuggestedPrompts(suggestionsEl);
     scrollLog();
 
     // Delegated inline opener
@@ -302,8 +298,21 @@
     } catch (e) { console.error(e); return "Network issue—try again."; }
   }
 
-  function openPanel(source){ pushEvent('chat_opened', { source: source||'unknown', page: window.location.pathname }); overlay && overlay.classList.remove('hidden'); setTimeout(scrollLog, 50); inputEl && inputEl.focus(); }
-  function closePanel(){ overlay && overlay.classList.add('hidden'); }
+  function openPanel(source){ 
+    pushEvent('chat_opened', { source: source||'unknown', page: window.location.pathname }); 
+    if (overlay) {
+      overlay.classList.remove('hidden'); 
+      setTimeout(scrollLog, 50); 
+      if (inputEl) inputEl.focus();
+    }
+  }
+  
+  function closePanel(){ 
+    if (overlay) {
+      overlay.classList.add('hidden');
+      pushEvent('chat_closed', { page: window.location.pathname });
+    }
+  }
 
   function enhanceInlinePlaceholder() {
     const host = document.getElementById('faq-or-chat');
