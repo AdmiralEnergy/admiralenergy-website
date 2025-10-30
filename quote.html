@@ -353,7 +353,7 @@
         })();
 
         // Form Submission Event
-        const form = document.querySelector('form[name="admiral-contact"]');
+        const form = document.getElementById('admiral-contact-form');
         if (form) {
             form.addEventListener('submit', function(e) {
                 e.preventDefault(); // Prevent default Netlify redirect
