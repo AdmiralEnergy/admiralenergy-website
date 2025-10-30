@@ -172,6 +172,12 @@
     // Remove typing indicator
     removeTypingIndicator(typingId);
     
+    // Check if bot wants to show lead form
+    if (reply && reply.includes('SHOW_LEAD_FORM')) {
+      showLeadCaptureForm();
+      return; // Don't append the trigger message
+    }
+    
     appendMessage('assistant', reply || "…");
     scrollLog();
     pushEvent('admiral_chat_reply_received', { page: window.location.pathname });
@@ -306,6 +312,129 @@
       const data = await res.json();
       return data.reply || "…";
     } catch (e) { console.error(e); return "Network issue—try again."; }
+  }
+
+  function showLeadCaptureForm() {
+    // Create form container
+    const formWrap = document.createElement('div');
+    formWrap.className = "mx-4 my-3 p-4 bg-white rounded-2xl border-2 border-blue-200 shadow-sm";
+    formWrap.innerHTML = `
+      <div class="flex items-start gap-3 mb-3">
+        <div class="w-8 h-8 rounded-full bg-admiral-gold flex items-center justify-center text-sm font-bold text-admiral-navy flex-shrink-0">⚓</div>
+        <div class="flex-1 text-sm text-gray-700">
+          <p class="font-semibold text-gray-900 mb-1">Great! Let's get you a custom analysis.</p>
+          <p class="text-xs text-gray-600">Our team will reach out within 24 hours.</p>
+        </div>
+      </div>
+      <form id="chatLeadForm" class="space-y-3">
+        <div>
+          <input 
+            type="text" 
+            name="name" 
+            placeholder="Your Name *" 
+            required
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+          />
+        </div>
+        <div>
+          <input 
+            type="email" 
+            name="email" 
+            placeholder="Email Address *" 
+            required
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+          />
+        </div>
+        <div>
+          <input 
+            type="tel" 
+            name="phone" 
+            placeholder="Phone Number (optional)" 
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+          />
+        </div>
+        <button 
+          type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-lg transition-colors text-sm"
+        >
+          Get My Custom Analysis
+        </button>
+        <p class="text-xs text-gray-500 text-center">No pressure, no spam—just honest advice.</p>
+      </form>
+    `;
+    
+    logEl.appendChild(formWrap);
+    scrollLog();
+    
+    // Handle form submission
+    const form = formWrap.querySelector('#chatLeadForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const leadData = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        phone: formData.get('phone') || '',
+        context: getChatContext()
+      };
+      
+      // Disable form while submitting
+      const submitBtn = form.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      
+      try {
+        const res = await fetch('/.netlify/functions/capture-lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(leadData)
+        });
+        
+        const data = await res.json();
+        
+        if (data.ok) {
+          // Track lead in GA4
+          pushEvent('generate_lead', {
+            source: 'admiral_chat',
+            lead_type: 'chat_contact_form',
+            page: window.location.pathname
+          });
+          
+          // Show success message
+          formWrap.innerHTML = `
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-lg flex-shrink-0">✓</div>
+              <div class="flex-1 text-sm">
+                <p class="font-semibold text-gray-900 mb-1">Got it, ${leadData.name}!</p>
+                <p class="text-gray-600 text-xs">Check your email for next steps. Our team will be in touch within 24 hours.</p>
+              </div>
+            </div>
+          `;
+          scrollLog();
+          
+          // Add a friendly follow-up message after delay
+          setTimeout(() => {
+            appendMessage('assistant', "Anything else I can help you with while you're here?");
+            scrollLog();
+          }, 1500);
+          
+        } else {
+          throw new Error(data.error || 'Failed to submit');
+        }
+      } catch (error) {
+        console.error('Lead capture error:', error);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Get My Custom Analysis';
+        alert('Oops! Something went wrong. Please try again or email us directly at contact@admiralenergy.ai');
+      }
+    });
+  }
+  
+  function getChatContext() {
+    // Get recent conversation context for lead
+    const thread = loadThread();
+    const recentMessages = thread.slice(-6).map(m => `${m.role}: ${m.content}`).join('\n');
+    return recentMessages || 'User requested consultation from chat';
   }
 
   function openPanel(source){ 
