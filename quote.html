@@ -68,6 +68,21 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     
+    <!-- Hidden form for Netlify build bot detection -->
+    <form name="admiral-contact" netlify netlify-honeypot="bot-field" hidden>
+        <input type="text" name="Full Name" />
+        <input type="email" name="Email" />
+        <input type="tel" name="Phone" />
+        <input type="text" name="Location" />
+        <textarea name="Message"></textarea>
+        <input type="hidden" name="phone_verified" />
+        <input type="hidden" name="utm_source" />
+        <input type="hidden" name="utm_medium" />
+        <input type="hidden" name="utm_campaign" />
+        <input type="hidden" name="utm_term" />
+        <input type="hidden" name="utm_content" />
+    </form>
+    
     <!-- Navigation -->
     <nav class="bg-admiral-navy text-white sticky top-0 z-50 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -89,7 +104,7 @@
                 </div>
                 
                 <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-white hover:text-admiral-gold">
+                    <button id="mobile-menu-button" class="text-white hover:text-admiral-gold" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-menu">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
@@ -124,8 +139,7 @@
             <form 
                 name="admiral-contact" 
                 method="POST" 
-                action="/thank-you/?ok=1" 
-                accept-charset="UTF-8"
+                action="/thank-you/"
                 data-netlify="true" 
                 netlify-honeypot="bot-field"
                 class="bg-white/90 p-6 md:p-8 rounded-2xl shadow-md ring-1 ring-black/5">
@@ -310,6 +324,8 @@
 
         if (mobileMenuButton && mobileMenu) {
             mobileMenuButton.addEventListener('click', () => {
+                const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+                mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
                 mobileMenu.classList.toggle('hidden');
             });
         }
