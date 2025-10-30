@@ -40,7 +40,7 @@
 #### **Critical Systems** (Change with Caution)
 - [NETLIFY_FORMS_GUIDE.md](NETLIFY_FORMS_GUIDE.md) - Form implementation (hidden template pattern)
 - [TRACKING_CONFIGURATION.md](TRACKING_CONFIGURATION.md) - GTM/GA4/Reddit Pixel setup
-- [GA4_TRACKING_IMPLEMENTATION.md](GA4_TRACKING_IMPLEMENTATION.md) - **NEW** 15-event tracking system overview
+- [GA4_TRACKING_IMPLEMENTATION.md](GA4_TRACKING_IMPLEMENTATION.md) - Analytics tracking system (9 core events currently active)
 
 #### Chatbot & Features  
 - [2025-10-22_Chatbot_Implementation_Guide.md](2025-10-22_Chatbot_Implementation_Guide.md) - Current OpenAI chat

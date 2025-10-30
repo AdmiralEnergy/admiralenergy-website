@@ -7,13 +7,17 @@ A static website with Netlify serverless functions, featuring an AI-powered chat
 🌐 **Live Site**: [https://admiralenergy.ai](https://admiralenergy.ai)  
 📦 **Hosting**: Netlify  
 🔧 **Tech Stack**: Vanilla HTML/CSS/JS + Tailwind CDN + Netlify Functions  
-📊 **Analytics**: Google Analytics 4 + Google Tag Manager  
+📊 **Analytics**: Google Analytics 4 (G-RX78MRB03L) + Google Tag Manager (GTM-N6HRP34Z)  
 🤖 **AI**: OpenAI GPT-4o-mini with Duke Energy knowledge base  
 📱 **Mobile**: Fully responsive, touch-optimized chat interface
 
+> **🔒 Security Note**: All API keys (OpenAI, Twilio) are stored in Netlify environment variables and accessed only through serverless functions—never exposed in client JavaScript.
+
 **Last Updated:** October 30, 2025  
 **Version:** 2.1.0  
-**Status:** ✅ Production Ready
+**Status:** ✅ Production Ready  
+**Deploy Status:** ⏸️ Auto-deploy PAUSED (manual trigger required) | Last verified: *Pending deployment of commit `439590c`*  
+**Current Live:** Commit `0d27b4c` (Oct 22, 2025)
 
 ---
 
@@ -55,7 +59,12 @@ A static website with Netlify serverless functions, featuring an AI-powered chat
 - 📄 **GTM-TRACKING-REFERENCE.md** - Complete analytics guide
 - 📄 **LEAD-CAPTURE-GUIDE.md** - Lead system documentation
 
-See `/docs/` folder for detailed documentation.
+See [docs/](docs/) folder for detailed documentation.
+
+> **📌 Accessibility Note**: Current site has basic accessibility. Planned improvements:
+> - Task 1.2: Semantic HTML structure + skip-to-main link
+> - Implementation: `<a class="sr-only focus:not-sr-only" href="#main">Skip to main content</a>`
+> - Wrapping content in `<main id="main">` tags
 
 ---
 
@@ -125,7 +134,7 @@ admiralenergy-website/
 ├── docs/                   # Project documentation
 │   ├── SESSION-LOG-2025-10-30.md       # Oct 30 session work log
 │   ├── ARCHITECTURE.md                  # Full system architecture
-│   ├── GTM-TRACKING-REFERENCE.md        # Complete analytics guide
+│   ├── GTM-TRACKING-REFERENCE.md        # Complete analytics guide (9 events)
 │   ├── LEAD-CAPTURE-GUIDE.md            # Lead system documentation
 │   ├── MOBILE-OPTIMIZATION-SUMMARY.md   # Mobile optimization details
 │   ├── ops-checklist.md                 # Operational procedures
@@ -172,15 +181,16 @@ admiralenergy-website/
 - **9 tracked events**: chat_opened, chat_message_sent, chat_reply_received, chat_closed, generate_lead (2 sources), form_start, phone_verified, exit_intent
 - **Conversion tracking**: generate_lead marked as key event
 - **UTM preservation**: Full attribution across session
-- **See**: `/docs/GTM-TRACKING-REFERENCE.md` for complete setup
+- **Cache policy**: HTML files no-cache for freshness; static assets (images/CSS/JS) cached 1 year immutable
+- **See**: [GTM-TRACKING-REFERENCE.md](docs/GTM-TRACKING-REFERENCE.md) for complete setup
 
 ### 4. **Performance & Security**
 - **No build step** - Instant editing, no compilation
 - **CDN delivery** - Netlify Edge CDN for global performance
-- **Immutable caching** - 1 year cache for static assets
+- **Smart caching** - HTML no-cache for freshness, assets 1-year immutable
 - **HTTPS enforced** - Automatic SSL via Netlify
 - **Security headers** - XSS protection, frame denial
-- **API key protection** - All keys in Netlify environment variables
+- **API key protection** - All keys in Netlify environment variables, never exposed in client JS
 
 ### 5. **Mobile-First Design**
 - **Responsive chat** - Full-screen on mobile, card on desktop (max 90vh)
@@ -192,6 +202,19 @@ admiralenergy-website/
 ---
 
 ## 🚀 Getting Started
+
+### Quick Start (Windows PowerShell)
+
+```powershell
+# Pull latest changes
+git pull
+
+# Start local dev server
+netlify dev
+
+# Optional: Run deployment check
+.\check-deployment.ps1  # (if exists)
+```
 
 ### Prerequisites
 
@@ -277,23 +300,41 @@ Test locally with `netlify dev` - functions available at `/.netlify/functions/fu
 
 ## 📦 Deployment
 
-### Automatic Deployment
+### Deployment Status
+
+**⏸️ Auto-Deploy: PAUSED** (manual control to conserve Netlify credits)  
+**Deployment Method**: Manual trigger via Netlify Dashboard  
+**Ready to Deploy**: Commit `439590c` (Oct 30, 2025 - all today's work)  
+**Currently Live**: Commit `0d27b4c` (Oct 22, 2025)
+
+### Automatic Deployment (When Enabled)
 
 **Main branch** → Production (`admiralenergy.ai`)  
 **Feature branches** → Deploy previews (`deploy-preview-XX--admiralenergy.netlify.app`)
 
-Netlify auto-deploys on every push to GitHub.
+When enabled, Netlify auto-deploys on every push to GitHub. Currently paused for manual control.
 
-### Manual Deployment
+### Manual Deployment (Current Method)
+
+**Via Netlify Dashboard:**
+1. Go to [Netlify Dashboard](https://app.netlify.com) → Your Site → Deploys
+2. Click "Trigger deploy" → "Deploy site"
+3. Wait ~2 minutes for build
+4. Hard refresh browser: `Ctrl+Shift+R` (Windows) or `Cmd+Shift+R` (Mac)
+
+**Via Netlify CLI:**
 
 ```bash
-# Deploy to production
-netlify deploy --prod
+# Deploy to production (publishes from current directory)
+netlify deploy --prod --dir=.
 
-# Deploy preview
+# Open deployed site in browser
+netlify open:site
+
+# Deploy preview (test before going live)
 netlify deploy
 
-# Build without deploying (validation)
+# Build validation (no deploy)
 npm run build
 ```
 
@@ -303,33 +344,40 @@ npm run build
 - [ ] Check all forms submit correctly
 - [ ] Verify chat widget loads and responds
 - [ ] Test OTP flow (if phone number is verified)
-- [ ] Review Netlify deploy logs
-- [ ] Check production URLs after deploy
+- [ ] Commit and push to GitHub
+- [ ] **Manually trigger deploy** in Netlify Dashboard (auto-deploy paused)
+- [ ] Review Netlify deploy logs for errors
+- [ ] Hard refresh browser after deploy (`Ctrl+Shift+R`)
+- [ ] Check production URLs and verify changes live
 
 ---
 
 ## 🔐 Environment Variables
 
-Set these in **Netlify Dashboard** → Site Settings → Environment Variables
+Set these in **Netlify Dashboard** → Site Settings → Build & deploy → Environment Variables
+
+> **⚠️ Security**: Environment variables are set in Netlify only—never commit `.env` to Git. All API calls route through Netlify Functions; keys are never exposed in client JavaScript.
 
 ### Required for Chat
 
 ```bash
-OPENAI_API_KEY=sk-proj-...              # OpenAI API key
+OPENAI_API_KEY=sk-proj-...              # OpenAI API key (never expose in client JS)
 ADMIRAL_SYSTEM_PROMPT="You are..."      # Optional: Custom AI prompt
 ```
 
 ### Required for OTP
 
 ```bash
-TWILIO_ACCOUNT_SID=AC...                 # Twilio Account SID
-TWILIO_AUTH_TOKEN=...                    # Twilio Auth Token
+TWILIO_ACCOUNT_SID=AC...                 # Twilio Account SID (never expose in client JS)
+TWILIO_AUTH_TOKEN=...                    # Twilio Auth Token (never expose in client JS)
 VERIFY_SERVICE_SID=VA...                 # Twilio Verify Service SID
 ```
 
+> **🔒 Key Protection**: All keys above are accessed only through `netlify/functions/*`. Never reference these in client-side JavaScript.
+
 ### Local Development
 
-Create `.env` file in root (gitignored):
+Create `.env` file in root (gitignored, never commit):
 
 ```bash
 OPENAI_API_KEY=sk-proj-...
@@ -337,6 +385,8 @@ TWILIO_ACCOUNT_SID=AC...
 TWILIO_AUTH_TOKEN=...
 VERIFY_SERVICE_SID=VA...
 ```
+
+> **Note**: `.env` is in `.gitignore` and will not be uploaded to GitHub. Production uses Netlify's environment variables.
 
 ---
 
