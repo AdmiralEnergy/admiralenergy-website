@@ -172,6 +172,12 @@
     // Remove typing indicator
     removeTypingIndicator(typingId);
     
+    // Check if bot wants to show contact buttons
+    if (reply && reply.includes('SHOW_CONTACT_BUTTONS')) {
+      showContactButtons();
+      return; // Don't append the trigger message
+    }
+    
     // Check if bot wants to show lead form
     if (reply && reply.includes('SHOW_LEAD_FORM')) {
       showLeadCaptureForm();
@@ -312,6 +318,69 @@
       const data = await res.json();
       return data.reply || "…";
     } catch (e) { console.error(e); return "Network issue—try again."; }
+  }
+
+  function showContactButtons() {
+    // Create message with Yes/No buttons
+    const buttonWrap = document.createElement('div');
+    buttonWrap.className = "flex gap-2 items-start mx-4 my-3";
+    
+    // Add avatar
+    const avatar = document.createElement('div');
+    avatar.className = "w-8 h-8 rounded-full bg-admiral-gold flex items-center justify-center text-sm font-bold text-admiral-navy flex-shrink-0";
+    avatar.textContent = "⚓";
+    buttonWrap.appendChild(avatar);
+    
+    // Create button container
+    const contentWrap = document.createElement('div');
+    contentWrap.className = "flex-1";
+    
+    // Add message
+    const message = document.createElement('div');
+    message.className = "max-w-[75%] rounded-2xl rounded-bl-md bg-white text-gray-800 px-4 py-2.5 shadow-sm border border-gray-200 mb-2";
+    message.textContent = "Would you like one of our energy experts to run the exact numbers for your home?";
+    contentWrap.appendChild(message);
+    
+    // Add buttons
+    const buttonsDiv = document.createElement('div');
+    buttonsDiv.className = "flex gap-2";
+    
+    const yesBtn = document.createElement('button');
+    yesBtn.type = 'button';
+    yesBtn.className = "bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg transition-colors text-sm";
+    yesBtn.textContent = "Yes, please!";
+    yesBtn.addEventListener('click', () => {
+      // Remove buttons
+      buttonWrap.remove();
+      // Show user's response
+      appendMessage('user', 'Yes, please!');
+      scrollLog();
+      // Show the lead form
+      showLeadCaptureForm();
+    });
+    
+    const noBtn = document.createElement('button');
+    noBtn.type = 'button';
+    noBtn.className = "bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-6 py-2 rounded-lg transition-colors text-sm";
+    noBtn.textContent = "Not right now";
+    noBtn.addEventListener('click', () => {
+      // Remove buttons
+      buttonWrap.remove();
+      // Show user's response
+      appendMessage('user', 'Not right now');
+      scrollLog();
+      // Show polite response
+      appendMessage('assistant', "No problem! Feel free to keep exploring or ask me anything else. I'm here whenever you're ready.");
+      scrollLog();
+    });
+    
+    buttonsDiv.appendChild(yesBtn);
+    buttonsDiv.appendChild(noBtn);
+    contentWrap.appendChild(buttonsDiv);
+    
+    buttonWrap.appendChild(contentWrap);
+    logEl.appendChild(buttonWrap);
+    scrollLog();
   }
 
   function showLeadCaptureForm() {
