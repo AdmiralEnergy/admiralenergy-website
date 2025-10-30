@@ -26,7 +26,7 @@
     btn.id = 'admiralFloatBtn';
     btn.type = 'button';
     btn.setAttribute('aria-label', 'Chat with The Admiral');
-    btn.className = "fixed bottom-5 right-5 z-50 rounded-full shadow-lg ring-1 ring-black/10 bg-admiral-gold text-admiral-navy px-4 py-3 font-semibold hover:bg-yellow-400 transition";
+    btn.className = "fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-50 rounded-full shadow-lg ring-1 ring-black/10 bg-admiral-gold text-admiral-navy px-3 py-2 sm:px-4 sm:py-3 font-semibold text-sm sm:text-base hover:bg-yellow-400 transition";
     btn.textContent = "💬 Chat with The Admiral";
     btn.addEventListener('click', () => openPanel('floating'));
     document.body.appendChild(btn);
@@ -45,22 +45,51 @@
     backdrop.addEventListener('click', closePanel);
 
     panel = document.createElement('div');
-    panel.className = "absolute bottom-6 right-6 w-[420px] max-w-[95vw] bg-white rounded-xl shadow-2xl ring-1 ring-black/10 flex flex-col";
+    panel.className = "absolute bottom-0 sm:bottom-6 right-0 sm:right-6 w-full sm:w-[420px] sm:max-w-[95vw] h-[100dvh] sm:h-auto bg-white sm:rounded-2xl shadow-2xl ring-1 ring-black/5 flex flex-col overflow-hidden";
     panel.innerHTML = `
-      <div class="flex items-center justify-between px-4 pt-4 pb-2 border-b border-gray-100">
-        <div>
-          <h3 class="text-base font-bold text-admiral-navy">The Admiral</h3>
-          <p class="text-xs text-gray-500">NC Solar & Backup Power Advisor</p>
+      <!-- Header with Avatar -->
+      <div class="flex items-center gap-3 px-4 pt-4 pb-3 bg-gradient-to-r from-admiral-navy to-blue-900 text-white">
+        <div id="admiralAvatar" class="w-12 h-12 rounded-full bg-admiral-gold flex items-center justify-center text-2xl font-bold text-admiral-navy flex-shrink-0">
+          ⚓
         </div>
-        <button type="button" aria-label="Close" class="text-gray-500 hover:text-gray-700 text-xl leading-none" id="admiralCloseBtn">✕</button>
+        <div class="flex-1 min-w-0">
+          <h3 class="text-base font-bold">The Admiral</h3>
+          <p class="text-xs text-blue-200">NC Solar & Backup Power Advisor</p>
+        </div>
+        <button type="button" aria-label="Close" class="text-white/70 hover:text-white text-2xl leading-none transition-colors" id="admiralCloseBtn">×</button>
       </div>
-      <div id="admiralLog" class="flex-1 px-4 py-3 h-[380px] overflow-y-auto space-y-3"></div>
-      <div id="admiralSuggestions" class="px-4 py-2 flex flex-wrap gap-2 border-t border-gray-100"></div>
-      <div class="p-4 border-t border-gray-200 bg-gray-50">
+      
+      <!-- Chat Messages -->
+      <div id="admiralLog" class="flex-1 px-4 py-4 h-[60vh] sm:h-[420px] overflow-y-auto space-y-3 bg-gray-50"></div>
+      
+      <!-- Suggested Prompts -->
+      <div id="admiralSuggestions" class="px-4 py-2 flex flex-wrap gap-2 bg-white border-t border-gray-100"></div>
+      
+      <!-- Input Area -->
+      <div class="p-3 bg-white border-t border-gray-200">
         <form id="admiralForm" class="flex items-end gap-2">
-          <textarea id="admiralInput" rows="2" placeholder="Ask about battery backup, solar ROI, or Duke PowerPair…" class="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-admiral-gold/30 resize-none"></textarea>
-          <button id="admiralSend" type="submit" class="rounded-lg bg-admiral-gold text-admiral-navy font-semibold px-4 py-2 hover:bg-yellow-400 transition text-sm">Send</button>
+          <div class="flex-1 relative">
+            <textarea 
+              id="admiralInput" 
+              rows="1" 
+              placeholder="Message The Admiral..." 
+              class="w-full rounded-2xl border border-gray-300 px-4 py-3 pr-10 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none overflow-hidden transition-all"
+              style="max-height: 120px;"
+            ></textarea>
+            <div class="absolute right-2 bottom-3 text-xs text-gray-400">⏎</div>
+          </div>
+          <button 
+            id="admiralSend" 
+            type="submit" 
+            class="rounded-full bg-blue-600 text-white font-semibold w-10 h-10 flex items-center justify-center hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+            title="Send message"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+            </svg>
+          </button>
         </form>
+        <div class="text-xs text-gray-400 mt-2 text-center">Press Enter to send • Shift+Enter for new line</div>
       </div>
     `;
 
@@ -71,8 +100,30 @@
     logEl = panel.querySelector('#admiralLog');
     inputEl = panel.querySelector('#admiralInput');
     const suggestionsEl = panel.querySelector('#admiralSuggestions');
+    const sendBtn = panel.querySelector('#admiralSend');
     panel.querySelector('#admiralCloseBtn').addEventListener('click', closePanel);
     panel.querySelector('#admiralForm').addEventListener('submit', onSubmit);
+
+    // Auto-resize textarea as user types
+    inputEl.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+      // Enable/disable send button
+      sendBtn.disabled = !this.value.trim();
+    });
+
+    // Enter to send, Shift+Enter for new line
+    inputEl.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        if (this.value.trim()) {
+          panel.querySelector('#admiralForm').requestSubmit();
+        }
+      }
+    });
+
+    // Initial button state
+    sendBtn.disabled = true;
 
     // Hydrate previous thread OR show welcome
     const thread = loadThread();
@@ -104,6 +155,9 @@
     
     appendMessage('user', text);
     inputEl.value = "";
+    inputEl.style.height = 'auto'; // Reset textarea height
+    const sendBtn = document.querySelector('#admiralSend');
+    if (sendBtn) sendBtn.disabled = true; // Disable send button
     scrollLog();
     pushEvent('chat_message_sent', { page: window.location.pathname });
 
@@ -124,12 +178,28 @@
     if (!logEl) return;
     const wrap = document.createElement('div');
     const me = role === 'user';
-    wrap.className = me ? "flex justify-end" : "flex justify-start";
+    wrap.className = me ? "flex justify-end items-end gap-2" : "flex justify-start items-end gap-2";
+    
+    // Add avatar for assistant messages
+    if (!me) {
+      const avatar = document.createElement('div');
+      avatar.className = "w-8 h-8 rounded-full bg-admiral-gold flex items-center justify-center text-sm font-bold text-admiral-navy flex-shrink-0";
+      avatar.textContent = "⚓";
+      wrap.appendChild(avatar);
+    }
+    
     const bubble = document.createElement('div');
-    bubble.className = me ? "max-w-[85%] rounded-lg bg-admiral-navy text-white px-3 py-2"
-                          : "max-w-[85%] rounded-lg bg-gray-100 text-gray-800 px-3 py-2";
+    bubble.className = me 
+      ? "max-w-[75%] rounded-2xl rounded-br-md bg-blue-600 text-white px-4 py-2.5 shadow-sm" 
+      : "max-w-[75%] rounded-2xl rounded-bl-md bg-white text-gray-800 px-4 py-2.5 shadow-sm border border-gray-200";
+    
+    // Preserve line breaks and format text
+    bubble.style.whiteSpace = 'pre-wrap';
+    bubble.style.wordBreak = 'break-word';
     bubble.textContent = content;
-    wrap.appendChild(bubble); logEl.appendChild(wrap);
+    
+    wrap.appendChild(bubble); 
+    logEl.appendChild(wrap);
 
     const thread = loadThread(); thread.push({ role, content }); saveThread(thread);
   }
@@ -141,10 +211,17 @@
     const id = 'typing-' + Date.now();
     const wrap = document.createElement('div');
     wrap.id = id;
-    wrap.className = "flex justify-start";
+    wrap.className = "flex justify-start items-end gap-2";
+    
+    // Add avatar
+    const avatar = document.createElement('div');
+    avatar.className = "w-8 h-8 rounded-full bg-admiral-gold flex items-center justify-center text-sm font-bold text-admiral-navy flex-shrink-0";
+    avatar.textContent = "⚓";
+    wrap.appendChild(avatar);
+    
     const bubble = document.createElement('div');
-    bubble.className = "max-w-[85%] rounded-lg bg-gray-100 text-gray-800 px-3 py-2";
-    bubble.innerHTML = '<div class="flex gap-1"><span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span><span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></span><span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></span></div>';
+    bubble.className = "rounded-2xl rounded-bl-md bg-white text-gray-800 px-4 py-3 shadow-sm border border-gray-200";
+    bubble.innerHTML = '<div class="flex gap-1.5"><span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span><span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.15s"></span><span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.3s"></span></div>';
     wrap.appendChild(bubble);
     logEl.appendChild(wrap);
     scrollLog();
@@ -160,19 +237,26 @@
   function appendWelcomeMessage() {
     if (!logEl) return;
     const wrap = document.createElement('div');
-    wrap.className = "flex justify-start";
+    wrap.className = "flex justify-start items-end gap-2";
+    
+    // Add avatar
+    const avatar = document.createElement('div');
+    avatar.className = "w-8 h-8 rounded-full bg-admiral-gold flex items-center justify-center text-sm font-bold text-admiral-navy flex-shrink-0";
+    avatar.textContent = "⚓";
+    wrap.appendChild(avatar);
+    
     const bubble = document.createElement('div');
-    bubble.className = "max-w-[85%] rounded-lg bg-admiral-navy text-white px-4 py-3 text-sm leading-relaxed";
+    bubble.className = "max-w-[85%] rounded-2xl rounded-bl-md bg-white text-gray-800 px-4 py-3 shadow-sm border border-gray-200 text-sm leading-relaxed";
     bubble.innerHTML = `
-      <div class="font-semibold mb-1">👋 Welcome! I'm The Admiral</div>
-      <div>I'm here to help NC homeowners with honest, math-first guidance on:</div>
-      <ul class="mt-2 space-y-1 text-xs">
-        <li>• Battery backup systems (Duke PowerPair)</li>
-        <li>• Solar ROI calculations</li>
-        <li>• Outage coverage planning</li>
-        <li>• Interconnection timelines</li>
+      <div class="font-bold text-admiral-navy mb-2">👋 Welcome! I'm The Admiral</div>
+      <div class="text-gray-700 mb-3">I'm here to help NC homeowners with honest, math-first guidance on:</div>
+      <ul class="space-y-1.5 text-sm text-gray-600">
+        <li class="flex items-start"><span class="text-blue-600 mr-2">•</span><span>Battery backup systems (Duke PowerPair)</span></li>
+        <li class="flex items-start"><span class="text-blue-600 mr-2">•</span><span>Solar ROI calculations</span></li>
+        <li class="flex items-start"><span class="text-blue-600 mr-2">•</span><span>Outage coverage planning</span></li>
+        <li class="flex items-start"><span class="text-blue-600 mr-2">•</span><span>Duke Energy programs & timelines</span></li>
       </ul>
-      <div class="mt-2 text-xs opacity-90">What questions do you have?</div>
+      <div class="mt-3 text-xs text-gray-500 italic">No pressure, just honest advice 💡</div>
     `;
     wrap.appendChild(bubble);
     logEl.appendChild(wrap);
@@ -190,7 +274,7 @@
     prompts.forEach(prompt => {
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = "text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-full transition";
+      btn.className = "text-xs bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 px-3 py-1.5 rounded-full transition-colors";
       btn.textContent = prompt;
       btn.addEventListener('click', () => {
         inputEl.value = prompt;
