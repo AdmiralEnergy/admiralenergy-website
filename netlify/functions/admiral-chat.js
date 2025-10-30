@@ -1,5 +1,7 @@
 // netlify/functions/admiral-chat.js
 // Admiral chat relay — Netlify Function (no streaming)
+const { searchKnowledge } = require('./knowledge-base');
+
 const ALLOWED_ORIGINS = []; // optional: add prod origin(s) for strict CORS
 
 exports.handler = async (event) => {
@@ -55,10 +57,20 @@ If user seems ready to move forward, encourage them to book a free consultation 
       return { statusCode: 400, headers: corsHeaders(event.headers?.origin), body: JSON.stringify({ error: 'messages[] required' }) };
     }
 
+    // Search knowledge base for relevant context
+    const lastUserMessage = messages[messages.length - 1]?.content || '';
+    const relevantKnowledge = searchKnowledge(lastUserMessage);
+    
+    // Enhance system prompt with relevant knowledge
+    let enhancedSystemPrompt = systemPrompt;
+    if (relevantKnowledge) {
+      enhancedSystemPrompt += `\n\n=== RELEVANT KNOWLEDGE BASE ===\n${relevantKnowledge}\n=== END KNOWLEDGE BASE ===\n\nUse this information to provide specific, accurate answers. Cite numbers and timelines from the knowledge base when relevant.`;
+    }
+
     const payload = {
       model: "gpt-4o-mini",
       temperature: 0.3,
-      messages: [{ role: "system", content: systemPrompt }, ...messages].slice(-24)
+      messages: [{ role: "system", content: enhancedSystemPrompt }, ...messages].slice(-24)
     };
 
     const res = await fetch("https://api.openai.com/v1/chat/completions", {
