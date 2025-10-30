@@ -326,7 +326,11 @@
           <p class="text-xs text-gray-600">Our team will reach out within 24 hours.</p>
         </div>
       </div>
-      <form id="chatLeadForm" class="space-y-3">
+      <form id="chatLeadForm" name="chat-lead-capture" method="POST" data-netlify="true" class="space-y-3">
+        <input type="hidden" name="form-name" value="chat-lead-capture" />
+        <input type="hidden" name="source" value="Admiral Chat Widget" />
+        <input type="hidden" name="page" id="chatLeadPage" />
+        <input type="hidden" name="context" id="chatLeadContext" />
         <div>
           <input 
             type="text" 
@@ -366,17 +370,19 @@
     logEl.appendChild(formWrap);
     scrollLog();
     
+    // Set hidden field values
+    const pageField = formWrap.querySelector('#chatLeadPage');
+    const contextField = formWrap.querySelector('#chatLeadContext');
+    if (pageField) pageField.value = window.location.pathname;
+    if (contextField) contextField.value = getChatContext();
+    
     // Handle form submission
     const form = formWrap.querySelector('#chatLeadForm');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const formData = new FormData(form);
-      const leadData = {
-        name: formData.get('name'),
-        email: formData.get('email'),
-        phone: formData.get('phone') || '',
-        context: getChatContext()
-      };
+      
+      // Get user name for success message
+      const userName = form.querySelector('input[name="name"]').value;
       
       // Disable form while submitting
       const submitBtn = form.querySelector('button[type="submit"]');
@@ -384,15 +390,15 @@
       submitBtn.textContent = 'Sending...';
       
       try {
-        const res = await fetch('/.netlify/functions/capture-lead', {
+        // Submit to Netlify Forms
+        const formData = new FormData(form);
+        const res = await fetch('/', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(leadData)
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(formData).toString()
         });
         
-        const data = await res.json();
-        
-        if (data.ok) {
+        if (res.ok) {
           // Track lead in GA4
           pushEvent('generate_lead', {
             source: 'admiral_chat',
@@ -405,7 +411,7 @@
             <div class="flex items-start gap-3">
               <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-lg flex-shrink-0">✓</div>
               <div class="flex-1 text-sm">
-                <p class="font-semibold text-gray-900 mb-1">Got it, ${leadData.name}!</p>
+                <p class="font-semibold text-gray-900 mb-1">Got it, ${userName}!</p>
                 <p class="text-gray-600 text-xs">Check your email for next steps. Our team will be in touch within 24 hours.</p>
               </div>
             </div>
@@ -419,7 +425,7 @@
           }, 1500);
           
         } else {
-          throw new Error(data.error || 'Failed to submit');
+          throw new Error('Failed to submit form');
         }
       } catch (error) {
         console.error('Lead capture error:', error);
