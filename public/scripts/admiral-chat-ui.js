@@ -60,7 +60,7 @@
       </div>
       
       <!-- Chat Messages -->
-      <div id="admiralLog" class="flex-1 px-4 py-4 h-[60vh] sm:h-[420px] overflow-y-auto space-y-3 bg-gray-50"></div>
+      <div id="admiralLog" class="flex-1 px-4 py-4 h-[60vh] sm:h-[420px] overflow-y-auto overflow-x-hidden space-y-3 bg-gray-50 scroll-smooth"></div>
       
       <!-- Suggested Prompts -->
       <div id="admiralSuggestions" class="px-4 py-2 flex flex-wrap gap-2 bg-white border-t border-gray-100"></div>
@@ -196,9 +196,10 @@
       ? "max-w-[75%] rounded-2xl rounded-br-md bg-blue-600 text-white px-4 py-2.5 shadow-sm" 
       : "max-w-[75%] rounded-2xl rounded-bl-md bg-white text-gray-800 px-4 py-2.5 shadow-sm border border-gray-200";
     
-    // Preserve line breaks and format text
+    // Preserve line breaks and format text with proper overflow handling
     bubble.style.whiteSpace = 'pre-wrap';
     bubble.style.wordBreak = 'break-word';
+    bubble.style.overflowWrap = 'break-word';
     bubble.textContent = content;
     
     wrap.appendChild(bubble); 
