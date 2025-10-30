@@ -45,10 +45,10 @@
     backdrop.addEventListener('click', closePanel);
 
     panel = document.createElement('div');
-    panel.className = "absolute bottom-0 sm:bottom-6 right-0 sm:right-6 w-full sm:w-[420px] sm:max-w-[95vw] h-[100dvh] sm:h-auto bg-white sm:rounded-2xl shadow-2xl ring-1 ring-black/5 flex flex-col overflow-hidden";
+    panel.className = "absolute bottom-0 sm:bottom-6 right-0 sm:right-6 w-full sm:w-[420px] sm:max-w-[95vw] h-[100dvh] sm:h-auto sm:max-h-[90vh] bg-white sm:rounded-2xl shadow-2xl ring-1 ring-black/5 flex flex-col overflow-hidden";
     panel.innerHTML = `
       <!-- Header with Avatar -->
-      <div class="flex items-center gap-3 px-4 pt-4 pb-3 bg-gradient-to-r from-admiral-navy to-blue-900 text-white">
+      <div class="flex items-center gap-3 px-4 pt-4 pb-3 bg-gradient-to-r from-admiral-navy to-blue-900 text-white flex-shrink-0">
         <div id="admiralAvatar" class="w-12 h-12 rounded-full bg-admiral-gold flex items-center justify-center text-2xl font-bold text-admiral-navy flex-shrink-0">
           ⚓
         </div>
@@ -60,13 +60,13 @@
       </div>
       
       <!-- Chat Messages -->
-      <div id="admiralLog" class="flex-1 px-4 py-4 h-[60vh] sm:h-[420px] overflow-y-auto overflow-x-hidden space-y-3 bg-gray-50 scroll-smooth"></div>
+      <div id="admiralLog" class="flex-1 min-h-0 px-4 py-4 overflow-y-auto overflow-x-hidden space-y-3 bg-gray-50 scroll-smooth"></div>
       
       <!-- Suggested Prompts -->
-      <div id="admiralSuggestions" class="px-4 py-2 flex flex-wrap gap-2 bg-white border-t border-gray-100"></div>
+      <div id="admiralSuggestions" class="px-4 py-2 flex flex-wrap gap-2 bg-white border-t border-gray-100 flex-shrink-0"></div>
       
       <!-- Input Area -->
-      <div class="p-3 bg-white border-t border-gray-200">
+      <div class="p-3 bg-white border-t border-gray-200 flex-shrink-0">
         <form id="admiralForm" class="flex items-end gap-2">
           <div class="flex-1 relative">
             <textarea 
@@ -284,6 +284,8 @@
         inputEl.value = prompt;
         container.innerHTML = ''; // Clear suggestions after click
         inputEl.focus();
+        // Trigger input event to enable send button
+        inputEl.dispatchEvent(new Event('input', { bubbles: true }));
       });
       container.appendChild(btn);
     });
