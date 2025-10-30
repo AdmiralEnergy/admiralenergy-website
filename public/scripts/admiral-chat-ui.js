@@ -88,7 +88,7 @@
     appendMessage('user', text);
     inputEl.value = "";
     scrollLog();
-    pushEvent('admiral_chat_message_sent', { page: 'home' });
+    pushEvent('chat_message_sent', { page: window.location.pathname });
 
     const reply = await askTheAdmiral(text);
     appendMessage('assistant', reply || "…");
@@ -129,7 +129,7 @@
     } catch (e) { console.error(e); return "Network issue—try again."; }
   }
 
-  function openPanel(source){ pushEvent('admiral_chat_opened', { source: source||'unknown', page:'home' }); overlay && overlay.classList.remove('hidden'); setTimeout(scrollLog, 50); inputEl && inputEl.focus(); }
+  function openPanel(source){ pushEvent('chat_opened', { source: source||'unknown', page: window.location.pathname }); overlay && overlay.classList.remove('hidden'); setTimeout(scrollLog, 50); inputEl && inputEl.focus(); }
   function closePanel(){ overlay && overlay.classList.add('hidden'); }
 
   function enhanceInlinePlaceholder() {

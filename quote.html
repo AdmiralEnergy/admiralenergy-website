@@ -520,6 +520,15 @@
                         otpInputContainer.classList.add('hidden');
                         otpVerified.classList.remove('hidden');
                         otpStatus.textContent = '';
+                        
+                        // Track successful phone verification
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                            event: 'phone_verified',
+                            page_url: window.location.href,
+                            verification_method: 'twilio_otp'
+                        });
+                        console.log('✅ phone_verified event pushed to dataLayer');
                     } else {
                         otpStatus.textContent = 'Invalid code. Try again or submit without verification.';
                         otpStatus.className = 'text-sm mt-2 text-red-600';
