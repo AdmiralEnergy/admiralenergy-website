@@ -79,7 +79,7 @@
                 </div>
                 
                 <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-white hover:text-admiral-gold">
+                    <button id="mobile-menu-button" class="text-white hover:text-admiral-gold" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-menu">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
@@ -201,40 +201,46 @@
     <!-- Mobile Menu Toggle Script -->
     <script>
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
             mobileMenu.classList.toggle('hidden');
         });
-    </script>
-
-    <script>
-    // Keep existing admiral_thankyou_view event
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      event: 'admiral_thankyou_view',
-      path: location.pathname + location.search,
-      timestamp: Date.now()
-    });
     </script>
 
     <script>
       // Helper: read URL parameters safely
       function qp(n){return new URLSearchParams(location.search).get(n)||''}
 
-      // Avoid duplicate pushes if this script is ever included twice
+      // Initialize dataLayer BEFORE GTM loads
+      window.dataLayer = window.dataLayer || [];
+
+      // Push the generate_lead event immediately for GTM to catch
       (function(){
         if (window.__aeLeadPushed) return;
         window.__aeLeadPushed = true;
 
         const evId = 'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2);
-        window.dataLayer = window.dataLayer || [];
-        dataLayer.push({ ecommerce: null }); // clear any prior ecommerce object
+        
+        // Clear any prior ecommerce object
+        dataLayer.push({ ecommerce: null });
 
+        // Push the generate_lead event for both GA4 and Reddit
         dataLayer.push({
-          event: "generate_lead",                 // Custom conversion event for Reddit/GTM
+          event: "generate_lead",
           // Optional user matching (leave blank if not collecting here; Reddit hashes if provided)
           user_data: {
             email_address: "",
             phone_number: ""
+          },
+          // Enhanced conversion data for GA4
+          conversion_data: {
+            value: 0,
+            currency: "USD",
+            transaction_id: evId,
+            // Additional context
+            method: qp('phone_verified') === '1' ? 'phone_verified' : 'standard'
           },
           // Reddit template expects an ecommerce-like object; we model a lead as a $0 item
           ecommerce: {
@@ -257,7 +263,27 @@
             utm_medium: qp('utm_medium'),
             utm_campaign: qp('utm_campaign'),
             utm_term: qp('utm_term'),
-            utm_content: qp('utm_content')
+            utm_content: qp('utm_content'),
+            referrer: document.referrer || 'direct',
+            landing_page: sessionStorage.getItem('ae_landing_page') || location.pathname
+          }
+        });
+
+        // Also push a thank you page view event
+        dataLayer.push({
+          event: 'admiral_thankyou_view',
+          path: location.pathname + location.search,
+          timestamp: Date.now()
+        });
+
+        // Debug logging (remove in production if desired)
+        console.log('✅ generate_lead event pushed to dataLayer', {
+          event_id: evId,
+          url: location.href,
+          utm_params: {
+            source: qp('utm_source'),
+            medium: qp('utm_medium'),
+            campaign: qp('utm_campaign')
           }
         });
       })();
