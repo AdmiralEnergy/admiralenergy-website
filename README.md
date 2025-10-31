@@ -17,7 +17,7 @@ A static website with Netlify serverless functions, featuring an AI-powered chat
 **Version:** 2.1.0  
 **Status:** ✅ Production Ready  
 **Deploy Status:** ⏸️ Auto-deploy PAUSED (manual trigger required) | Last verified: *Pending deployment of commit `439590c`*  
-**Current Live:** Commit `0d27b4c` (Oct 22, 2025)
+**Current Live:** Commit `0d27b4c` (Oct 22, 2025) | Deploy ID: *[Will be added after next manual deploy]*
 
 ---
 
@@ -191,6 +191,7 @@ admiralenergy-website/
 - **HTTPS enforced** - Automatic SSL via Netlify
 - **Security headers** - XSS protection, frame denial
 - **API key protection** - All keys in Netlify environment variables, never exposed in client JS
+- **API safeguards** - Netlify Functions enforce CORS allowlist and simple rate limiting
 
 ### 5. **Mobile-First Design**
 - **Responsive chat** - Full-screen on mobile, card on desktop (max 90vh)
@@ -666,6 +667,12 @@ Private repository - © 2025 Admiral Energy. All rights reserved.
 - **Mobile Issues**: Reference [MOBILE-OPTIMIZATION-SUMMARY.md](docs/MOBILE-OPTIMIZATION-SUMMARY.md)
 - **General Help**: Contact Admiral Energy development team
 
+### Legal & Compliance
+
+- **Privacy Policy**: `/privacy.html` (TODO: Create page with PII handling + SMS/TCPA language)
+- **Terms of Service**: `/terms.html` (TODO: Create page with service terms)
+- **Note**: SMS opt-in and TCPA compliance language currently in `quote.html` form
+
 ---
 
 **Last Updated**: October 30, 2025  
@@ -673,3 +680,11 @@ Private repository - © 2025 Admiral Energy. All rights reserved.
 **Node Version**: 18  
 **Netlify CLI**: 23.9.5+  
 **Status**: ✅ Production Ready - All features tested and documented
+
+<!--
+A11y PR checklist:
+- Skip link present and focusable
+- One <main id="main"> landmark per page
+- All interactive controls keyboard reachable (Tab/Shift+Tab)
+- Sufficient color contrast maintained (WCAG AA)
+-->
