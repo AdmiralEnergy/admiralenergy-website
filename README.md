@@ -89,17 +89,12 @@ admiralenergy-website/
 public/
 ├── 📄 _headers                        # Asset-specific cache headers (1 year immutable)
 │
-├── 📁 scripts/                        # Client-side JavaScript (2 files)
-│   ├── admiral-chat-ui.js            # Chat widget UI + localStorage persistence
-│   └── admiral-chat.js               # Chat client logic (legacy/fallback)
+├── 📁 scripts/                        # Client-side JavaScript (1 file)
+│   └── admiral-chat-ui.js            # Chat widget UI + localStorage persistence
 │
-├── 📁 images/                         # Site images (6 files, ~110KB total)
+├── 📁 images/                         # Site images (2 files, ~110KB total)
 │   ├── david-edwards.jpg             # About page headshot (96KB)
-│   ├── hero-placeholder.png          # Homepage hero image (13KB)
-│   ├── apple-touch-icon.png          # iOS home screen icon (1KB)
-│   ├── favicon.png                   # Generic favicon (198B)
-│   ├── favicon-16x16.png             # 16px favicon (134B)
-│   └── favicon-32x32.png             # 32px favicon (198B)
+│   └── hero-placeholder.png          # Homepage hero image (13KB)
 │
 ├── 📁 logos/                          # Brand assets (9 files, ~475KB total)
 │   ├── ae-logo-horiz-bg.png          # Horizontal logo with bg (90KB) - PRIMARY
@@ -147,13 +142,13 @@ _archive/                  # Historical backups (doesn't exist currently)
 
 ### Total File Count
 - **HTML Pages**: 8 files
-- **JavaScript**: 5 files (2 client-side, 3 functions)
+- **JavaScript**: 4 files (1 client-side, 3 functions)
 - **CSS**: 1 file
-- **Images**: 6 files (~110KB)
+- **Images**: 2 files (~110KB)
 - **Logos/Icons**: 10 files (~475KB)
 - **Documentation**: 6 markdown files
 - **Config**: 6 files (.gitignore, netlify.toml, package files, node version files)
-- **Total Tracked Files**: ~42 files
+- **Total Tracked Files**: ~37 files (5 removed in cleanup)
 
 ---
 
@@ -338,91 +333,36 @@ VERIFY_SERVICE_SID=VA...
 
 ---
 
-## 🔍 File Redundancy Analysis
+## ✅ Repository Cleanup Completed (November 3, 2025)
 
-### ❌ CONFIRMED: Unused Favicon Files (SAFE TO DELETE)
+### Files Removed (5 total)
 
-**public/images/** contains 4 old favicon files with ZERO HTML references:
-- `favicon.png` (198B) ❌ Not referenced anywhere
-- `favicon-16x16.png` (134B) ❌ Not referenced anywhere
-- `favicon-32x32.png` (198B) ❌ Not referenced anywhere
-- `apple-touch-icon.png` (966B) ❌ Not referenced anywhere
+**Deleted from `public/images/`** (4 orphaned favicon files):
+- ✅ `favicon.png` (198B) - Not referenced in any HTML
+- ✅ `favicon-16x16.png` (134B) - Replaced by `ae-favicon-16.png`
+- ✅ `favicon-32x32.png` (198B) - Replaced by `ae-favicon-32.png`
+- ✅ `apple-touch-icon.png` (966B) - Replaced by `ae-apple-180.png`
 
-**All HTML files use**: `public/logos/ae-*` files instead
+**Deleted from `public/scripts/`** (1 legacy script):
+- ✅ `admiral-chat.js` - Legacy external link launcher, replaced by `admiral-chat-ui.js`
 
-**Action**: **DELETE these 4 files** - they are orphaned and serve no purpose.
+**Code Updates**:
+- ✅ Fixed outdated comment in `index.html` (line 418) - now correctly references `admiral-chat-ui.js`
 
-**Savings**: 1.5KB disk space + cleaner structure
+### Results
+- **Disk space saved**: ~1.5KB
+- **Files reduced**: 42 → 37 tracked files
+- **Cleaner structure**: No orphaned assets or dead code
+- **Improved clarity**: All files have clear purpose and are actively used
 
----
+### Remaining Items for Future Consideration
 
-### ❌ CONFIRMED: Unused Chat Script (SAFE TO DELETE)
+**Documentation Review Needed**:
+- ⚠️ `docs/2025-10-22_AdmiralEnergy_Status.md` - Historical snapshot, consider archiving
+- ⚠️ `docs/2025-10-22_Chatbot_Implementation_Guide.md` - Implementation details, may be redundant with README
+- ⚠️ `docs/2025-10-22_Progress_and_Priorities.md` - Development roadmap, review for current relevance
 
-**public/scripts/admiral-chat.js** (legacy external link launcher):
-- ❌ Not referenced in any HTML file
-- ❌ Not loaded by any script tag
-- ✅ Only `admiral-chat-ui.js` is used (embedded chat widget)
-
-**Action**: **DELETE admiral-chat.js** or move to `docs/` as historical reference.
-
-**Note**: There's a comment in `index.html` line 418 that says "Replaced by admiral-chat.js at runtime" - this is outdated and misleading since the file isn't loaded.
-
----
-
-### ⚠️ REVIEW NEEDED: Dated Documentation Files
-
-**docs/** contains 3 dated files from October 22, 2025:
-- `2025-10-22_AdmiralEnergy_Status.md` (1.8KB) - Project status snapshot
-- `2025-10-22_Chatbot_Implementation_Guide.md` (15KB) - Detailed chat setup guide
-- `2025-10-22_Progress_and_Priorities.md` (11KB) - Development roadmap
-
-**Questions**:
-1. Are these historical artifacts or living documents?
-2. Is the information now covered in this README?
-3. Should they be archived or deleted?
-
-**Recommendation**: 
-- Review content for unique information
-- Merge relevant sections into README.md
-- Move to a `docs/archive/` folder or delete if redundant
-
-**Current docs/** useful files to KEEP:
-- ✅ `ops-checklist.md` - Operational procedures
-- ✅ `checklist-chatbot.md` - Quick reference guide
-- ✅ `GTM-Audit-2025-10-26.md` - Analytics audit (recent, specific)
-
----
-
-### ✅ INTENTIONAL: Duplicate _headers Files
-
-**Root `_headers`** and **`public/_headers`** are BOTH needed:
-- Root: Caches HTML and CSS files
-- Public: Caches images/logos/icons with 1-year immutable strategy
-
-**Action**: No change needed - this is correct Netlify architecture.
-
----
-
-### 📊 Cleanup Summary
-
-**Immediate Deletions (Step 2)**:
-- [ ] Delete `public/images/favicon.png`
-- [ ] Delete `public/images/favicon-16x16.png`
-- [ ] Delete `public/images/favicon-32x32.png`
-- [ ] Delete `public/images/apple-touch-icon.png`
-- [ ] Delete `public/scripts/admiral-chat.js`
-- [ ] Update comment in `index.html` line 418 (outdated reference)
-
-**Review & Decide (Step 2)**:
-- [ ] Review `docs/2025-10-22_*.md` files
-- [ ] Extract unique content or archive
-- [ ] Decide: Keep, Archive, or Delete
-
-**Expected Results**:
-- Cleaner file structure
-- No dead code or orphaned assets
-- Faster CI/CD (fewer files to process)
-- Easier maintenance
+**Recommendation**: Review these 3 dated docs for unique content, then merge into living documentation or move to `docs/archive/`.
 
 ---
 
