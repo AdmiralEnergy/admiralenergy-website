@@ -120,17 +120,6 @@ netlify/
     └── verify-otp.js                 # Twilio Verify OTP checker with CORS
 ```
 
-### Documentation Directory
-```
-docs/                                  # Project documentation (6 files)
-├── ops-checklist.md                  # Operational procedures & deployment
-├── checklist-chatbot.md              # Chat implementation guide
-├── GTM-Audit-2025-10-26.md           # Google Tag Manager audit
-├── 2025-10-22_AdmiralEnergy_Status.md            # Project status snapshot
-├── 2025-10-22_Chatbot_Implementation_Guide.md    # Detailed chat guide
-└── 2025-10-22_Progress_and_Priorities.md         # Development priorities
-```
-
 ### Local Only (Gitignored, Not in Repo)
 ```
 .env                       # Environment variables (OPENAI_API_KEY, TWILIO_*, etc.)
@@ -354,15 +343,7 @@ VERIFY_SERVICE_SID=VA...
 - **Files reduced**: 42 → 37 tracked files
 - **Cleaner structure**: No orphaned assets or dead code
 - **Improved clarity**: All files have clear purpose and are actively used
-
-### Remaining Items for Future Consideration
-
-**Documentation Review Needed**:
-- ⚠️ `docs/2025-10-22_AdmiralEnergy_Status.md` - Historical snapshot, consider archiving
-- ⚠️ `docs/2025-10-22_Chatbot_Implementation_Guide.md` - Implementation details, may be redundant with README
-- ⚠️ `docs/2025-10-22_Progress_and_Priorities.md` - Development roadmap, review for current relevance
-
-**Recommendation**: Review these 3 dated docs for unique content, then merge into living documentation or move to `docs/archive/`.
+- **Streamlined documentation**: All project documentation consolidated in README.md
 
 ---
 
@@ -526,10 +507,8 @@ Private repository - © 2025 Admiral Energy. All rights reserved.
 
 ## 🆘 Support
 
-- **Technical Issues**: Check `docs/ops-checklist.md`
-- **Chat Issues**: See `docs/checklist-chatbot.md`
-- **Analytics**: Review `docs/GTM-Audit-2025-10-26.md`
 - **Questions**: Contact Admiral Energy development team
+- **Documentation**: All project information is consolidated in this README.md
 
 ---
 
