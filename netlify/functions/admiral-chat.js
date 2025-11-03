@@ -1,5 +1,7 @@
 // netlify/functions/admiral-chat.js
 // Admiral chat relay — Netlify Function (no streaming)
+const { searchPolicies, formatContext } = require('./nc-policy-data');
+
 const ALLOWED_ORIGINS = []; // optional: add prod origin(s) for strict CORS
 
 exports.handler = async (event) => {
@@ -13,7 +15,7 @@ exports.handler = async (event) => {
     }
 
     const apiKey = process.env.OPENAI_API_KEY;
-    const systemPrompt =
+    const baseSystemPrompt =
       process.env.ADMIRAL_SYSTEM_PROMPT ||
       "You are The Admiral—NC-focused solar & battery advisor. Use math-first, battery-first guidance; cite dates; avoid prices unless user shares bill/usage. Mention Duke PowerPair realities, interconnection timelines, and when solar doesn't pencil out. Tone: calm, clear, non-pushy.";
 
@@ -26,10 +28,18 @@ exports.handler = async (event) => {
       return { statusCode: 400, headers: corsHeaders(event.headers?.origin), body: JSON.stringify({ error: 'messages[] required' }) };
     }
 
+    // Search for relevant policy data based on latest user message
+    const lastUserMessage = messages.filter(m => m.role === 'user').pop()?.content || '';
+    const policyResults = searchPolicies(lastUserMessage);
+    const policyContext = formatContext(policyResults);
+    
+    // Enhance system prompt with relevant policy data
+    const enhancedSystemPrompt = baseSystemPrompt + policyContext;
+
     const payload = {
       model: "gpt-4o-mini",
       temperature: 0.3,
-      messages: [{ role: "system", content: systemPrompt }, ...messages].slice(-24)
+      messages: [{ role: "system", content: enhancedSystemPrompt }, ...messages].slice(-24)
     };
 
     const res = await fetch("https://api.openai.com/v1/chat/completions", {

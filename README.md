@@ -114,8 +114,9 @@ public/
 ### Netlify Functions Directory
 ```
 netlify/
-└── functions/                         # Serverless functions (3 files)
+└── functions/                         # Serverless functions (4 files)
     ├── admiral-chat.js               # OpenAI GPT-4o-mini proxy with CORS
+    ├── nc-policy-data.js             # NC rate & policy knowledge base (NEW)
     ├── send-otp.js                   # Twilio Verify OTP sender with CORS
     └── verify-otp.js                 # Twilio Verify OTP checker with CORS
 ```
@@ -131,13 +132,13 @@ _archive/                  # Historical backups (doesn't exist currently)
 
 ### Total File Count
 - **HTML Pages**: 8 files
-- **JavaScript**: 4 files (1 client-side, 3 functions)
+- **JavaScript**: 5 files (1 client-side, 4 serverless functions)
 - **CSS**: 1 file
 - **Images**: 2 files (~110KB)
 - **Logos/Icons**: 10 files (~475KB)
-- **Documentation**: 6 markdown files
+- **Documentation**: This README
 - **Config**: 6 files (.gitignore, netlify.toml, package files, node version files)
-- **Total Tracked Files**: ~37 files (5 removed in cleanup)
+- **Total Tracked Files**: 32 files (after cleanup and policy data addition)
 
 ---
 
@@ -146,9 +147,10 @@ _archive/                  # Historical backups (doesn't exist currently)
 ### 1. **Admiral Chat Assistant**
 - **AI-powered** chat widget using OpenAI GPT-4o-mini
 - **North Carolina focused** - Duke Energy, interconnection timelines, local incentives
+- **Dynamic knowledge injection** - Real-time NC rate data and policy information via `nc-policy-data.js`
 - **Math-first guidance** - Battery ROI calculations, avoiding solar overselling
 - **Privacy-conscious** - No chat history stored, anonymous by default
-- **Implementation**: `public/scripts/admiral-chat*.js` + `netlify/functions/admiral-chat.js`
+- **Implementation**: `public/scripts/admiral-chat-ui.js` + `netlify/functions/admiral-chat.js` + `nc-policy-data.js`
 
 ### 2. **OTP-Verified Contact Form**
 - **Twilio Verify API** integration for phone number validation
@@ -254,6 +256,26 @@ exports.handler = async (event, context) => {
 ```
 
 Test locally with `netlify dev` - functions available at `/.netlify/functions/function-name`
+
+### Updating NC Policy Data
+
+The chatbot uses `netlify/functions/nc-policy-data.js` for current NC energy rates and policies.
+
+**To update rates or policies:**
+
+1. Edit `netlify/functions/nc-policy-data.js`
+2. Update the `NC_POLICY_DATA` object with new values
+3. Update `lastUpdated` field with current date
+4. Commit and push - changes deploy automatically
+
+**Current data includes:**
+- Duke Energy residential rates (standard, net metering, time-of-use)
+- Interconnection timeline and fees
+- Federal and utility incentives (ITC, PowerPair)
+- Break-even calculations
+- Policy status and recommendations
+
+The chatbot automatically searches this data based on user questions and injects relevant information into the conversation context.
 
 ---
 
