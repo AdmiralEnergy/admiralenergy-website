@@ -33,6 +33,7 @@ This is a **static site with serverless functions** architecture:
 - **Forms**: Netlify Forms with optional Twilio OTP verification
 - **AI Chat**: OpenAI GPT-4o-mini via serverless proxy
 - **Deployment**: Continuous deployment from GitHub to Netlify
+- **Caching**: Two-tier strategy (HTML: no-cache, Assets: 1-year immutable)
 
 ### Design Philosophy
 
@@ -40,54 +41,119 @@ This is a **static site with serverless functions** architecture:
 - ✅ **Progressive enhancement** - Works without JavaScript for core content
 - ✅ **Math-first messaging** - Honest guidance, not sales pressure
 - ✅ **Battery-first approach** - Solar when it makes financial sense
+- ✅ **Root-absolute paths** - All assets use `/public/` or `/styles.css` for deep path compatibility
+
+### Current Dependencies
+
+**Runtime (package.json)**:
+- `twilio@^5.0.0` - OTP verification via Twilio Verify API
+
+**CDN (no install required)**:
+- Tailwind CSS v3 - Loaded via CDN with custom config
+- Google Tag Manager - Analytics and event tracking
+
+**Dev Tools**:
+- Netlify CLI - Local development and deployment
+- Node.js 18+ - Required for serverless functions
 
 ---
 
-## 📁 Project Structure
+## 📁 Complete Project Structure
 
+### Root Directory
 ```
 admiralenergy-website/
-├── index.html              # Homepage - Core messaging
-├── about.html              # Company story and values
-├── services.html           # Service offerings and process
-├── case-studies.html       # Customer success stories
-├── powerpair.html          # Duke PowerPair program details
-├── quote.html              # Contact form with OTP verification
-├── thank-you.html          # Form submission success page
-├── 404.html                # Custom 404 error page
-├── styles.css              # Global styles (supplementing Tailwind)
-├── _headers                # Root-level HTTP headers (HTML/CSS caching)
-│
-├── public/                 # Static assets served as-is
-│   ├── _headers           # Asset-specific cache headers
-│   ├── icons/             # PWA icons
-│   ├── images/            # Site images and graphics
-│   ├── logos/             # Brand assets and favicons
-│   └── scripts/           # Client-side JavaScript
-│       ├── admiral-chat-ui.js    # Chat widget UI
-│       └── admiral-chat.js       # Chat client logic
-│
-├── netlify/
-│   └── functions/          # Serverless functions
-│       ├── admiral-chat.js       # OpenAI chat proxy
-│       ├── send-otp.js           # Twilio OTP sender
-│       └── verify-otp.js         # Twilio OTP verifier
-│
-├── docs/                   # Project documentation
-│   ├── ops-checklist.md          # Operational procedures
-│   ├── checklist-chatbot.md      # Chat implementation guide
-│   └── GTM-Audit-2025-10-26.md   # Analytics audit
-│
-├── netlify.toml            # Netlify configuration
-├── package.json            # Node.js dependencies
-├── .node-version           # Node.js version lock (v18)
-├── .nvmrc                  # NVM compatibility
-└── .gitignore              # Git exclusions
-
-# Local only (not tracked):
-├── NewFiles/               # Staging area for WIP files
-└── _archive/               # Historical backups
+├── 📄 index.html              # Homepage - Core messaging & hero
+├── 📄 about.html              # Company story, values, David's bio
+├── 📄 services.html           # Service offerings and process timeline
+├── 📄 case-studies.html       # Customer success stories (placeholder)
+├── 📄 powerpair.html          # Duke PowerPair program deep dive
+├── 📄 quote.html              # Contact form with OTP verification
+├── 📄 thank-you.html          # Form submission success page
+├── 📄 404.html                # Custom 404 error page
+├── 📄 styles.css              # Global styles (supplementing Tailwind)
+├── 📄 _headers                # Root-level HTTP headers (HTML/CSS caching)
+├── 📄 netlify.toml            # Netlify config (redirects, headers, functions)
+├── 📄 package.json            # Node.js dependencies (twilio only)
+├── 📄 package-lock.json       # Lock file for dependencies
+├── 📄 .node-version           # Node.js version lock (18)
+├── 📄 .nvmrc                  # NVM compatibility file
+├── 📄 .gitignore              # Git exclusions
+├── 📄 .env                    # Environment variables (local only, gitignored)
+├── 📄 README.md               # This file
+└── 📁 .netlify/               # Netlify local dev cache (gitignored)
 ```
+
+### Public Assets Directory
+```
+public/
+├── 📄 _headers                        # Asset-specific cache headers (1 year immutable)
+│
+├── 📁 scripts/                        # Client-side JavaScript (2 files)
+│   ├── admiral-chat-ui.js            # Chat widget UI + localStorage persistence
+│   └── admiral-chat.js               # Chat client logic (legacy/fallback)
+│
+├── 📁 images/                         # Site images (6 files, ~110KB total)
+│   ├── david-edwards.jpg             # About page headshot (96KB)
+│   ├── hero-placeholder.png          # Homepage hero image (13KB)
+│   ├── apple-touch-icon.png          # iOS home screen icon (1KB)
+│   ├── favicon.png                   # Generic favicon (198B)
+│   ├── favicon-16x16.png             # 16px favicon (134B)
+│   └── favicon-32x32.png             # 32px favicon (198B)
+│
+├── 📁 logos/                          # Brand assets (9 files, ~475KB total)
+│   ├── ae-logo-horiz-bg.png          # Horizontal logo with bg (90KB) - PRIMARY
+│   ├── ae-icon-192.png               # PWA icon 192x192 (30KB)
+│   ├── ae-icon-512.png               # PWA icon 512x512 (125KB)
+│   ├── ae-apple-180.png              # Apple touch icon 180x180 (27KB)
+│   ├── ae-favicon-16.png             # Favicon 16x16 (635B)
+│   ├── ae-favicon-32.png             # Favicon 32x32 (1.7KB)
+│   ├── admiral-energy-share.png      # Social media share image (187KB)
+│   ├── favicon.ico                   # Multi-size ICO (15KB)
+│   └── site.webmanifest              # PWA manifest (295B)
+│
+└── 📁 icons/                          # UI icons (1 file)
+    └── linkedin.svg                  # LinkedIn social icon (SVG)
+```
+
+### Netlify Functions Directory
+```
+netlify/
+└── functions/                         # Serverless functions (3 files)
+    ├── admiral-chat.js               # OpenAI GPT-4o-mini proxy with CORS
+    ├── send-otp.js                   # Twilio Verify OTP sender with CORS
+    └── verify-otp.js                 # Twilio Verify OTP checker with CORS
+```
+
+### Documentation Directory
+```
+docs/                                  # Project documentation (6 files)
+├── ops-checklist.md                  # Operational procedures & deployment
+├── checklist-chatbot.md              # Chat implementation guide
+├── GTM-Audit-2025-10-26.md           # Google Tag Manager audit
+├── 2025-10-22_AdmiralEnergy_Status.md            # Project status snapshot
+├── 2025-10-22_Chatbot_Implementation_Guide.md    # Detailed chat guide
+└── 2025-10-22_Progress_and_Priorities.md         # Development priorities
+```
+
+### Local Only (Gitignored, Not in Repo)
+```
+.env                       # Environment variables (OPENAI_API_KEY, TWILIO_*, etc.)
+.netlify/                  # Netlify CLI cache and local dev state
+node_modules/              # NPM dependencies (if npm install run locally)
+NewFiles/                  # Staging area for WIP files (doesn't exist currently)
+_archive/                  # Historical backups (doesn't exist currently)
+```
+
+### Total File Count
+- **HTML Pages**: 8 files
+- **JavaScript**: 5 files (2 client-side, 3 functions)
+- **CSS**: 1 file
+- **Images**: 6 files (~110KB)
+- **Logos/Icons**: 10 files (~475KB)
+- **Documentation**: 6 markdown files
+- **Config**: 6 files (.gitignore, netlify.toml, package files, node version files)
+- **Total Tracked Files**: ~42 files
 
 ---
 
@@ -272,6 +338,94 @@ VERIFY_SERVICE_SID=VA...
 
 ---
 
+## 🔍 File Redundancy Analysis
+
+### ❌ CONFIRMED: Unused Favicon Files (SAFE TO DELETE)
+
+**public/images/** contains 4 old favicon files with ZERO HTML references:
+- `favicon.png` (198B) ❌ Not referenced anywhere
+- `favicon-16x16.png` (134B) ❌ Not referenced anywhere
+- `favicon-32x32.png` (198B) ❌ Not referenced anywhere
+- `apple-touch-icon.png` (966B) ❌ Not referenced anywhere
+
+**All HTML files use**: `public/logos/ae-*` files instead
+
+**Action**: **DELETE these 4 files** - they are orphaned and serve no purpose.
+
+**Savings**: 1.5KB disk space + cleaner structure
+
+---
+
+### ❌ CONFIRMED: Unused Chat Script (SAFE TO DELETE)
+
+**public/scripts/admiral-chat.js** (legacy external link launcher):
+- ❌ Not referenced in any HTML file
+- ❌ Not loaded by any script tag
+- ✅ Only `admiral-chat-ui.js` is used (embedded chat widget)
+
+**Action**: **DELETE admiral-chat.js** or move to `docs/` as historical reference.
+
+**Note**: There's a comment in `index.html` line 418 that says "Replaced by admiral-chat.js at runtime" - this is outdated and misleading since the file isn't loaded.
+
+---
+
+### ⚠️ REVIEW NEEDED: Dated Documentation Files
+
+**docs/** contains 3 dated files from October 22, 2025:
+- `2025-10-22_AdmiralEnergy_Status.md` (1.8KB) - Project status snapshot
+- `2025-10-22_Chatbot_Implementation_Guide.md` (15KB) - Detailed chat setup guide
+- `2025-10-22_Progress_and_Priorities.md` (11KB) - Development roadmap
+
+**Questions**:
+1. Are these historical artifacts or living documents?
+2. Is the information now covered in this README?
+3. Should they be archived or deleted?
+
+**Recommendation**: 
+- Review content for unique information
+- Merge relevant sections into README.md
+- Move to a `docs/archive/` folder or delete if redundant
+
+**Current docs/** useful files to KEEP:
+- ✅ `ops-checklist.md` - Operational procedures
+- ✅ `checklist-chatbot.md` - Quick reference guide
+- ✅ `GTM-Audit-2025-10-26.md` - Analytics audit (recent, specific)
+
+---
+
+### ✅ INTENTIONAL: Duplicate _headers Files
+
+**Root `_headers`** and **`public/_headers`** are BOTH needed:
+- Root: Caches HTML and CSS files
+- Public: Caches images/logos/icons with 1-year immutable strategy
+
+**Action**: No change needed - this is correct Netlify architecture.
+
+---
+
+### 📊 Cleanup Summary
+
+**Immediate Deletions (Step 2)**:
+- [ ] Delete `public/images/favicon.png`
+- [ ] Delete `public/images/favicon-16x16.png`
+- [ ] Delete `public/images/favicon-32x32.png`
+- [ ] Delete `public/images/apple-touch-icon.png`
+- [ ] Delete `public/scripts/admiral-chat.js`
+- [ ] Update comment in `index.html` line 418 (outdated reference)
+
+**Review & Decide (Step 2)**:
+- [ ] Review `docs/2025-10-22_*.md` files
+- [ ] Extract unique content or archive
+- [ ] Decide: Keep, Archive, or Delete
+
+**Expected Results**:
+- Cleaner file structure
+- No dead code or orphaned assets
+- Faster CI/CD (fewer files to process)
+- Easier maintenance
+
+---
+
 ## ⚠️ Known Issues & Solutions
 
 ### Issue: Twilio Trial Account Limitations
@@ -439,6 +593,7 @@ Private repository - © 2025 Admiral Energy. All rights reserved.
 
 ---
 
-**Last Updated**: October 30, 2025  
+**Last Updated**: November 3, 2025  
 **Node Version**: 18  
-**Netlify CLI**: 23.9.5+
+**Netlify CLI**: 23.9.5+  
+**Repository Analysis**: Complete file inventory and redundancy audit performed
