@@ -16,6 +16,11 @@
     <link rel="manifest" href="/public/logos/site.webmanifest" />
     <meta name="theme-color" content="#0c2f4a" />
 
+    <!-- Resource Hints for Performance -->
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+
     <!-- Social -->
     <meta property="og:image" content="/public/logos/admiral-energy-share.png" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -36,7 +41,7 @@
     </style>
     
     <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
     <script>
         tailwind.config = {
             theme: {
@@ -88,7 +93,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
-                    <img src="/public/logos/ae-logo-horiz-bg.png" alt="Admiral Energy" class="h-8 md:h-9 w-auto rounded-lg p-0.5 shadow-sm ring-1 ring-black/5">
+                    <img src="/public/logos/ae-logo-horiz-bg.png" alt="Admiral Energy" width="200" height="50" class="h-8 md:h-9 w-auto rounded-lg p-0.5 shadow-sm ring-1 ring-black/5">
                     <span class="ml-3 text-xl font-bold">Admiral Energy</span>
                 </div>
                 
@@ -283,7 +288,7 @@
             <div class="grid md:grid-cols-4 gap-8">
                 <div class="md:col-span-2">
                     <div class="flex items-center mb-4">
-                        <img src="/public/logos/ae-logo-horiz-bg.png" alt="Admiral Energy" class="h-7 w-auto rounded-md p-0.5 shadow-sm ring-1 ring-black/5">
+                        <img src="/public/logos/ae-logo-horiz-bg.png" alt="Admiral Energy" width="200" height="50" loading="lazy" class="h-7 w-auto rounded-md p-0.5 shadow-sm ring-1 ring-black/5">
                         <span class="ml-3 text-xl font-bold">Admiral Energy</span>
                     </div>
                     <p class="text-gray-300 mb-4">Backup Power System Experts for North Carolina. Battery first, solar when it makes sense.</p>
@@ -351,30 +356,6 @@
                 }
             });
         })();
-
-        // Exit Intent Tracking
-        let exitIntentFired = false;
-        let pageLoadTime = Date.now();
-        
-        document.addEventListener('mouseleave', function(e) {
-            // Only fire if mouse leaves from top of page (indicating tab switch or close)
-            if (e.clientY <= 0 && !exitIntentFired) {
-                exitIntentFired = true;
-                const timeOnPage = Math.round((Date.now() - pageLoadTime) / 1000); // seconds
-                
-                window.dataLayer = window.dataLayer || [];
-                window.dataLayer.push({
-                    event: 'exit_intent',
-                    page_url: window.location.href,
-                    time_on_page: timeOnPage,
-                    page_title: document.title
-                });
-                console.log('✅ exit_intent event pushed to dataLayer', {
-                    page_url: window.location.href,
-                    time_on_page: timeOnPage
-                });
-            }
-        });
 
         // Form Submission Event
         const form = document.getElementById('admiral-contact-form');
@@ -544,5 +525,8 @@
             });
         })();
     </script>
+    
+    <!-- Shared Utilities (includes exit intent tracking) -->
+    <script defer src="/public/scripts/shared-utils.js"></script>
 </body>
 </html>

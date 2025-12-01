@@ -8,12 +8,12 @@ const KNOWLEDGE_BASE = {
 - Upfront Incentive: $9,000 total ($3,600 solar credit at $0.36/watt up to 10kW + $5,400 battery at $400/kWh up to 13.5kWh)
 - Battery Control Program: Additional $552/year for 10 years ($46/month credit) for letting Duke dispatch battery during 30-36 peak events annually
 - Total 10-year value: $9,000 upfront + $5,520 Battery Control = $14,520 in Duke incentives
-- Plus 30% Federal ITC on full system cost
+- Additional incentives may apply based on system configuration
 - Capacity: 13.5 kWh usable (Tesla Powerwall 2 or equivalent)
 - Power: 5kW continuous, 7kW peak
 - Availability: First-come first-served, capacity limited
 - Eligibility: New solar+storage systems in Duke NC territory
-- Battery must charge 75%+ from solar to qualify for federal ITC`
+- Battery must charge 75%+ from solar for optimal system performance`
   },
   
   solar_roi: {
@@ -23,7 +23,7 @@ const KNOWLEDGE_BASE = {
 - Solar Choice (Time of Use): 15+ year payback without battery, requires TOU rate management
 - Legacy Net Metering (grandfathered until Oct 1, 2027): Best economics - 85-88% bill reduction at retail rate
 - Duke Energy Carolinas Rates: ~14¢/kWh retail, $22/month minimum
-- Federal ITC: 30% through 2032, then 26% (2033), 22% (2034)
+- Additional incentives may be available based on system configuration and timing
 - Property Tax Exemption: Solar adds ~$15,000 home value but exempt from property tax assessment
 - System Sizing: 10-12kW typical for average homes on Bridge Rate; 12-15kW for Solar Choice with battery
 - Payback increased post-2023: Installations fell 15% due to reduced economics vs old net metering`
@@ -110,7 +110,7 @@ Backup Power Coverage (13.5kWh):
 
 Alternative: Consider PowerPair battery backup WITHOUT solar:
 - Provides outage protection
-- Qualifies for 30% tax credit
+- May qualify for additional incentives
 - No roof/shade concerns
 - Can add solar later if situation changes`
   },

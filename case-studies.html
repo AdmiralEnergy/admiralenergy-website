@@ -21,13 +21,18 @@
     <link rel="manifest" href="/public/logos/site.webmanifest" />
     <meta name="theme-color" content="#0c2f4a" />
 
+    <!-- Resource Hints for Performance -->
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+
     <!-- Social -->
     <meta property="og:image" content="/public/logos/admiral-energy-share.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="/public/logos/admiral-energy-share.png" />
     
     <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
     <script>
         tailwind.config = {
             theme: {
@@ -64,7 +69,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
-                    <img src="/public/logos/ae-logo-horiz-bg.png" alt="Admiral Energy" class="h-8 md:h-9 w-auto rounded-lg p-0.5 shadow-sm ring-1 ring-black/5">
+                    <img src="/public/logos/ae-logo-horiz-bg.png" alt="Admiral Energy" width="200" height="50" class="h-8 md:h-9 w-auto rounded-lg p-0.5 shadow-sm ring-1 ring-black/5">
                     <span class="ml-3 text-xl font-bold">Admiral Energy</span>
                 </div>
                 
@@ -135,10 +140,6 @@
                                     <span>PowerPair Incentive:</span>
                                     <span>-$9,000</span>
                                 </div>
-                                <div class="flex justify-between text-green-600">
-                                    <span>Federal 30% ITC:</span>
-                                    <span>-$2,700</span>
-                                </div>
                                 <div class="border-t pt-2 flex justify-between font-semibold">
                                     <span>Net Investment:</span>
                                     <span>$6,300</span>
@@ -188,7 +189,7 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Case Study 2 -->
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <img src="/public/images/case-study-2-placeholder.jpg" alt="Enphase Battery Installation" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <img src="/public/images/case-study-2-placeholder.jpg" alt="Enphase Battery Installation" width="400" height="192" loading="lazy" class="w-full h-48 object-cover rounded-lg mb-4">
                     <h3 class="text-lg font-semibold text-admiral-navy mb-2">The Patel Family - Charlotte</h3>
                     <p class="text-gray-600 mb-4">Enphase IQ 5P battery system provides 2+ days backup for their home office and medical equipment.</p>
                     
@@ -209,7 +210,7 @@
                 
                 <!-- Case Study 3 -->
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <img src="/public/images/case-study-3-placeholder.jpg" alt="Solar + Battery Installation" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <img src="/public/images/case-study-3-placeholder.jpg" alt="Solar + Battery Installation" width="400" height="192" loading="lazy" class="w-full h-48 object-cover rounded-lg mb-4">
                     <h3 class="text-lg font-semibold text-admiral-navy mb-2">The Williams - Raleigh</h3>
                     <p class="text-gray-600 mb-4">Solar + battery system eliminates $220/month electric bills and provides 5+ days backup power.</p>
                     
@@ -230,7 +231,7 @@
                 
                 <!-- Case Study 4 -->
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <img src="/public/images/case-study-4-placeholder.jpg" alt="Whole Home Battery Backup" class="w-full h-48 object-cover rounded-lg mb-4">
+                    <img src="/public/images/case-study-4-placeholder.jpg" alt="Whole Home Battery Backup" width="400" height="192" loading="lazy" class="w-full h-48 object-cover rounded-lg mb-4">
                     <h3 class="text-lg font-semibold text-admiral-navy mb-2">The Chen Family - Asheville</h3>
                     <p class="text-gray-600 mb-4">Whole-home battery backup system powers everything including EV charging during outages.</p>
                     
@@ -362,7 +363,7 @@
             <div class="grid md:grid-cols-4 gap-8">
                 <div class="md:col-span-2">
                     <div class="flex items-center mb-4">
-                        <img src="/public/logos/ae-logo-horiz-bg.png" alt="Admiral Energy" class="h-7 w-auto rounded-md p-0.5 shadow-sm ring-1 ring-black/5">
+                        <img src="/public/logos/ae-logo-horiz-bg.png" alt="Admiral Energy" width="200" height="50" loading="lazy" class="h-7 w-auto rounded-md p-0.5 shadow-sm ring-1 ring-black/5">
                         <span class="ml-3 text-xl font-bold">Admiral Energy</span>
                     </div>
                     <p class="text-gray-300 mb-4">Backup Power System Experts for North Carolina. Battery first, solar when it makes sense.</p>
@@ -395,23 +396,13 @@
         </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script>
-        // Mobile menu toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileMenuButton.addEventListener('click', () => {
-            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
-            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
-            mobileMenu.classList.toggle('hidden');
-        });
-    </script>
+    <!-- Shared Utilities -->
+    <script defer src="/public/scripts/shared-utils.js"></script>
 </body>
 </html>text-lg text-gray-700 mb-4">When Hurricane Helene knocked out power for 3 days, their Tesla Powerwall kept everything running while neighbors went without electricity.</p>
                         
                         <div class="flex items-center mb-4">
-                            <img src="/public/images/customer-photo-placeholder.jpg" alt="Johnson Family" class="w-16 h-16 rounded-full object-cover mr-4">
+                            <img src="/public/images/customer-photo-placeholder.jpg" alt="Johnson Family" width="64" height="64" loading="lazy" class="w-16 h-16 rounded-full object-cover mr-4">
                             <div>
                                 <h3 class="font-semibold text-admiral-navy">Mike & Sarah Johnson</h3>
                                 <p class="text-gray-600">Homeowners since 2019</p>
@@ -420,7 +411,7 @@
                     </div>
                     
                     <div>
-                        <img src="/public/images/powerwall-installation-placeholder.jpg" alt="Tesla Powerwall Installation" class="w-full rounded-lg shadow-md">
+                        <img src="/public/images/powerwall-installation-placeholder.jpg" alt="Tesla Powerwall Installation" width="800" height="600" loading="lazy" class="w-full rounded-lg shadow-md">
                     </div>
                 </div>
                 

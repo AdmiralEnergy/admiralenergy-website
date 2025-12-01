@@ -21,13 +21,18 @@
     <link rel="manifest" href="/public/logos/site.webmanifest" />
     <meta name="theme-color" content="#0c2f4a" />
 
+    <!-- Resource Hints for Performance -->
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+
     <!-- Social -->
     <meta property="og:image" content="/public/logos/admiral-energy-share.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="/public/logos/admiral-energy-share.png" />
     
     <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
     <script>
         tailwind.config = {
             theme: {
@@ -64,7 +69,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
-                    <img src="/public/logos/ae-logo-horiz-bg.png" alt="Admiral Energy" class="h-8 md:h-9 w-auto rounded-lg p-0.5 shadow-sm ring-1 ring-black/5">
+                    <img src="/public/logos/ae-logo-horiz-bg.png" alt="Admiral Energy" width="200" height="50" class="h-8 md:h-9 w-auto rounded-lg p-0.5 shadow-sm ring-1 ring-black/5">
                     <span class="ml-3 text-xl font-bold">Admiral Energy</span>
                 </div>
                 
@@ -107,7 +112,7 @@
             <h1 class="text-4xl md:text-5xl font-bold mb-4">Duke PowerPair Program</h1>
             <p class="text-xl text-blue-100 mb-6">Complete guide to the $9,000 battery incentive</p>
             <div class="bg-admiral-gold text-admiral-navy px-6 py-3 rounded-lg inline-block">
-                <p class="font-semibold">As of October 2025 • Program continues after federal ITC expires</p>
+                <p class="font-semibold">As of October 2025 • Ongoing program availability</p>
             </div>
         </div>
     </section>
@@ -587,10 +592,6 @@
                             <span>PowerPair Incentive:</span>
                             <span class="font-semibold text-green-600">-$9,000</span>
                         </div>
-                        <div class="flex justify-between border-b pb-2">
-                            <span>Federal 30% ITC:</span>
-                            <span class="font-semibold text-green-600">-$2,700</span>
-                        </div>
                         <div class="flex justify-between text-lg font-bold">
                             <span>Net Cost:</span>
                             <span class="text-admiral-navy">$6,300</span>
@@ -615,13 +616,9 @@
                             <span>PowerPair Incentive:</span>
                             <span class="font-semibold text-green-600">-$9,000</span>
                         </div>
-                        <div class="flex justify-between border-b pb-2">
-                            <span>Federal 30% ITC:</span>
-                            <span class="font-semibold text-green-600">-$4,500</span>
-                        </div>
                         <div class="flex justify-between text-lg font-bold">
                             <span>Net Cost:</span>
-                            <span class="text-admiral-navy">$10,500</span>
+                            <span class="text-admiral-navy">$15,000</span>
                         </div>
                     </div>
                     
@@ -656,7 +653,7 @@
                         </li>
                         <li class="flex items-start">
                             <span class="text-green-600 text-lg mr-3">+</span>
-                            <span><strong>Program continues</strong> after federal ITC expires</span>
+                            <span><strong>Program continues</strong> with ongoing availability</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-green-600 text-lg mr-3">+</span>
@@ -751,7 +748,7 @@
             <div class="grid md:grid-cols-4 gap-8">
                 <div class="md:col-span-2">
                     <div class="flex items-center mb-4">
-                        <img src="/public/logos/ae-logo-horiz-bg.png" alt="Admiral Energy" class="h-7 w-auto rounded-md p-0.5 shadow-sm ring-1 ring-black/5">
+                        <img src="/public/logos/ae-logo-horiz-bg.png" alt="Admiral Energy" width="200" height="50" loading="lazy" class="h-7 w-auto rounded-md p-0.5 shadow-sm ring-1 ring-black/5">
                         <span class="ml-3 text-xl font-bold">Admiral Energy</span>
                     </div>
                     <p class="text-gray-300 mb-4">Backup Power System Experts for North Carolina. Battery first, solar when it makes sense.</p>
@@ -784,18 +781,8 @@
         </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script>
-        // Mobile menu toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileMenuButton.addEventListener('click', () => {
-            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
-            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
-            mobileMenu.classList.toggle('hidden');
-        });
-    </script>
+    <!-- Shared Utilities -->
+    <script defer src="/public/scripts/shared-utils.js"></script>
 </body>
 </html>
 
