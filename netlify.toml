@@ -96,6 +96,12 @@
     # Cache JS for 1 year
     Cache-Control = "public, max-age=31536000, immutable"
 
+[[headers]]
+  for = "*.html"
+  [headers.values]
+    # Don't cache HTML - always serve fresh content
+    Cache-Control = "public, max-age=0, must-revalidate"
+
 # Form handling
 [build.processing]
   skip_processing = false
