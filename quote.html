@@ -81,6 +81,7 @@
         <input type="text" name="Location" />
         <textarea name="Message"></textarea>
         <input type="hidden" name="phone_verified" />
+        <input type="hidden" name="sms_consent" />
         <input type="hidden" name="utm_source" />
         <input type="hidden" name="utm_medium" />
         <input type="hidden" name="utm_campaign" />
@@ -275,8 +276,28 @@
                     </button>
                 </div>
                 
+                <!-- SMS Consent Checkbox (TCPA Compliant) -->
+                <div class="mt-6 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <div class="flex items-start space-x-3">
+                        <input
+                            type="checkbox"
+                            id="sms-consent"
+                            name="sms_consent"
+                            value="yes"
+                            class="mt-1 h-4 w-4 text-admiral-gold border-gray-300 rounded focus:ring-admiral-gold">
+                        <label for="sms-consent" class="text-sm text-gray-700">
+                            <strong>Yes, I agree to receive SMS/text messages</strong> from Admiral Energy regarding my quote request, appointment reminders, and follow-ups. Message frequency varies (up to 5/month). Message and data rates may apply. Reply STOP to cancel, HELP for help.
+                            <span class="block mt-1 text-xs text-gray-500">
+                                Consent is not required to receive services. View our
+                                <a href="/privacy.html" class="text-admiral-gold hover:underline">Privacy Policy</a> and
+                                <a href="/terms.html" class="text-admiral-gold hover:underline">Terms & Conditions</a>.
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
                 <p class="ae-help text-center mt-4">
-                    By submitting, you agree to receive email communication from Admiral Energy. We never share your information.
+                    By submitting, you agree to receive email communication from Admiral Energy. We never share your information. View our <a href="/privacy.html" class="text-admiral-gold hover:underline">Privacy Policy</a> and <a href="/terms.html" class="text-admiral-gold hover:underline">Terms</a>.
                 </p>
             </form>
         </div>
@@ -311,6 +332,11 @@
                         <li>Kings Mountain, NC</li>
                         <li><a href="mailto:david@admiralenergy.ai" class="hover:text-admiral-gold transition-colors">david@admiralenergy.ai</a></li>
                         <li><a href="/quote.html" class="hover:text-admiral-gold transition-colors">Book Consultation</a></li>
+                    </ul>
+                    <h3 class="font-semibold mb-4 mt-6">Legal</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="/privacy.html" class="hover:text-admiral-gold transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms.html" class="hover:text-admiral-gold transition-colors">Terms & Conditions</a></li>
                     </ul>
                 </div>
             </div>
