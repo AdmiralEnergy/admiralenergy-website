@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admiral Energy | Grid Engine Command Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'grid-dark': '#0f172a',
+                        'grid-darker': '#020617',
+                        'grid-card': 'rgba(30, 41, 59, 0.6)',
+                        'grid-green': '#22c55e',
+                        'grid-amber': '#f59e0b',
+                        'grid-red': '#ef4444',
+                        'grid-blue': '#3b82f6',
+                        'grid-purple': '#a855f7',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'flow': 'flow 2s ease-in-out infinite',
+                        'scan': 'scan 3s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(180deg, #020617 0%, #0f172a 50%, #020617 100%);
+            min-height: 100vh;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor; }
+            to { box-shadow: 0 0 15px currentColor, 0 0 30px currentColor, 0 0 45px currentColor; }
+        }
+        
+        @keyframes flow {
+            0%, 100% { opacity: 0.3; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(10px); }
+        }
+        
+        @keyframes scan {
+            0% { transform: translateY(-100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(100%); opacity: 0; }
+        }
+        
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+        
+        @keyframes data-flow {
+            0% { stroke-dashoffset: 100; }
+            100% { stroke-dashoffset: 0; }
+        }
+        
+        .glass-card {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .glass-card-hover:hover {
+            background: rgba(30, 41, 59, 0.6);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .glow-green { text-shadow: 0 0 10px #22c55e, 0 0 20px #22c55e; }
+        .glow-amber { text-shadow: 0 0 10px #f59e0b, 0 0 20px #f59e0b; }
+        .glow-red { text-shadow: 0 0 10px #ef4444, 0 0 20px #ef4444; }
+        
+        .connector-line {
+            background: linear-gradient(180deg, transparent, #22c55e, transparent);
+            animation: flow 2s ease-in-out infinite;
+        }
+        
+        .status-pulse::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            animation: pulse-ring 1.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+        }
+        
+        .timeline-connector {
+            background: linear-gradient(180deg, 
+                transparent 0%,
+                rgba(34, 197, 94, 0.3) 10%,
+                rgba(34, 197, 94, 0.5) 50%,
+                rgba(34, 197, 94, 0.3) 90%,
+                transparent 100%
+            );
+        }
+        
+        .node-active {
+            box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3), 0 0 20px rgba(34, 197, 94, 0.2);
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="text-white antialiased">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // Grid Status Widget Component
+        const GridStatusWidget = () => {
+            const [status, setStatus] = useState('operational');
+            const [pulseCount, setPulseCount] = useState(0);
+            
+            const statuses = {
+                operational: { color: 'bg-grid-green', label: 'OPERATIONAL', glow: 'shadow-green-500/50' },
+                warning: { color: 'bg-grid-amber', label: 'ELEVATED', glow: 'shadow-amber-500/50' },
+                critical: { color: 'bg-grid-red', label: 'OUTAGE DETECTED', glow: 'shadow-red-500/50' },
+                offline: { color: 'bg-gray-800', label: 'OFFLINE', glow: 'shadow-gray-500/50' }
+            };
+            
+            useEffect(() => {
+                const interval = setInterval(() => {
+                    setPulseCount(p => p + 1);
+                    // Randomly change status for demo
+                    const rand = Math.random();
+                    if (rand > 0.95) setStatus('critical');
+                    else if (rand > 0.85) setStatus('warning');
+                    else setStatus('operational');
+                }, 2000);
+                return () => clearInterval(interval);
+            }, []);
+            
+            const currentStatus = statuses[status];
+            
+            return (
+                <div className="fixed top-6 right-6 z-50">
+                    <div className="glass-card rounded-xl p-4 min-w-[200px]">
+                        <div className="flex items-center gap-3 mb-3">
+                            <div className="relative">
+                                <div className={`w-3 h-3 rounded-full ${currentStatus.color} ${currentStatus.glow} shadow-lg`}>
+                                    <div className={`absolute inset-0 rounded-full ${currentStatus.color} animate-ping opacity-75`}></div>
+                                </div>
+                            </div>
+                            <span className="text-xs font-semibold tracking-wider text-gray-400">GRID STATUS</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <span className={`text-sm font-bold ${status === 'operational' ? 'text-grid-green' : status === 'warning' ? 'text-grid-amber' : status === 'critical' ? 'text-grid-red' : 'text-gray-500'}`}>
+                                {currentStatus.label}
+                            </span>
+                            <span className="text-xs text-gray-500 font-mono">{pulseCount} scans</span>
+                        </div>
+                        <div className="mt-3 h-1 bg-gray-800 rounded-full overflow-hidden">
+                            <div 
+                                className={`h-full ${currentStatus.color} transition-all duration-1000`}
+                                style={{ width: `${(pulseCount % 10) * 10 + 10}%` }}
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // Flow Arrow Component
+        const FlowArrow = ({ className = '' }) => (
+            <div className={`flex justify-center ${className}`}>
+                <div className="w-0.5 h-12 connector-line relative">
+                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2">
+                        <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                            <path d="M6 8L0 0H12L6 8Z" fill="#22c55e" fillOpacity="0.6"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        );
+
+        // Data Source Node
+        const DataSourceNode = ({ icon, label, sublabel, color = 'green' }) => {
+            const [isHovered, setIsHovered] = useState(false);
+            const colors = {
+                green: 'border-grid-green/30 hover:border-grid-green/60',
+                purple: 'border-grid-purple/30 hover:border-grid-purple/60',
+                blue: 'border-grid-blue/30 hover:border-grid-blue/60',
+            };
+            
+            return (
+                <div 
+                    className={`glass-card glass-card-hover rounded-xl p-4 cursor-pointer transition-all duration-300 border ${colors[color]}`}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                >
+                    <div className="flex items-center gap-3">
+                        <div className={`text-2xl ${isHovered ? 'scale-110' : ''} transition-transform duration-300`}>
+                            {icon}
+                        </div>
+                        <div>
+                            <div className="font-semibold text-white">{label}</div>
+                            <div className="text-xs text-gray-400">{sublabel}</div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // Central Node Component
+        const CentralNode = ({ icon, title, subtitle, isActive = false }) => (
+            <div className={`glass-card rounded-2xl p-6 text-center transition-all duration-500 ${isActive ? 'node-active' : ''}`}>
+                <div className="relative inline-block mb-4">
+                    <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-grid-green/20 to-grid-blue/20 flex items-center justify-center text-4xl border border-grid-green/20">
+                        {icon}
+                    </div>
+                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-grid-green rounded-full animate-pulse"></div>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-1">{title}</h3>
+                <p className="text-sm text-gray-400">{subtitle}</p>
+            </div>
+        );
+
+        // Enrollment Split Component
+        const EnrollmentSplit = () => {
+            const [hoveredSide, setHoveredSide] = useState(null);
+            
+            return (
+                <div className="relative">
+                    <div className="glass-card rounded-2xl p-6 mb-6">
+                        <div className="text-center mb-6">
+                            <div className="inline-flex items-center gap-2 bg-grid-green/10 border border-grid-green/20 rounded-full px-4 py-2 mb-3">
+                                <span className="text-xl">📥</span>
+                                <span className="text-grid-green font-semibold">ENROLLMENT EVENT</span>
+                            </div>
+                            <p className="text-gray-400 text-sm">Lead captured via NC Grid Scanner</p>
+                        </div>
+                        
+                        <div className="grid grid-cols-2 gap-4">
+                            {/* Email Path */}
+                            <div 
+                                className={`glass-card rounded-xl p-4 cursor-pointer transition-all duration-300 border ${hoveredSide === 'email' ? 'border-grid-amber/50 bg-grid-amber/5' : 'border-transparent'}`}
+                                onMouseEnter={() => setHoveredSide('email')}
+                                onMouseLeave={() => setHoveredSide(null)}
+                            >
+                                <div className="text-center">
+                                    <div className="w-12 h-12 rounded-xl bg-grid-amber/10 border border-grid-amber/20 flex items-center justify-center text-2xl mx-auto mb-3">
+                                        📧
+                                    </div>
+                                    <div className="font-semibold text-white mb-1">Email Enrolled</div>
+                                    <div className="text-xs text-grid-amber font-medium mb-2">NURTURE TRACK</div>
+                                    <div className="text-xs text-gray-500">Standard engagement sequence</div>
+                                </div>
+                            </div>
+                            
+                            {/* SMS Path */}
+                            <div 
+                                className={`glass-card rounded-xl p-4 cursor-pointer transition-all duration-300 border ${hoveredSide === 'sms' ? 'border-grid-green/50 bg-grid-green/5' : 'border-transparent'}`}
+                                onMouseEnter={() => setHoveredSide('sms')}
+                                onMouseLeave={() => setHoveredSide(null)}
+                            >
+                                <div className="text-center">
+                                    <div className="w-12 h-12 rounded-xl bg-grid-green/10 border border-grid-green/20 flex items-center justify-center text-2xl mx-auto mb-3">
+                                        📱
+                                    </div>
+                                    <div className="font-semibold text-white mb-1">SMS Enrolled</div>
+                                    <div className="text-xs text-grid-green font-medium mb-2">HIGH VALUE ASSET</div>
+                                    <div className="text-xs text-gray-500">Priority engagement protocol</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {/* Split indicator */}
+                    <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-grid-dark px-3 py-1 rounded-full border border-gray-700">
+                        <span className="text-xs text-gray-400 font-medium">SPLIT</span>
+                    </div>
+                </div>
+            );
+        };
+
+        // Timeline Day Component
+        const TimelineDay = ({ day, actions, subject, isActive, isPause, onClick }) => {
+            const [isHovered, setIsHovered] = useState(false);
+            
+            return (
+                <div 
+                    className={`relative flex items-start gap-4 cursor-pointer transition-all duration-300 ${isHovered ? 'translate-x-2' : ''}`}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                    onClick={onClick}
+                >
+                    {/* Day marker */}
+                    <div className="flex-shrink-0 w-20 text-right">
+                        <div className={`text-sm font-bold ${isPause ? 'text-gray-600' : 'text-grid-green'}`}>
+                            DAY {day}
+                        </div>
+                    </div>
+                    
+                    {/* Timeline dot */}
+                    <div className="relative flex-shrink-0">
+                        <div className={`w-4 h-4 rounded-full border-2 ${isPause ? 'bg-gray-800 border-gray-600' : 'bg-grid-green/20 border-grid-green'} ${isHovered && !isPause ? 'scale-125' : ''} transition-transform duration-300`}>
+                            {!isPause && isHovered && (
+                                <div className="absolute inset-0 rounded-full bg-grid-green animate-ping"></div>
+                            )}
+                        </div>
+                        {day < 7 && (
+                            <div className={`absolute top-4 left-1/2 -translate-x-1/2 w-0.5 h-12 ${isPause ? 'bg-gray-800' : 'timeline-connector'}`}></div>
+                        )}
+                    </div>
+                    
+                    {/* Content */}
+                    <div className={`flex-1 pb-8 ${isPause ? 'opacity-50' : ''}`}>
+                        <div className={`glass-card rounded-xl p-4 transition-all duration-300 ${isHovered && !isPause ? 'border border-grid-green/30' : 'border border-transparent'}`}>
+                            {isPause ? (
+                                <div className="flex items-center gap-2 text-gray-500">
+                                    <span className="text-xl">⏸️</span>
+                                    <span className="text-sm font-medium">Strategic Pause</span>
+                                </div>
+                            ) : (
+                                <>
+                                    <div className="flex items-center gap-3 mb-2">
+                                        {actions.map((action, i) => (
+                                            <div key={i} className={`flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs font-medium ${
+                                                action === 'call' ? 'bg-grid-blue/10 text-grid-blue border border-grid-blue/20' :
+                                                action === 'email' ? 'bg-grid-purple/10 text-grid-purple border border-grid-purple/20' :
+                                                'bg-gray-800 text-gray-400'
+                                            }`}>
+                                                <span>{action === 'call' ? '📞' : action === 'email' ? '📧' : '🔔'}</span>
+                                                <span className="uppercase">{action}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    {subject && (
+                                        <div className={`text-sm text-gray-400 transition-all duration-300 ${isHovered ? 'text-gray-300' : ''}`}>
+                                            <span className="text-gray-600">Subject:</span> "{subject}"
+                                        </div>
+                                    )}
+                                </>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // Nurture Sequence Component
+        const NurtureSequence = () => {
+            const [activeDay, setActiveDay] = useState(null);
+            
+            const timeline = [
+                { day: 1, actions: ['call', 'email'], subject: 'Notification: Duke grid status...' },
+                { day: 2, isPause: true },
+                { day: 3, actions: ['call', 'email'], subject: 'Quick check: Outage alerts link' },
+                { day: 4, actions: ['email'], subject: '[County] Grid Activity Report' },
+                { day: 5, isPause: true },
+                { day: 6, actions: ['call', 'email'], subject: 'Permission to close file?' },
+                { day: 7, actions: ['call'], subject: 'Final Voicemail - Last Touch' },
+            ];
+            
+            return (
+                <div className="glass-card rounded-2xl p-6">
+                    <div className="flex items-center justify-between mb-6">
+                        <div>
+                            <h3 className="text-xl font-bold text-white flex items-center gap-3">
+                                <span className="text-2xl">⚡</span>
+                                7-Day Nurture Sequence
+                            </h3>
+                            <p className="text-sm text-gray-400 mt-1">The Grid Engine Automation</p>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-2">
+                                <div className="w-3 h-3 rounded-full bg-grid-blue"></div>
+                                <span className="text-xs text-gray-400">Call</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className="w-3 h-3 rounded-full bg-grid-purple"></div>
+                                <span className="text-xs text-gray-400">Email</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className="w-3 h-3 rounded-full bg-gray-600"></div>
+                                <span className="text-xs text-gray-400">Pause</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="ml-4">
+                        {timeline.map((item, index) => (
+                            <TimelineDay 
+                                key={item.day}
+                                {...item}
+                                isActive={activeDay === item.day}
+                                onClick={() => setActiveDay(activeDay === item.day ? null : item.day)}
+                            />
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        // Conversion Stage Component
+        const ConversionStage = () => {
+            const [showTooltip, setShowTooltip] = useState(null);
+            
+            return (
+                <div className="glass-card rounded-2xl p-6">
+                    <div className="text-center mb-6">
+                        <h3 className="text-xl font-bold text-white flex items-center justify-center gap-3">
+                            <span className="text-2xl">🎯</span>
+                            Conversion Gateway
+                        </h3>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-6">
+                        {/* Verified SET */}
+                        <div 
+                            className="relative"
+                            onMouseEnter={() => setShowTooltip('set')}
+                            onMouseLeave={() => setShowTooltip(null)}
+                        >
+                            <div className="glass-card rounded-xl p-6 border border-grid-green/30 bg-gradient-to-br from-grid-green/5 to-transparent cursor-pointer hover:border-grid-green/50 transition-all duration-300">
+                                <div className="text-center">
+                                    <div className="w-16 h-16 rounded-2xl bg-grid-green/10 border border-grid-green/30 flex items-center justify-center text-3xl mx-auto mb-4">
+                                        ✓
+                                    </div>
+                                    <div className="text-lg font-bold text-grid-green mb-1">Verified SET</div>
+                                    <div className="text-sm text-gray-400">Readiness Review Held</div>
+                                </div>
+                                
+                                {/* Success metrics */}
+                                <div className="mt-4 pt-4 border-t border-gray-800">
+                                    <div className="flex justify-between text-xs">
+                                        <span className="text-gray-500">Battery Backup Consultation</span>
+                                        <span className="text-grid-green font-semibold">QUALIFIED</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {showTooltip === 'set' && (
+                                <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-xs text-gray-300 whitespace-nowrap z-10">
+                                    🏆 Goal: In-home appointment booked
+                                </div>
+                            )}
+                        </div>
+                        
+                        {/* Loop Back */}
+                        <div 
+                            className="relative"
+                            onMouseEnter={() => setShowTooltip('loop')}
+                            onMouseLeave={() => setShowTooltip(null)}
+                        >
+                            <div className="glass-card rounded-xl p-6 border border-grid-amber/30 cursor-pointer hover:border-grid-amber/50 transition-all duration-300">
+                                <div className="text-center">
+                                    <div className="w-16 h-16 rounded-2xl bg-grid-amber/10 border border-grid-amber/30 flex items-center justify-center text-3xl mx-auto mb-4">
+                                        🔄
+                                    </div>
+                                    <div className="text-lg font-bold text-grid-amber mb-1">Loop Back</div>
+                                    <div className="text-sm text-gray-400">Long Term Nurture</div>
+                                </div>
+                                
+                                {/* Status */}
+                                <div className="mt-4 pt-4 border-t border-gray-800">
+                                    <div className="flex justify-between text-xs">
+                                        <span className="text-gray-500">Re-engagement Queue</span>
+                                        <span className="text-grid-amber font-semibold">PENDING</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {showTooltip === 'loop' && (
+                                <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-xs text-gray-300 whitespace-nowrap z-10">
+                                    ♻️ Not ready? Return to nurture sequence
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    
+                    {/* Loop back arrow visual */}
+                    <div className="mt-6 flex justify-center">
+                        <div className="flex items-center gap-2 text-xs text-gray-500">
+                            <svg width="120" height="30" viewBox="0 0 120 30" fill="none" className="opacity-40">
+                                <path d="M10 15 Q60 40 110 15" stroke="#f59e0b" strokeWidth="2" strokeDasharray="4 2" fill="none"/>
+                                <path d="M105 10 L110 15 L105 20" stroke="#f59e0b" strokeWidth="2" fill="none"/>
+                            </svg>
+                            <span>Cycles back to Day 1</span>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // Stats Bar Component
+        const StatsBar = () => {
+            const [stats, setStats] = useState({
+                leads: 1247,
+                active: 89,
+                converted: 23,
+                rate: 18.4
+            });
+            
+            useEffect(() => {
+                const interval = setInterval(() => {
+                    setStats(s => ({
+                        ...s,
+                        leads: s.leads + Math.floor(Math.random() * 3),
+                        active: s.active + (Math.random() > 0.5 ? 1 : -1),
+                    }));
+                }, 5000);
+                return () => clearInterval(interval);
+            }, []);
+            
+            return (
+                <div className="grid grid-cols-4 gap-4 mb-8">
+                    {[
+                        { label: 'Total Leads Captured', value: stats.leads.toLocaleString(), icon: '📊', color: 'text-white' },
+                        { label: 'Active in Sequence', value: stats.active, icon: '⚡', color: 'text-grid-green' },
+                        { label: 'Verified SETs (MTD)', value: stats.converted, icon: '✓', color: 'text-grid-blue' },
+                        { label: 'Conversion Rate', value: `${stats.rate}%`, icon: '📈', color: 'text-grid-amber' },
+                    ].map((stat, i) => (
+                        <div key={i} className="glass-card rounded-xl p-4">
+                            <div className="flex items-center gap-2 mb-2">
+                                <span className="text-lg">{stat.icon}</span>
+                                <span className="text-xs text-gray-500 uppercase tracking-wider">{stat.label}</span>
+                            </div>
+                            <div className={`text-2xl font-bold ${stat.color}`}>{stat.value}</div>
+                        </div>
+                    ))}
+                </div>
+            );
+        };
+
+        // Main App Component
+        const App = () => {
+            const [isLoaded, setIsLoaded] = useState(false);
+            
+            useEffect(() => {
+                setTimeout(() => setIsLoaded(true), 100);
+            }, []);
+            
+            return (
+                <div className={`min-h-screen py-8 px-4 transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+                    <GridStatusWidget />
+                    
+                    <div className="max-w-4xl mx-auto">
+                        {/* Header */}
+                        <div className="text-center mb-12">
+                            <div className="inline-flex items-center gap-2 bg-grid-green/10 border border-grid-green/20 rounded-full px-4 py-2 mb-4">
+                                <div className="w-2 h-2 rounded-full bg-grid-green animate-pulse"></div>
+                                <span className="text-grid-green text-sm font-medium">GRID ENGINE ACTIVE</span>
+                            </div>
+                            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                                <span className="text-white">Admiral Energy</span>
+                                <span className="text-grid-green"> Grid Intelligence</span>
+                            </h1>
+                            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                                Real-time power grid monitoring and intelligent lead capture system for battery backup solutions
+                            </p>
+                        </div>
+                        
+                        {/* Stats Bar */}
+                        <StatsBar />
+                        
+                        {/* Section 1: Inbound/Awareness */}
+                        <div className="mb-6">
+                            <div className="flex items-center gap-2 mb-4">
+                                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-grid-blue/20 to-grid-purple/20 flex items-center justify-center text-sm font-bold text-grid-blue border border-grid-blue/20">1</div>
+                                <h2 className="text-lg font-semibold text-white">Inbound / Awareness</h2>
+                                <div className="flex-1 h-px bg-gradient-to-r from-gray-800 to-transparent ml-4"></div>
+                            </div>
+                            
+                            <div className="grid grid-cols-2 gap-4 mb-6">
+                                <DataSourceNode 
+                                    icon="📱" 
+                                    label="TikTok Traffic" 
+                                    sublabel="Organic content funnel"
+                                    color="purple"
+                                />
+                                <DataSourceNode 
+                                    icon="📞" 
+                                    label="Cold Call Outreach" 
+                                    sublabel="Direct response channel"
+                                    color="blue"
+                                />
+                            </div>
+                            
+                            <FlowArrow />
+                            
+                            <div className="mt-6">
+                                <CentralNode 
+                                    icon="🔍"
+                                    title="The NC Grid Scanner"
+                                    subtitle="Duke Energy outage & weather alert monitoring"
+                                    isActive={true}
+                                />
+                            </div>
+                        </div>
+                        
+                        <FlowArrow className="my-6" />
+                        
+                        {/* Section 2: The Capture */}
+                        <div className="mb-6">
+                            <div className="flex items-center gap-2 mb-4">
+                                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-grid-green/20 to-grid-amber/20 flex items-center justify-center text-sm font-bold text-grid-green border border-grid-green/20">2</div>
+                                <h2 className="text-lg font-semibold text-white">The Capture</h2>
+                                <span className="text-xs text-gray-500 ml-2">(The Asset)</span>
+                                <div className="flex-1 h-px bg-gradient-to-r from-gray-800 to-transparent ml-4"></div>
+                            </div>
+                            
+                            <EnrollmentSplit />
+                        </div>
+                        
+                        <FlowArrow className="my-6" />
+                        
+                        {/* Section 3: 7-Day Nurture Sequence */}
+                        <div className="mb-6">
+                            <div className="flex items-center gap-2 mb-4">
+                                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-grid-purple/20 to-grid-blue/20 flex items-center justify-center text-sm font-bold text-grid-purple border border-grid-purple/20">3</div>
+                                <h2 className="text-lg font-semibold text-white">The Engine</h2>
+                                <span className="text-xs text-gray-500 ml-2">(7-Day Nurture)</span>
+                                <div className="flex-1 h-px bg-gradient-to-r from-gray-800 to-transparent ml-4"></div>
+                            </div>
+                            
+                            <NurtureSequence />
+                        </div>
+                        
+                        <FlowArrow className="my-6" />
+                        
+                        {/* Section 4: Conversion */}
+                        <div className="mb-12">
+                            <div className="flex items-center gap-2 mb-4">
+                                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-grid-green/20 to-grid-blue/20 flex items-center justify-center text-sm font-bold text-grid-green border border-grid-green/20">4</div>
+                                <h2 className="text-lg font-semibold text-white">The Conversion</h2>
+                                <span className="text-xs text-gray-500 ml-2">(The Goal)</span>
+                                <div className="flex-1 h-px bg-gradient-to-r from-gray-800 to-transparent ml-4"></div>
+                            </div>
+                            
+                            <ConversionStage />
+                        </div>
+                        
+                        {/* Footer */}
+                        <div className="text-center border-t border-gray-800 pt-8">
+                            <div className="inline-flex items-center gap-3 text-gray-500 text-sm">
+                                <span className="font-semibold text-white">Admiral Energy</span>
+                                <span>•</span>
+                                <span>Grid Intelligence Platform</span>
+                                <span>•</span>
+                                <span className="text-grid-green">v2.0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
