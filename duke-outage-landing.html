@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NC Power Outage Alerts | Admiral Energy</title>
+    <meta name="description" content="Get real-time Duke Energy outage alerts and your free Battery Backup Guide. Never be caught in the dark again.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Next Time Duke Goes Down, Will You Be Ready?">
+    <meta property="og:description" content="Get real-time outage alerts + free Battery Backup Guide for NC homeowners.">
+    <meta property="og:type" content="website">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --navy: #0c2f4a;
+            --navy-dark: #081f32;
+            --gold: #c9a648;
+            --gold-light: #d4b85c;
+            --off-white: #f7f5f2;
+            --white: #ffffff;
+            --gray-100: #f3f4f6;
+            --gray-400: #9ca3af;
+            --gray-600: #4b5563;
+            --red-500: #ef4444;
+            --green-500: #22c55e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--navy-dark);
+            color: var(--white);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated storm background */
+        .storm-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(201, 166, 72, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(12, 47, 74, 0.8) 0%, transparent 50%),
+                linear-gradient(180deg, var(--navy-dark) 0%, var(--navy) 100%);
+            z-index: -2;
+        }
+
+        /* Lightning flash effect */
+        .lightning {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0);
+            z-index: -1;
+            pointer-events: none;
+            animation: lightning 8s infinite;
+        }
+
+        @keyframes lightning {
+            0%, 89%, 91%, 93%, 100% { background: rgba(255, 255, 255, 0); }
+            90%, 92% { background: rgba(255, 255, 255, 0.03); }
+        }
+
+        /* Rain effect */
+        .rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cline x1='10' y1='0' x2='10' y2='15' stroke='rgba(255,255,255,0.1)' stroke-width='1'/%3E%3Cline x1='30' y1='20' x2='30' y2='35' stroke='rgba(255,255,255,0.08)' stroke-width='1'/%3E%3Cline x1='50' y1='5' x2='50' y2='20' stroke='rgba(255,255,255,0.1)' stroke-width='1'/%3E%3Cline x1='70' y1='15' x2='70' y2='30' stroke='rgba(255,255,255,0.08)' stroke-width='1'/%3E%3Cline x1='90' y1='0' x2='90' y2='15' stroke='rgba(255,255,255,0.1)' stroke-width='1'/%3E%3C/svg%3E");
+            background-size: 100px 100px;
+            animation: rain 0.5s linear infinite;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        @keyframes rain {
+            0% { background-position: 0 0; }
+            100% { background-position: 20px 100px; }
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 24px 20px 40px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 4px;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--gold);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--navy-dark);
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.02em;
+        }
+
+        .logo-tagline {
+            font-size: 11px;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Alert banner */
+        .alert-banner {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 8px 16px;
+            border-radius: 100px;
+            margin: 20px auto 24px;
+            animation: pulse-border 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-border {
+            0%, 100% { border-color: rgba(239, 68, 68, 0.3); }
+            50% { border-color: rgba(239, 68, 68, 0.6); }
+        }
+
+        .alert-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--red-500);
+            border-radius: 50%;
+            animation: blink 1s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .alert-text {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--red-500);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Main content */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .headline {
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1.1;
+            text-align: center;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .headline .highlight {
+            color: var(--gold);
+        }
+
+        .subheadline {
+            font-size: 17px;
+            color: var(--gray-400);
+            text-align: center;
+            line-height: 1.5;
+            margin-bottom: 32px;
+        }
+
+        /* Stats bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 32px;
+            padding: 16px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--gold);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 4px;
+        }
+
+        /* Form card */
+        .form-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 28px 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--gray-400);
+            margin-bottom: 6px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 16px;
+            font-family: inherit;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: var(--white);
+            transition: all 0.2s ease;
+        }
+
+        .form-input::placeholder {
+            color: var(--gray-600);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px rgba(201, 166, 72, 0.15);
+        }
+
+        .phone-input-wrapper {
+            position: relative;
+        }
+
+        .phone-prefix {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+            font-size: 16px;
+            pointer-events: none;
+        }
+
+        .phone-input {
+            padding-left: 44px;
+        }
+
+        .county-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+
+        .consent-group {
+            margin: 20px 0;
+        }
+
+        .consent-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .consent-checkbox {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            flex-shrink: 0;
+            accent-color: var(--gold);
+            cursor: pointer;
+        }
+
+        .consent-text {
+            font-size: 12px;
+            color: var(--gray-400);
+            line-height: 1.5;
+        }
+
+        .consent-text a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px 24px;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: inherit;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            color: var(--navy-dark);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(201, 166, 72, 0.35);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Benefits list */
+        .benefits {
+            margin-top: 24px;
+        }
+
+        .benefits-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .benefit-item:last-child {
+            border-bottom: none;
+        }
+
+        .benefit-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(201, 166, 72, 0.15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .benefit-icon svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--gold);
+        }
+
+        .benefit-text {
+            font-size: 14px;
+            color: var(--white);
+            font-weight: 500;
+        }
+
+        .benefit-subtext {
+            font-size: 12px;
+            color: var(--gray-400);
+            margin-top: 2px;
+        }
+
+        /* Social proof */
+        .social-proof {
+            margin-top: 32px;
+            text-align: center;
+        }
+
+        .avatars {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid var(--navy-dark);
+            margin-left: -8px;
+            background: var(--gray-600);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .avatar:first-child {
+            margin-left: 0;
+        }
+
+        .avatar.count {
+            background: var(--gold);
+            color: var(--navy-dark);
+            font-size: 11px;
+        }
+
+        .social-text {
+            font-size: 13px;
+            color: var(--gray-400);
+        }
+
+        .social-text strong {
+            color: var(--white);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 32px;
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .footer-text {
+            font-size: 11px;
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            margin-top: 12px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .footer-links a {
+            font-size: 11px;
+            color: var(--gray-400);
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        /* Success state */
+        .success-state {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .success-state.active {
+            display: block;
+        }
+
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(34, 197, 94, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .success-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--green-500);
+        }
+
+        .success-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .success-text {
+            font-size: 15px;
+            color: var(--gray-400);
+            line-height: 1.6;
+        }
+
+        .success-phone {
+            display: inline-block;
+            background: rgba(201, 166, 72, 0.15);
+            color: var(--gold);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 16px;
+        }
+
+        /* Loading state */
+        .loading .submit-btn {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid transparent;
+            border-top-color: var(--navy-dark);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 380px) {
+            .headline {
+                font-size: 28px;
+            }
+            
+            .stats-bar {
+                gap: 20px;
+            }
+            
+            .stat-number {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="storm-bg"></div>
+    <div class="lightning"></div>
+    <div class="rain"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="logo-text">Admiral Energy</div>
+                    <div class="logo-tagline">North Carolina Solar</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Alert Banner -->
+        <div class="alert-banner">
+            <div class="alert-dot"></div>
+            <span class="alert-text">Storm Season Active</span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main">
+            <h1 class="headline">
+                Next Time Duke Goes Down,<br>
+                <span class="highlight">Will You Be Ready?</span>
+            </h1>
+            
+            <p class="subheadline">
+                Get real-time outage alerts for your county + your free Battery Backup Savings Guide.
+            </p>
+
+            <!-- Stats -->
+            <div class="stats-bar">
+                <div class="stat">
+                    <div class="stat-number">81%</div>
+                    <div class="stat-label">NC Homes Hit<br>by Outages</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">$200+</div>
+                    <div class="stat-label">Avg Cost Per<br>Outage</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">$9K</div>
+                    <div class="stat-label">Duke Rebate<br>Available</div>
+                </div>
+            </div>
+
+            <!-- Form -->
+            <div class="form-card" id="formCard">
+                <form id="alertForm" name="outage-alerts" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                    <input type="hidden" name="form-name" value="outage-alerts">
+                    <input type="hidden" name="bot-field">
+                    <input type="hidden" name="source" value="outage-alerts-lp">
+                    <div class="form-title">Get Your Free Guide + Alerts</div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Your Name</label>
+                        <input type="text" class="form-input" id="name" name="name" placeholder="John Smith" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Mobile Phone (for alerts)</label>
+                        <div class="phone-input-wrapper">
+                            <span class="phone-prefix">+1</span>
+                            <input type="tel" class="form-input phone-input" id="phone" name="phone" placeholder="(704) 555-1234" required pattern="[\d\s\-\(\)]{10,}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Your County</label>
+                        <select class="form-input county-select" id="county" name="county" required>
+                            <option value="">Select your county...</option>
+                            <option value="Mecklenburg">Mecklenburg (Charlotte)</option>
+                            <option value="Wake">Wake (Raleigh)</option>
+                            <option value="Guilford">Guilford (Greensboro)</option>
+                            <option value="Forsyth">Forsyth (Winston-Salem)</option>
+                            <option value="Cumberland">Cumberland (Fayetteville)</option>
+                            <option value="Durham">Durham</option>
+                            <option value="Buncombe">Buncombe (Asheville)</option>
+                            <option value="Gaston">Gaston</option>
+                            <option value="Union">Union</option>
+                            <option value="Cabarrus">Cabarrus</option>
+                            <option value="Iredell">Iredell</option>
+                            <option value="Rowan">Rowan</option>
+                            <option value="Catawba">Catawba</option>
+                            <option value="Cleveland">Cleveland</option>
+                            <option value="Lincoln">Lincoln</option>
+                            <option value="other">Other NC County</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email (optional)</label>
+                        <input type="email" class="form-input" id="email" name="email" placeholder="john@email.com">
+                    </div>
+
+                    <div class="consent-group">
+                        <label class="consent-label">
+                            <input type="checkbox" class="consent-checkbox" id="consent" name="consent" required>
+                            <span class="consent-text">
+                                I agree to receive outage alerts and solar savings information via text message. Message frequency varies. Reply STOP to cancel. Msg & data rates may apply. View our <a href="/privacy">Privacy Policy</a>.
+                            </span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+                        </svg>
+                        Get My Free Guide
+                    </button>
+                </form>
+
+                <!-- Success State -->
+                <div class="success-state" id="successState">
+                    <div class="success-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <h2 class="success-title">You're All Set!</h2>
+                    <p class="success-text">
+                        Check your phone—your Battery Backup Guide is on its way. We'll text you when outages hit <strong id="successCounty">your county</strong>.
+                    </p>
+                    <div class="success-phone" id="successPhone"></div>
+                </div>
+            </div>
+
+            <!-- Benefits -->
+            <div class="benefits">
+                <div class="benefits-title">You'll Receive</div>
+                
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="benefit-text">Free Battery Backup Guide</div>
+                        <div class="benefit-subtext">Sent instantly via text</div>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                            <line x1="12" y1="9" x2="12" y2="13"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="benefit-text">Real-Time Outage Alerts</div>
+                        <div class="benefit-subtext">For your specific county</div>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="benefit-text">Your Savings Estimate</div>
+                        <div class="benefit-subtext">Including Duke's $9K rebate</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Proof -->
+            <div class="social-proof">
+                <div class="avatars">
+                    <div class="avatar" style="background: #4f46e5;">JM</div>
+                    <div class="avatar" style="background: #059669;">KL</div>
+                    <div class="avatar" style="background: #dc2626;">RP</div>
+                    <div class="avatar" style="background: #7c3aed;">TS</div>
+                    <div class="avatar count">+847</div>
+                </div>
+                <p class="social-text">
+                    <strong>847 NC homeowners</strong> signed up for alerts this month
+                </p>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p class="footer-text">
+                Admiral Energy LLC · 100% Veteran-Owned · Kings Mountain, NC<br>
+                © 2025 All rights reserved
+            </p>
+            <div class="footer-links">
+                <a href="/privacy">Privacy Policy</a>
+                <a href="/terms">Terms of Service</a>
+                <a href="tel:+17045551234">Contact Us</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Phone number formatting
+        const phoneInput = document.getElementById('phone');
+        phoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0) {
+                if (value.length <= 3) {
+                    value = '(' + value;
+                } else if (value.length <= 6) {
+                    value = '(' + value.slice(0, 3) + ') ' + value.slice(3);
+                } else {
+                    value = '(' + value.slice(0, 3) + ') ' + value.slice(3, 6) + '-' + value.slice(6, 10);
+                }
+            }
+            e.target.value = value;
+        });
+
+        // Form submission
+        const form = document.getElementById('alertForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formCard = document.getElementById('formCard');
+        const successState = document.getElementById('successState');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value.replace(/\D/g, ''),
+                county: document.getElementById('county').value,
+                email: document.getElementById('email').value || null,
+                consent: document.getElementById('consent').checked,
+                source: 'outage-alerts-lp',
+                timestamp: new Date().toISOString()
+            };
+
+            // Show loading
+            submitBtn.innerHTML = '<div class="spinner"></div> Sending...';
+            formCard.classList.add('loading');
+
+            try {
+                // Submit to Netlify Forms
+                const response = await fetch('/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        'form-name': 'outage-alerts',
+                        'name': formData.name,
+                        'phone': formData.phone,
+                        'county': formData.county,
+                        'email': formData.email || '',
+                        'consent': formData.consent ? 'yes' : 'no',
+                        'source': 'outage-alerts-lp',
+                        'timestamp': formData.timestamp
+                    }).toString()
+                });
+
+                if (!response.ok) {
+                    throw new Error('Signup failed');
+                }
+
+                // Show success
+                form.style.display = 'none';
+                successState.classList.add('active');
+                document.getElementById('successCounty').textContent = formData.county + ' County';
+                document.getElementById('successPhone').textContent = '+1 ' + formData.phone.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+
+                // Track conversion (add your analytics)
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'conversion', {
+                        'event_category': 'Lead',
+                        'event_label': 'Outage Alerts Signup'
+                    });
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                submitBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+                    </svg>
+                    Get My Free Guide
+                `;
+                formCard.classList.remove('loading');
+                alert('Something went wrong. Please try again or call us directly.');
+            }
+        });
+    </script>
+</body>
+</html>
