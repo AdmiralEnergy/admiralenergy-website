@@ -819,6 +819,29 @@
     </div>
 
     <script>
+        // County to Duke utility mapping (DEC = Duke Energy Carolinas, DEP = Duke Energy Progress)
+        const COUNTY_UTILITY_MAP = {
+            'Mecklenburg': 'DEC',
+            'Wake': 'DEP',
+            'Guilford': 'DEC',
+            'Forsyth': 'DEC',
+            'Cumberland': 'DEP',
+            'Durham': 'DEC',
+            'Buncombe': 'DEC',
+            'Gaston': 'DEC',
+            'Union': 'DEC',
+            'Cabarrus': 'DEC',
+            'Iredell': 'DEC',
+            'Rowan': 'DEC',
+            'Catawba': 'DEC',
+            'Cleveland': 'DEC',
+            'Lincoln': 'DEC',
+            'other': 'DEP'  // Default to DEP for other counties
+        };
+
+        // Grid Engine API endpoint
+        const GRID_ENGINE_API = 'https://command.ripemerchant.host/api/grid/subscribe';
+
         // Phone number formatting
         const phoneInput = document.getElementById('phone');
         phoneInput.addEventListener('input', function(e) {
@@ -843,13 +866,15 @@
 
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             // Get form data
+            const county = document.getElementById('county').value;
             const formData = {
                 name: document.getElementById('name').value,
                 phone: document.getElementById('phone').value.replace(/\D/g, ''),
-                county: document.getElementById('county').value,
-                email: document.getElementById('email').value || null,
+                county: county,
+                utility: COUNTY_UTILITY_MAP[county] || 'DEP',
+                email: document.getElementById('email').value || undefined,
                 consent: document.getElementById('consent').checked,
                 source: 'outage-alerts-lp',
                 timestamp: new Date().toISOString()
@@ -859,9 +884,38 @@
             submitBtn.innerHTML = '<div class="spinner"></div> Sending...';
             formCard.classList.add('loading');
 
+            let gridEngineSuccess = false;
+
             try {
-                // Submit to Netlify Forms
-                const response = await fetch('/', {
+                // Submit to Grid Engine API (primary - for outage alerts)
+                const gridResponse = await fetch(GRID_ENGINE_API, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        phone: formData.phone,
+                        county: formData.county,
+                        utility: formData.utility,
+                        email: formData.email,
+                        source: 'landing-page'
+                    })
+                });
+
+                if (gridResponse.ok) {
+                    const result = await gridResponse.json();
+                    console.log('Grid Engine subscription:', result);
+                    gridEngineSuccess = true;
+                } else {
+                    console.warn('Grid Engine API returned non-OK status:', gridResponse.status);
+                }
+            } catch (gridError) {
+                console.warn('Grid Engine API error (falling back to Netlify):', gridError);
+            }
+
+            try {
+                // Also submit to Netlify Forms (backup + CRM integration)
+                const netlifyResponse = await fetch('/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -878,22 +932,23 @@
                     }).toString()
                 });
 
-                if (!response.ok) {
-                    throw new Error('Signup failed');
-                }
+                // Show success if either API succeeded
+                if (gridEngineSuccess || netlifyResponse.ok) {
+                    form.style.display = 'none';
+                    successState.classList.add('active');
+                    document.getElementById('successCounty').textContent = formData.county + ' County';
+                    document.getElementById('successPhone').textContent = '+1 ' + formData.phone.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
 
-                // Show success
-                form.style.display = 'none';
-                successState.classList.add('active');
-                document.getElementById('successCounty').textContent = formData.county + ' County';
-                document.getElementById('successPhone').textContent = '+1 ' + formData.phone.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
-
-                // Track conversion (add your analytics)
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'conversion', {
-                        'event_category': 'Lead',
-                        'event_label': 'Outage Alerts Signup'
-                    });
+                    // Track conversion (add your analytics)
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'conversion', {
+                            'event_category': 'Lead',
+                            'event_label': 'Outage Alerts Signup',
+                            'grid_engine': gridEngineSuccess
+                        });
+                    }
+                } else {
+                    throw new Error('Both APIs failed');
                 }
 
             } catch (error) {
