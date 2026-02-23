@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import { Menu, X, ShoppingCart } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -50,19 +50,10 @@ export default function Header() {
             >
               Contact
             </Link>
-            {/* Snipcart cart button */}
-            <button className="snipcart-checkout relative hover:text-admiral-gold transition-colors" aria-label="Shopping cart">
-              <ShoppingCart className="w-5 h-5" />
-              <span className="snipcart-items-count absolute -top-2 -right-2 bg-admiral-gold text-admiral-navy text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold"></span>
-            </button>
           </div>
 
           {/* Mobile menu button */}
           <div className="lg:hidden flex items-center gap-3">
-            <button className="snipcart-checkout relative hover:text-admiral-gold" aria-label="Cart">
-              <ShoppingCart className="w-5 h-5" />
-              <span className="snipcart-items-count absolute -top-2 -right-2 bg-admiral-gold text-admiral-navy text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold"></span>
-            </button>
             <button onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle menu">
               {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>

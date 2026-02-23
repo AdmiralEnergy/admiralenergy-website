@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { products } from "@/data/products";
-import { ShoppingCart, ArrowRight, Battery } from "lucide-react";
+import { ArrowRight, Battery, ShoppingBag } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Shop Portable Backup Power",
@@ -36,7 +37,17 @@ export default function ShopPage() {
               >
                 {/* Image placeholder */}
                 <div className="bg-gray-50 h-48 flex items-center justify-center relative">
-                  <Battery className="w-16 h-16 text-admiral-navy/20" />
+                  {product.images[0] ? (
+                    <Image
+                      src={product.images[0]}
+                      alt={product.name}
+                      fill
+                      sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
+                      className="object-contain p-4"
+                    />
+                  ) : (
+                    <Battery className="w-16 h-16 text-admiral-navy/20" />
+                  )}
                   {product.badge && (
                     <span className="absolute top-3 left-3 bg-admiral-gold text-admiral-navy text-xs font-bold px-2 py-1 rounded">
                       {product.badge}
@@ -60,22 +71,21 @@ export default function ShopPage() {
                       ${product.price.toFixed(2)}
                     </span>
                     <div className="flex gap-2">
-                      <Link
-                        href={`/shop/${product.slug}`}
-                        className="text-sm text-admiral-navy font-medium hover:text-admiral-gold transition-colors inline-flex items-center gap-1"
-                      >
-                        Details <ArrowRight className="w-3 h-3" />
-                      </Link>
-                      <button
-                        className="snipcart-add-item bg-admiral-gold text-admiral-navy px-3 py-1.5 rounded-md text-sm font-semibold hover:bg-gold-light transition-colors inline-flex items-center gap-1"
-                        data-item-id={product.id}
-                        data-item-name={product.name}
-                        data-item-price={product.price}
-                        data-item-url={`/shop/${product.slug}`}
-                        data-item-description={product.shortDescription}
-                      >
-                        <ShoppingCart className="w-3.5 h-3.5" /> Add
-                      </button>
+                      {product.stripeEnabled ? (
+                        <Link
+                          href={`/shop/${product.slug}`}
+                          className="bg-admiral-gold text-admiral-navy px-3 py-1.5 rounded-md text-sm font-semibold hover:bg-gold-light transition-colors inline-flex items-center gap-1"
+                        >
+                          <ShoppingBag className="w-3.5 h-3.5" /> Buy Now
+                        </Link>
+                      ) : (
+                        <Link
+                          href={`/shop/${product.slug}`}
+                          className="text-sm text-admiral-navy font-medium hover:text-admiral-gold transition-colors inline-flex items-center gap-1"
+                        >
+                          Details <ArrowRight className="w-3 h-3" />
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </div>

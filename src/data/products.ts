@@ -3,6 +3,8 @@ export interface Product {
   name: string;
   slug: string;
   price: number;
+  /** Price in cents for Stripe */
+  priceCents: number;
   description: string;
   shortDescription: string;
   features: string[];
@@ -11,43 +13,53 @@ export interface Product {
   category: string;
   inStock: boolean;
   badge?: string;
+  model?: string;
+  sku?: string;
+  /** If true, this product has a working Stripe checkout */
+  stripeEnabled?: boolean;
 }
 
 export const products: Product[] = [
   {
-    id: "solar-power-bank-001",
-    name: "Admiral Solar Power Bank",
-    slug: "solar-power-bank",
-    price: 149.99,
+    id: "hs-43-solar-power-bank",
+    name: "Multifunctional Solar Power Bank",
+    slug: "hs-43-solar-power-bank",
+    price: 59.99,
+    priceCents: 5999,
+    model: "HS-43",
+    sku: "AE-HS43-001",
+    stripeEnabled: true,
     description:
-      "Your first line of defense against power outages. The Admiral Solar Power Bank packs serious portable power into a rugged, solar-rechargeable unit. Keep phones charged, run a Wi-Fi router, power a CPAP machine, or light your home when the grid goes down. Charges from any wall outlet or the included solar panel connection. Built for North Carolina storm season.",
+      "Keep your phone, flashlight, and essential comms alive during outages. The HS-43 packs 40,000 mAh of portable power into a rugged, pocket-friendly frame with 3-way charging: wall, solar panel, and hand crank. Fast charge support (PD 20W + SCP 22.5W) means your devices are ready when you need them. Built-in cables for iPhone and Android — no hunting for cords in the dark.",
     shortDescription:
-      "Portable solar-rechargeable power bank for outage preparedness. USB + AC outputs.",
+      "40,000 mAh rugged solar power bank with hand crank, built-in cables, and emergency flashlight.",
     features: [
-      "High-capacity lithium battery (500Wh)",
-      "Pure sine wave AC outlet (300W continuous)",
-      "Multiple USB-A and USB-C ports",
-      "Solar panel input (100W max)",
-      "Wall outlet charging (full in ~5 hours)",
-      "LED emergency light built-in",
-      "Lightweight and portable (12 lbs)",
-      "LCD display showing charge level and output",
-      "Pass-through charging (use while charging)",
-      "Short-circuit and overload protection",
+      "40,000 mAh / 148Wh battery capacity",
+      "3-way charging: wall, solar panel, hand crank",
+      "Fast charge: PD 20W (USB-C) + SCP 22.5W (USB-A)",
+      "Built-in cables: USB-C, Micro-USB, and Lightning",
+      "Emergency flashlight: 480 lumens, SOS/strobe modes, up to 25 hours",
+      "Built-in compass and bubble level",
+      "Rugged, outdoor-ready frame",
+      "Compact: fits in your hand (173 × 84 × 42 mm)",
     ],
     specs: {
-      Capacity: "500Wh (48,000mAh)",
-      "AC Output": "300W continuous / 600W peak",
-      "USB-C": "100W PD (x1)",
-      "USB-A": "18W QC 3.0 (x2)",
-      "Solar Input": "Up to 100W (MPPT)",
-      "Wall Charge Time": "~5 hours",
-      Weight: "12 lbs (5.4 kg)",
-      Dimensions: '11.3 × 7.6 × 7.5"',
-      "Battery Type": "LiFePO4 (3,000+ cycles)",
-      Warranty: "2-year limited warranty",
+      Model: "HS-43",
+      Battery: "40,000 mAh, 3.7V, 148Wh",
+      "USB-A Output (Red)": "SCP 22.5W max",
+      "USB-C Output": "PD 20W max",
+      "Built-in USB-C Cable": "PD 20W max",
+      "USB-C Input": "PD 18W max",
+      "USB-A Input Cable": "QC 18W max",
+      Flashlight: "2 LEDs, 4W total, ~480 lumens, SOS/strobe",
+      "Flashlight Runtime": "Up to 25 hours",
+      Dimensions: "173.2 × 84 × 42.2 mm",
+      Weight: "~580 g (1.28 lbs)",
+      "Operating Temp": "0–40°C (32–104°F)",
+      "Built-ins": "Compass, bubble level, USB-C/Micro-USB/Lightning cables",
+      Warranty: "1-year limited warranty",
     },
-    images: [],
+    images: ["/images/products/solar-power-bank.svg"],
     category: "Portable Power",
     inStock: true,
     badge: "Flagship",
@@ -57,6 +69,7 @@ export const products: Product[] = [
     name: "100W Portable Solar Panel",
     slug: "100w-solar-panel",
     price: 199.99,
+    priceCents: 19999,
     description:
       "Pair with any Admiral power bank or portable station. This foldable 100W solar panel converts sunlight to charging power — perfect for extended outages, camping, or off-grid weekends. ETFE-coated for durability and weather resistance.",
     shortDescription: "Foldable 100W solar panel for charging power stations and power banks.",
@@ -78,7 +91,7 @@ export const products: Product[] = [
       Connector: "Anderson + MC4 adapters included",
       Warranty: "1-year limited warranty",
     },
-    images: [],
+    images: ["/images/products/100w-solar-panel.svg"],
     category: "Solar Panels",
     inStock: true,
   },
@@ -87,6 +100,7 @@ export const products: Product[] = [
     name: "Storm Ready Emergency Kit",
     slug: "storm-ready-kit",
     price: 79.99,
+    priceCents: 7999,
     description:
       "Essential emergency preparedness kit for NC homeowners. Includes a hand-crank/solar radio, LED flashlight, first-aid basics, emergency blankets, and a waterproof document bag. Designed around the specific risks North Carolina faces — hurricanes, ice storms, and summer thunderstorms.",
     shortDescription: "Essential emergency kit for NC storm preparedness.",
@@ -107,7 +121,7 @@ export const products: Product[] = [
       Weight: "4.5 lbs",
       Warranty: "1-year limited warranty",
     },
-    images: [],
+    images: ["/images/products/storm-ready-kit.svg"],
     category: "Emergency Kits",
     inStock: true,
   },
@@ -115,4 +129,8 @@ export const products: Product[] = [
 
 export function getProductBySlug(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug);
+}
+
+export function getProductById(id: string): Product | undefined {
+  return products.find((p) => p.id === id);
 }

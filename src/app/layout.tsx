@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Script from "next/script";
+import { SITE_URL } from "@/lib/site";
+import { products } from "@/data/products";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,11 +24,11 @@ export const metadata: Metadata = {
   },
   description:
     "Portable backup power, home resilience planning, and expert guidance for North Carolina homeowners. No pitch. Just math.",
-  metadataBase: new URL("https://admiralenergy.ai"),
+  metadataBase: new URL(SITE_URL),
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://admiralenergy.ai",
+    url: SITE_URL,
     siteName: "Admiral Energy",
     title: "Admiral Energy — Portable Energy Autonomy & Home Resilience",
     description:
@@ -54,6 +56,40 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Organization JSON-LD
+  const orgSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Admiral Energy",
+    url: SITE_URL,
+    logo: `${SITE_URL}/logos/ae-logo-horiz-bg.png`,
+    description: "Portable Energy Autonomy & Home Resilience for North Carolina homeowners.",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Kings Mountain",
+      addressRegion: "NC",
+      addressCountry: "US",
+    },
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: "+1-984-238-4187",
+      contactType: "customer service",
+      email: "info@admiralenergy.ai",
+    },
+  };
+
+  // ItemList structured data for shop
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: products.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: `${SITE_URL}/shop/${p.slug}`,
+      name: p.name,
+    })),
+  };
+
   return (
     <html lang="en">
       <head>
@@ -66,9 +102,15 @@ export default function RootLayout({
           })(window,document,'script','dataLayer','GTM-N6HRP34Z');
         `}</Script>
 
-        {/* Snipcart */}
-        <link rel="preconnect" href="https://app.snipcart.com" />
-        <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.7.1/default/snipcart.css" />
+        {/* Organization JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+        />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-admiral-white text-gray-900`}>
         {/* GTM noscript */}
@@ -84,16 +126,6 @@ export default function RootLayout({
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />
-
-        {/* Snipcart hidden div — replace API key with your live key */}
-        <div
-          hidden
-          id="snipcart"
-          data-api-key="YOUR_SNIPCART_PUBLIC_API_KEY"
-          data-config-modal-style="side"
-          data-config-add-product-behavior="none"
-        ></div>
-        <Script src="https://cdn.snipcart.com/themes/v3.7.1/default/snipcart.js" strategy="afterInteractive" />
       </body>
     </html>
   );

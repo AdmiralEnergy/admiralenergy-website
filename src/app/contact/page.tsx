@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import type { Metadata } from "next";
 import {
   Phone,
   Mail,
@@ -11,12 +10,26 @@ import {
   CheckCircle,
 } from "lucide-react";
 
-// Note: Metadata must be in a separate layout or use generateMetadata in a server component wrapper
-// For simplicity, we include it as a comment. The actual metadata is in the layout or via generateMetadata.
-
 export default function ContactPage() {
   const [homeownerSubmitted, setHomeownerSubmitted] = useState(false);
   const [partnerSubmitted, setPartnerSubmitted] = useState(false);
+
+  const submitNetlifyForm = async (form: HTMLFormElement) => {
+    const data = new FormData(form);
+    const encoded = new URLSearchParams();
+
+    data.forEach((value, key) => {
+      if (typeof value === "string") {
+        encoded.append(key, value);
+      }
+    });
+
+    await fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encoded.toString(),
+    });
+  };
 
   return (
     <>
@@ -93,15 +106,12 @@ export default function ContactPage() {
                 <form
                   name="homeowner-inquiry"
                   method="POST"
+                  data-netlify="true"
+                  data-netlify-honeypot="bot-field"
                   onSubmit={(e) => {
                     e.preventDefault();
                     const form = e.target as HTMLFormElement;
-                    const data = new FormData(form);
-                    fetch("/", {
-                      method: "POST",
-                      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                      body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
-                    })
+                    submitNetlifyForm(form)
                       .then(() => setHomeownerSubmitted(true))
                       .catch(() => alert("Something went wrong. Please email us directly."));
                   }}
@@ -225,15 +235,12 @@ export default function ContactPage() {
                 <form
                   name="partner-inquiry"
                   method="POST"
+                  data-netlify="true"
+                  data-netlify-honeypot="bot-field"
                   onSubmit={(e) => {
                     e.preventDefault();
                     const form = e.target as HTMLFormElement;
-                    const data = new FormData(form);
-                    fetch("/", {
-                      method: "POST",
-                      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                      body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
-                    })
+                    submitNetlifyForm(form)
                       .then(() => setPartnerSubmitted(true))
                       .catch(() => alert("Something went wrong. Please email us directly."));
                   }}
