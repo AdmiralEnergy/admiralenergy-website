@@ -93,8 +93,6 @@ export default function ContactPage() {
                 <form
                   name="homeowner-inquiry"
                   method="POST"
-                  data-netlify="true"
-                  data-netlify-honeypot="bot-field"
                   onSubmit={(e) => {
                     e.preventDefault();
                     const form = e.target as HTMLFormElement;
@@ -227,8 +225,6 @@ export default function ContactPage() {
                 <form
                   name="partner-inquiry"
                   method="POST"
-                  data-netlify="true"
-                  data-netlify-honeypot="bot-field"
                   onSubmit={(e) => {
                     e.preventDefault();
                     const form = e.target as HTMLFormElement;

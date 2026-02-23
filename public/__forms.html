@@ -1,0 +1,29 @@
+<!-- 
+  Hidden form declarations for Netlify Forms detection.
+  Netlify's Next.js Runtime v5 requires static HTML forms for discovery.
+  The actual forms live in src/app/contact/page.tsx and submit via JS fetch.
+-->
+<!DOCTYPE html>
+<html>
+<head><title>Form Placeholders</title></head>
+<body>
+  <form name="homeowner-inquiry" netlify netlify-honeypot="bot-field" hidden>
+    <input name="bot-field" />
+    <input name="first-name" />
+    <input name="last-name" />
+    <input name="email" />
+    <input name="phone" />
+    <input name="interest" />
+    <textarea name="message"></textarea>
+  </form>
+
+  <form name="partner-inquiry" netlify netlify-honeypot="bot-field" hidden>
+    <input name="bot-field" />
+    <input name="company" />
+    <input name="contact-name" />
+    <input name="email" />
+    <input name="partnership-type" />
+    <textarea name="details"></textarea>
+  </form>
+</body>
+</html>
