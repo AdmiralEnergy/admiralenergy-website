@@ -42,10 +42,16 @@ You are an expert TypeScript/Next.js security engineer performing a full securit
 ### Remaining
 - None. All audit tasks complete.
 
+### Verification (2026-02-24)
+- `npm run lint`: 0 errors, 0 warnings.
+- `npm run build`: compiled successfully.
+- `npm audit`: 0 vulnerabilities.
+- Commit `5a7fc20` pushed to `origin/main`.
+
 ### Recommendations
-- Remove unused imports/props to keep `npm run lint` warning-free.
-- Convert the footer logo to `next/image` once asset sizing is confirmed.
 - Keep `PRODUCT_PRICES` and `products.ts` in sync for any Stripe-enabled product changes.
+- Verify Netlify deploy for commit `5a7fc20`.
+- Keep `.netlify/` ignored and avoid committing local build artifacts.
 
 ---
 

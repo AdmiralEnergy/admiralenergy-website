@@ -1,6 +1,27 @@
 # Codex Cleanup Prompt — Admiral Energy Website (Post-Audit)
 
-> **Context:** A security audit commit (`9f1dce9`) has been applied locally but not pushed. All 12 original audit tasks are complete. This prompt handles the remaining lint warnings, gitignore gap, and final commit/push to deploy.
+> **Context:** Cleanup is complete and pushed to `origin/main` (commit `5a7fc20`). Lint/build/audit are clean. This prompt is retained as a historical record of the cleanup steps.
+
+---
+
+## Status (2026-02-24)
+
+### Completed
+- `.netlify/` added to `.gitignore`.
+- Unused imports removed from `src/app/partners/ecoflow/delta-pro-ultra/page.tsx`.
+- `productName` preserved in `BuyNowButton` and explicitly marked unused (`_productName` + `void _productName`).
+- Footer logo converted to `next/image`.
+- `public/scripts/admiral-chat-ui.js` empty catch updated (no unused variable).
+- Docs updated to reflect all audit tasks complete.
+
+### Verification
+- `npm run lint` -> 0 errors, 0 warnings.
+- `npm run build` -> compiled successfully.
+- `npm audit` -> 0 vulnerabilities.
+- Commit: `5a7fc20` pushed to `origin/main`.
+
+### Remaining
+- None. All cleanup tasks complete.
 
 ---
 
@@ -22,7 +43,11 @@
 
 ---
 
-## Task 1 — Add `.netlify/` to `.gitignore`
+## Historical Task List (Completed)
+
+This section is retained for reference only. All tasks below are complete.
+
+## Task 1 - Add `.netlify/` to `.gitignore`
 
 **File:** `.gitignore`
 
@@ -71,7 +96,7 @@ import {
 
 **Lint warning:** `productName` is destructured in the component props but never referenced in the component body.
 
-**Decision:** Keep `productName` in the interface (it is semantically useful and the caller passes it), but prefix the destructured variable with an underscore so ESLint treats it as intentionally unused.
+**Decision:** Keep `productName` in the interface (it is semantically useful and the caller passes it), but prefix the destructured variable with an underscore and explicitly mark it unused so ESLint is satisfied.
 
 **Action in `src/components/BuyNowButton.tsx`:**
 Change the destructuring from:
@@ -87,6 +112,11 @@ export default function BuyNowButton({
   productId,
   productName: _productName,
   price,
+```
+
+Also add:
+```tsx
+void _productName;
 ```
 
 This keeps the prop contract intact (callers still pass `productName={product.name}`) and silences the lint warning without removing useful future metadata.
