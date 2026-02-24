@@ -5,13 +5,14 @@ export default function HomePage() {
   return (
     <>
       {/* TEMP: AvantLink site ownership verification — remove after verification.
-          Uses raw <script> so the tag appears in static HTML for AvantLink's crawler.
-          HTTP URL is intentional — AvantLink's verifier matches the exact URL.
-          Browser will block execution (mixed content), but the crawler only checks HTML source.
+          Uses dangerouslySetInnerHTML to output the exact HTML string without React
+          encoding & as &amp; (which breaks AvantLink's naive URL extraction).
           See docs/AVANTLINK_VERIFICATION.md for removal instructions. */}
-      <script
-        type="text/javascript"
-        src="http://classic.avantlink.com/affiliate_app_confirm.php?mode=js&authResponse=b4fccba6d8ff1139cd80f0add54cd84b5a17d636"
+      <div
+        dangerouslySetInnerHTML={{
+          __html:
+            '<script type="text/javascript" src="http://classic.avantlink.com/affiliate_app_confirm.php?mode=js&authResponse=b4fccba6d8ff1139cd80f0add54cd84b5a17d636"></script>',
+        }}
       />
 
       {/* JSON-LD: LocalBusiness */}
