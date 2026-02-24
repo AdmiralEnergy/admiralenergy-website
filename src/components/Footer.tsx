@@ -1,4 +1,5 @@
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -8,9 +9,11 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center mb-4">
-              <img
+              <Image
                 src="/logos/ae-logo-horiz-bg.png"
                 alt="Admiral Energy"
+                width={140}
+                height={28}
                 className="h-7 w-auto rounded-md p-0.5 shadow-sm ring-1 ring-black/5"
               />
               <span className="ml-3 text-xl font-bold">Admiral Energy</span>

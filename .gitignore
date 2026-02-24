@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+# Netlify local artifacts
+.netlify/
+
 # production
 /build
 

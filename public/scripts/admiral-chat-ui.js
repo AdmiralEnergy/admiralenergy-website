@@ -10,7 +10,7 @@
   if (!CHAT_ENABLED) return;
 
   function pushEvent(name, payload) {
-    try { window.dataLayer = window.dataLayer || []; window.dataLayer.push(Object.assign({ event: name }, payload || {})); } catch (_) {}
+    try { window.dataLayer = window.dataLayer || []; window.dataLayer.push(Object.assign({ event: name }, payload || {})); } catch { }
   }
 
   // Thread state

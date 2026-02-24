@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  Battery,
   Home,
-  Zap,
-  ShieldCheck,
   CheckCircle,
   ArrowRight,
   AlertTriangle,

@@ -13,11 +13,12 @@ interface BuyNowButtonProps {
 
 export default function BuyNowButton({
   productId,
-  productName,
+  productName: _productName,
   price,
   inStock,
   maxQty = 5,
 }: BuyNowButtonProps) {
+  void _productName;
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
