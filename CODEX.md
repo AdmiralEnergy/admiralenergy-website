@@ -615,12 +615,12 @@ Based on `REBRAND_IMPLEMENTATION_GUIDE.md` and `docs/LAUNCH_CHECKLIST.md`:
 - Cleanup: Footer logo converted to `next/image`.
 - Cleanup: `public/scripts/admiral-chat-ui.js` empty catch updated.
 - Verification: `npm run lint`, `npm run build`, and `npm audit` are clean; commit `5a7fc20` pushed to `origin/main`.
+- Netlify deploy for commit `5a7fc20` confirmed live at admiralenergy.ai (2026-02-24).
 
 ### Remaining
 - None. All audit tasks complete. Lint: 0 errors, 0 warnings.
 
 ### Recommendations
-- Verify the Netlify deploy for commit `5a7fc20`.
 - Keep `.netlify/` ignored and avoid committing local build artifacts.
 - Keep `PRODUCT_PRICES` and `products.ts` in sync for any Stripe-enabled product changes.
 
