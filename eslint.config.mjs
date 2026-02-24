@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Generated/legacy artifacts outside the TypeScript lint scope:
+    ".netlify/**",
+    "netlify/functions/**/*.js",
   ]),
 ]);
 

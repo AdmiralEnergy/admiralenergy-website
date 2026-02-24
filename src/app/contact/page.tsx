@@ -118,11 +118,7 @@ export default function ContactPage() {
                   className="space-y-4"
                 >
                   <input type="hidden" name="form-name" value="homeowner-inquiry" />
-                  <p className="hidden">
-                    <label>
-                      Don&apos;t fill this out: <input name="bot-field" />
-                    </label>
-                  </p>
+                  <input type="text" name="bot-field" style={{ display: "none" }} aria-hidden="true" />
 
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
@@ -247,11 +243,7 @@ export default function ContactPage() {
                   className="space-y-4"
                 >
                   <input type="hidden" name="form-name" value="partner-inquiry" />
-                  <p className="hidden">
-                    <label>
-                      Don&apos;t fill this out: <input name="bot-field" />
-                    </label>
-                  </p>
+                  <input type="text" name="bot-field" style={{ display: "none" }} aria-hidden="true" />
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">

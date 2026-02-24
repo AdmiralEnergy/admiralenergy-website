@@ -8,7 +8,7 @@
 <head><title>Form Placeholders</title></head>
 <body>
   <form name="homeowner-inquiry" netlify netlify-honeypot="bot-field" hidden>
-    <input name="bot-field" />
+    <input type="text" name="bot-field" style="display:none" aria-hidden="true" />
     <input name="first-name" />
     <input name="last-name" />
     <input name="email" />
@@ -18,7 +18,7 @@
   </form>
 
   <form name="partner-inquiry" netlify netlify-honeypot="bot-field" hidden>
-    <input name="bot-field" />
+    <input type="text" name="bot-field" style="display:none" aria-hidden="true" />
     <input name="company" />
     <input name="contact-name" />
     <input name="email" />

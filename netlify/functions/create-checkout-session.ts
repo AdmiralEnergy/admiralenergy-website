@@ -1,6 +1,13 @@
 import type { Handler, HandlerEvent } from "@netlify/functions";
 import Stripe from "stripe";
+import { getProductById } from "../../src/data/products";
 
+/**
+ * PRICE SYNC REQUIRED
+ * These prices MUST match priceCents in src/data/products.ts.
+ * Discrepancy = wrong charge. Audit both files on every product change.
+ * Last verified: 2026-02-24
+ */
 // Product prices are defined here as the single source of truth.
 // These must match the priceCents in src/data/products.ts.
 const PRODUCT_PRICES: Record<string, { name: string; priceCents: number; description: string }> = {
@@ -11,14 +18,48 @@ const PRODUCT_PRICES: Record<string, { name: string; priceCents: number; descrip
   },
 };
 
+const ALLOWED_ORIGIN = process.env.NEXT_PUBLIC_SITE_URL || "https://admiralenergy.ai";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.URL || "https://admiralenergy.ai";
 
 const handler: Handler = async (event: HandlerEvent) => {
+  const origin = event.headers["origin"] || event.headers["Origin"] || "";
+  const corsHeaders = {
+    "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+  };
+
+  if (origin && origin !== ALLOWED_ORIGIN) {
+    return {
+      statusCode: 403,
+      headers: corsHeaders,
+      body: JSON.stringify({ error: "Forbidden" }),
+    };
+  }
+
+  if (event.httpMethod === "OPTIONS") {
+    return {
+      statusCode: 204,
+      headers: corsHeaders,
+      body: "",
+    };
+  }
+
   // Only allow POST
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
+      headers: corsHeaders,
       body: JSON.stringify({ error: "Method not allowed" }),
+    };
+  }
+
+  const contentType = event.headers["content-type"] || event.headers["Content-Type"] || "";
+  if (!contentType.includes("application/json")) {
+    return {
+      statusCode: 415,
+      headers: corsHeaders,
+      body: JSON.stringify({ error: "Unsupported Media Type" }),
     };
   }
 
@@ -28,6 +69,7 @@ const handler: Handler = async (event: HandlerEvent) => {
     console.error("STRIPE_SECRET_KEY is not set");
     return {
       statusCode: 500,
+      headers: corsHeaders,
       body: JSON.stringify({ error: "Payment service not configured" }),
     };
   }
@@ -37,23 +79,49 @@ const handler: Handler = async (event: HandlerEvent) => {
   });
 
   try {
-    const body = JSON.parse(event.body || "{}");
-    const { productId, quantity } = body;
+    let body: unknown;
+    try {
+      body = JSON.parse(event.body || "{}");
+    } catch {
+      return {
+        statusCode: 400,
+        headers: corsHeaders,
+        body: JSON.stringify({ error: "Invalid JSON" }),
+      };
+    }
+
+    const { productId, quantity } = body as { productId?: unknown; quantity?: unknown };
+    const sanitizedProductId =
+      typeof productId === "string" ? productId.replace(/[^a-zA-Z0-9_-]/g, "") : "";
 
     // Default to HS-43 if no productId
-    const resolvedProductId = productId || "hs-43-solar-power-bank";
+    const resolvedProductId = sanitizedProductId || "hs-43-solar-power-bank";
 
     // Look up product
     const product = PRODUCT_PRICES[resolvedProductId];
     if (!product) {
       return {
         statusCode: 400,
+        headers: corsHeaders,
         body: JSON.stringify({ error: "Invalid product" }),
       };
     }
 
+    const catalogProduct = getProductById(resolvedProductId);
+    if (!catalogProduct || catalogProduct.priceCents !== product.priceCents) {
+      console.error("Product pricing mismatch for", resolvedProductId);
+      return {
+        statusCode: 500,
+        headers: corsHeaders,
+        body: JSON.stringify({ error: "Product pricing mismatch" }),
+      };
+    }
+
     // Validate quantity
-    const qty = Math.max(1, Math.min(5, parseInt(String(quantity), 10) || 1));
+    const quantityNumber =
+      typeof quantity === "number" ? quantity : Number.parseInt(String(quantity), 10);
+    const normalizedQuantity = Number.isFinite(quantityNumber) ? Math.trunc(quantityNumber) : 1;
+    const qty = Math.max(1, Math.min(5, normalizedQuantity));
 
     // Optional: use a Stripe Price ID from env if configured
     const stripePriceId = process.env.STRIPE_PRICE_ID_HS43;
@@ -105,7 +173,7 @@ const handler: Handler = async (event: HandlerEvent) => {
 
     return {
       statusCode: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
       body: JSON.stringify({ url: session.url }),
     };
   } catch (err: unknown) {
@@ -113,6 +181,7 @@ const handler: Handler = async (event: HandlerEvent) => {
     console.error("Stripe checkout error:", message);
     return {
       statusCode: 500,
+      headers: corsHeaders,
       body: JSON.stringify({ error: "Failed to create checkout session" }),
     };
   }
