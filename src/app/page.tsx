@@ -7,8 +7,7 @@ export default function HomePage() {
     <>
       {/* TEMP: AvantLink site ownership verification — remove after verification. */}
       <Script
-        type="text/javascript"
-        src="http://classic.avantlink.com/affiliate_app_confirm.php?mode=js&authResponse=b4fccba6d8ff1139cd80f0add54cd84b5a17d636"
+        src="https://classic.avantlink.com/affiliate_app_confirm.php?mode=js&authResponse=b4fccba6d8ff1139cd80f0add54cd84b5a17d636"
         strategy="afterInteractive"
       />
 
