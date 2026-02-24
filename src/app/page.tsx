@@ -4,17 +4,6 @@ import { Shield, ArrowRight, CheckCircle, Battery, Sun } from "lucide-react";
 export default function HomePage() {
   return (
     <>
-      {/* TEMP: AvantLink site ownership verification — remove after verification.
-          Uses dangerouslySetInnerHTML to output the exact HTML string without React
-          encoding & as &amp; (which breaks AvantLink's naive URL extraction).
-          See docs/AVANTLINK_VERIFICATION.md for removal instructions. */}
-      <div
-        dangerouslySetInnerHTML={{
-          __html:
-            '<script type="text/javascript" src="http://classic.avantlink.com/affiliate_app_confirm.php?mode=js&authResponse=b4fccba6d8ff1139cd80f0add54cd84b5a17d636"></script>',
-        }}
-      />
-
       {/* JSON-LD: LocalBusiness */}
       <script
         type="application/ld+json"
