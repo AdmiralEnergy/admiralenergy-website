@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { products } from "@/data/products";
-import { ArrowRight, Battery, ShoppingBag } from "lucide-react";
+import { ArrowRight, Battery, ShoppingBag, Sun, CheckCircle, Zap } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Shop Portable Backup Power",
+  title: "Shop Portable Power | Generac GB1000 & Solar Panels",
   description:
-    "Solar power banks, portable stations, and emergency kits for North Carolina homeowners. Own your backup power today.",
+    "Shop the Generac GB1000 portable power station, Admiral 200W foldable solar panels, and emergency kits. Portable backup power for NC homeowners.",
 };
 
 export default function ShopPage() {
@@ -16,17 +16,19 @@ export default function ShopPage() {
       {/* Hero */}
       <section className="bg-gradient-to-br from-admiral-navy to-[#0a2540] text-white py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-admiral-gold font-semibold text-sm uppercase tracking-wider mb-3">
+            Shop Portable Power
+          </p>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Shop Portable Backup Power
+            Backup Power You Can Own Today
           </h1>
           <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-            Curated resilience products for NC homeowners. Every product we sell,
-            we&apos;d put in our own home.
+            Generac power stations, foldable solar panels, and emergency kits — curated for NC homeowners. Every product we sell, we&apos;d put in our own home.
           </p>
         </div>
       </section>
 
-      {/* Products Grid */}
+      {/* Products Grid (Above the Fold) */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -35,8 +37,8 @@ export default function ShopPage() {
                 key={product.id}
                 className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col"
               >
-                {/* Image placeholder */}
-                <div className="bg-gray-50 h-48 flex items-center justify-center relative">
+                {/* Image */}
+                <div className="bg-gray-50 h-52 flex items-center justify-center relative">
                   {product.images[0] ? (
                     <Image
                       src={product.images[0]}
@@ -81,9 +83,9 @@ export default function ShopPage() {
                       ) : (
                         <Link
                           href={`/shop/${product.slug}`}
-                          className="text-sm text-admiral-navy font-medium hover:text-admiral-gold transition-colors inline-flex items-center gap-1"
+                          className="bg-admiral-gold text-admiral-navy px-3 py-1.5 rounded-md text-sm font-semibold hover:bg-gold-light transition-colors inline-flex items-center gap-1"
                         >
-                          Details <ArrowRight className="w-3 h-3" />
+                          View Details <ArrowRight className="w-3 h-3" />
                         </Link>
                       )}
                     </div>
@@ -92,19 +94,60 @@ export default function ShopPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* Affiliate note */}
-          <div className="mt-12 bg-blue-50 border border-blue-100 rounded-xl p-6 text-center">
-            <p className="text-sm text-gray-600">
-              Looking for whole-home backup? We also review and recommend
-              professional-grade systems like the{" "}
+      {/* Education: Portable Power is the Fastest Way to Start */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <Sun className="w-10 h-10 text-admiral-gold mb-4" />
+              <h2 className="text-3xl font-bold text-admiral-navy mb-4">
+                Portable Power Is the Fastest Way to Start
+              </h2>
+              <p className="text-gray-600 text-lg mb-6">
+                Portable power stations + foldable solar panels = renewable backup without permitting, contractors, or utility interconnection. It&apos;s the fastest way for anyone to benefit from solar energy.
+              </p>
+              <ul className="space-y-3 mb-6">
+                {[
+                  "No permits or electrician needed",
+                  "Works for outages, hurricanes, camping, and WFH continuity",
+                  "Solar recharging means indefinite power with sun",
+                  "Start here — upgrade to whole-home later if needed",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-admiral-gold mt-0.5 flex-shrink-0" />
+                    <span className="text-gray-700">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="bg-white rounded-2xl shadow-md p-8">
+              <Zap className="w-8 h-8 text-admiral-navy mb-3" />
+              <h3 className="text-xl font-semibold text-admiral-navy mb-3">
+                Need Multi-Day Whole-Home Backup?
+              </h3>
+              <p className="text-gray-600 mb-4">
+                If you need backup that powers your entire home for days — not just essentials — a Generac home standby generator is the right move. We provide install quotes for the Charlotte / Kings Mountain area.
+              </p>
               <Link
-                href="/partners/ecoflow/delta-pro-ultra"
-                className="text-admiral-navy font-semibold underline hover:no-underline"
+                href="/contact"
+                className="bg-admiral-navy text-white px-6 py-3 rounded-lg font-semibold hover:bg-navy-light transition-colors inline-flex items-center gap-2"
               >
-                EcoFlow DELTA Pro Ultra
+                Get a Generac Install Quote <ArrowRight className="w-4 h-4" />
               </Link>
-              . Some product links may earn a small commission at no extra cost
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Affiliate note */}
+      <section className="py-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-blue-50 border border-blue-100 rounded-xl p-6 text-center">
+            <p className="text-sm text-gray-600">
+              Some product links may earn a small commission at no extra cost
               to you.{" "}
               <Link
                 href="/policies/affiliate-disclosure"

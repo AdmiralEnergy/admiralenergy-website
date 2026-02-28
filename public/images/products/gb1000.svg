@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <rect width="400" height="400" fill="#f8f9fa"/>
+  <rect x="100" y="120" width="200" height="160" rx="16" fill="#0c2f4a" opacity="0.1" stroke="#0c2f4a" stroke-width="2"/>
+  <rect x="120" y="140" width="80" height="30" rx="4" fill="#c9a648" opacity="0.3"/>
+  <text x="160" y="160" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#0c2f4a" font-weight="bold">GB1000</text>
+  <rect x="120" y="185" width="160" height="8" rx="4" fill="#0c2f4a" opacity="0.15"/>
+  <rect x="120" y="200" width="120" height="8" rx="4" fill="#0c2f4a" opacity="0.1"/>
+  <circle cx="150" cy="240" r="10" fill="#c9a648" opacity="0.4"/>
+  <circle cx="180" cy="240" r="10" fill="#c9a648" opacity="0.4"/>
+  <circle cx="210" cy="240" r="10" fill="#0c2f4a" opacity="0.15"/>
+  <circle cx="240" cy="240" r="10" fill="#0c2f4a" opacity="0.15"/>
+  <text x="200" y="330" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#999">Product image coming soon</text>
+</svg>

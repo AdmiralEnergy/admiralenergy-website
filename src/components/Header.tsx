@@ -8,10 +8,7 @@ import { Menu, X } from 'lucide-react';
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/shop', label: 'Shop' },
-  { href: '/portable-power', label: 'Portable Power' },
-  { href: '/home-resilience', label: 'Home Resilience' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/about', label: 'About' },
+  { href: '/blog', label: 'Home Resilience Blog' },
 ];
 
 export default function Header() {
@@ -48,7 +45,7 @@ export default function Header() {
               href="/contact"
               className="bg-admiral-gold text-admiral-navy px-4 py-2 rounded-md hover:bg-gold-light transition-colors font-semibold text-sm"
             >
-              Contact
+              Get a Quote
             </Link>
           </div>
 
@@ -80,7 +77,7 @@ export default function Header() {
               className="block px-3 py-2 bg-admiral-gold text-admiral-navy rounded-md font-semibold"
               onClick={() => setMobileOpen(false)}
             >
-              Contact
+              Get a Quote
             </Link>
           </div>
         </div>

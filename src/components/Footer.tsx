@@ -19,7 +19,7 @@ export default function Footer() {
               <span className="ml-3 text-xl font-bold">Admiral Energy</span>
             </div>
             <p className="text-gray-300 mb-4">
-              Portable Energy Autonomy &amp; Home Resilience for North Carolina.
+              Portable Backup Power, Generac Home Generators &amp; Home Resilience for North Carolina.
               No pitch. Just math. Be the Admiral of Your Energy.
             </p>
             <p className="text-sm text-gray-400">Kings Mountain, NC</p>
@@ -30,11 +30,12 @@ export default function Footer() {
             <h3 className="font-semibold mb-4">Explore</h3>
             <ul className="space-y-2 text-gray-300">
               <li><Link href="/shop" className="hover:text-admiral-gold transition-colors">Shop</Link></li>
-              <li><Link href="/portable-power" className="hover:text-admiral-gold transition-colors">Portable Power</Link></li>
-              <li><Link href="/home-resilience" className="hover:text-admiral-gold transition-colors">Home Resilience</Link></li>
-              <li><Link href="/blog" className="hover:text-admiral-gold transition-colors">Blog</Link></li>
+              <li><Link href="/shop/gb1000" className="hover:text-admiral-gold transition-colors">Generac GB1000</Link></li>
+              <li><Link href="/shop/200w-solar-panel" className="hover:text-admiral-gold transition-colors">200W Solar Panel</Link></li>
+              <li><Link href="/blog" className="hover:text-admiral-gold transition-colors">Home Resilience Blog</Link></li>
               <li><Link href="/about" className="hover:text-admiral-gold transition-colors">About</Link></li>
               <li><Link href="/case-studies" className="hover:text-admiral-gold transition-colors">Resilience Stories</Link></li>
+              <li><Link href="/home-resilience" className="hover:text-admiral-gold transition-colors">Home Resilience Guide</Link></li>
             </ul>
           </div>
 
@@ -42,7 +43,7 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Contact &amp; Policies</h3>
             <ul className="space-y-2 text-gray-300">
-              <li><Link href="/contact" className="hover:text-admiral-gold transition-colors">Contact Us</Link></li>
+              <li><Link href="/contact" className="hover:text-admiral-gold transition-colors font-semibold text-admiral-gold">Get a Quote</Link></li>
               <li><a href="mailto:david@admiralenergy.ai" className="hover:text-admiral-gold transition-colors">david@admiralenergy.ai</a></li>
               <li><Link href="/policies/shipping" className="hover:text-admiral-gold transition-colors">Shipping</Link></li>
               <li><Link href="/policies/returns" className="hover:text-admiral-gold transition-colors">Returns</Link></li>

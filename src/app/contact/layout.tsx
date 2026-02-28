@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact Admiral Energy",
+  title: "Get a Quote — Generac Installs & Portable Power",
   description:
-    "Reach out for portable power advice, solar consultations, or partnership inquiries. No sales scripts — just a real conversation.",
+    "Request a quote for a Generac generator install, GB1000 portable power station, or solar panel bundle. Charlotte metro + Kings Mountain, NC.",
 };
 
 export default function ContactLayout({

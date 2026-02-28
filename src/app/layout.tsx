@@ -19,26 +19,26 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Admiral Energy — Portable Energy Autonomy & Home Resilience | North Carolina",
+    default: "Admiral Energy — Generac GB1000, 200W Solar Panels & Generator Installs | North Carolina",
     template: "%s | Admiral Energy",
   },
   description:
-    "Portable backup power, home resilience planning, and expert guidance for North Carolina homeowners. No pitch. Just math.",
+    "Shop the Generac GB1000 portable power station, Admiral 200W solar panels, and get Generac generator install quotes in Charlotte & Kings Mountain, NC. No pitch. Just math.",
   metadataBase: new URL(SITE_URL),
   openGraph: {
     type: "website",
     locale: "en_US",
     url: SITE_URL,
     siteName: "Admiral Energy",
-    title: "Admiral Energy — Portable Energy Autonomy & Home Resilience",
+    title: "Admiral Energy — Generac GB1000, Solar Panels & Generator Installs",
     description:
-      "Portable backup power, home resilience planning, and expert guidance for North Carolina homeowners.",
+      "Shop portable backup power and get Generac install quotes for North Carolina homeowners.",
     images: [{ url: "/logos/admiral-energy-share.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Admiral Energy — Portable Energy Autonomy",
-    description: "Backup power & resilience for NC homeowners.",
+    title: "Admiral Energy — Generac GB1000 & Generator Installs",
+    description: "Portable backup power & Generac installs for NC homeowners.",
     images: ["/logos/admiral-energy-share.png"],
   },
   icons: {
@@ -63,7 +63,7 @@ export default function RootLayout({
     name: "Admiral Energy",
     url: SITE_URL,
     logo: `${SITE_URL}/logos/ae-logo-horiz-bg.png`,
-    description: "Portable Energy Autonomy & Home Resilience for North Carolina homeowners.",
+    description: "Portable backup power, Generac home generators, and energy resilience for North Carolina homeowners.",
     address: {
       "@type": "PostalAddress",
       addressLocality: "Kings Mountain",

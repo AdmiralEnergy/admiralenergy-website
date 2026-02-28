@@ -36,10 +36,12 @@ export default function ContactPage() {
       {/* Hero */}
       <section className="bg-admiral-navy text-white py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl font-bold mb-4">Get In Touch</h1>
+          <h1 className="text-4xl font-bold mb-4">Get a Quote</h1>
           <p className="text-gray-300 text-lg">
-            Whether you&apos;re a homeowner looking for guidance or a potential
-            partner, we&apos;re here to help. No sales scripts — just real conversation.
+            Request a quote for: Generac generator install • GB1000 • Solar panel bundle
+          </p>
+          <p className="text-blue-200 text-sm mt-2">
+            No sales scripts — just a real conversation about what makes sense for your home.
           </p>
         </div>
       </section>
@@ -176,10 +178,10 @@ export default function ContactPage() {
                       name="interest"
                       className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-admiral-gold focus:border-admiral-gold"
                     >
-                      <option value="portable-power">Portable Power Products</option>
-                      <option value="storm-prep">Storm Preparedness Advice</option>
-                      <option value="whole-home">Whole-Home Battery Backup</option>
-                      <option value="solar">Solar Installation Consultation</option>
+                      <option value="generac-install">Generac Generator Install Quote</option>
+                      <option value="gb1000">Portable Power (GB1000)</option>
+                      <option value="solar-bundle">Solar Panel Bundle</option>
+                      <option value="not-sure">Not Sure — Help Me Choose</option>
                       <option value="general">General Question</option>
                     </select>
                   </div>

@@ -4,9 +4,9 @@ import { getAllPosts } from "@/lib/blog";
 import { Clock, ArrowRight, BookOpen } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: "Home Resilience Blog",
   description:
-    "Practical guides on portable power, solar energy, home resilience, and storm preparedness for NC homeowners.",
+    "Generators, portable power, outage prep, and NC incentives — practical guides for North Carolina homeowners from Admiral Energy.",
 };
 
 export default function BlogPage() {
@@ -18,11 +18,18 @@ export default function BlogPage() {
       <section className="bg-admiral-navy text-white py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <BookOpen className="w-10 h-10 text-admiral-gold mx-auto mb-4" />
-          <h1 className="text-4xl font-bold mb-4">Energy Intelligence</h1>
-          <p className="text-gray-300 text-lg">
+          <h1 className="text-4xl font-bold mb-4">Home Resilience Blog</h1>
+          <p className="text-gray-300 text-lg mb-6">
             Practical guides, honest takes, and real information — no fluff,
             no sales pitches, just what NC homeowners actually need to know.
           </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {["Generators (Generac)", "Portable Power", "Outage Prep", "NC Incentives (PowerPair)"].map((cat) => (
+              <span key={cat} className="bg-white/10 text-white text-xs font-medium px-3 py-1.5 rounded-full">
+                {cat}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
