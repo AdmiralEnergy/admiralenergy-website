@@ -116,26 +116,35 @@ const sidekickLinks = [
 
 function SidekickHeader({ mobileOpen, setMobileOpen }: SidekickHeaderProps) {
   return (
-    <header className="sticky top-0 z-50 shadow-lg">
+    <header className="sticky top-0 z-50 overflow-x-hidden shadow-lg">
       <div className="bg-admiral-gold text-admiral-navy">
-        <div className="mx-auto flex max-w-7xl items-center justify-center gap-3 overflow-x-auto whitespace-nowrap px-4 py-2 text-[0.7rem] font-bold sm:text-xs">
-          <span>FREE SHIPPING</span>
+        <div className="mx-auto flex max-w-sm items-center justify-between gap-2 overflow-hidden px-3 py-2 text-[0.62rem] font-bold sm:max-w-7xl sm:justify-center sm:gap-3 sm:px-4 sm:text-xs">
+          <span>
+            <span className="hidden sm:inline">FREE SHIPPING</span>
+            <span className="sm:hidden">FREE SHIP</span>
+          </span>
           <span className="h-1 w-1 shrink-0 rounded-full bg-admiral-navy/60" />
-          <span>30-DAY RETURNS</span>
+          <span>
+            <span className="hidden sm:inline">30-DAY RETURNS</span>
+            <span className="sm:hidden">RETURNS</span>
+          </span>
           <span className="h-1 w-1 shrink-0 rounded-full bg-admiral-navy/60" />
-          <span>1-YEAR LIMITED WARRANTY</span>
+          <span>
+            <span className="hidden sm:inline">1-YEAR LIMITED WARRANTY</span>
+            <span className="sm:hidden">WARRANTY</span>
+          </span>
         </div>
       </div>
       <nav className="bg-admiral-navy text-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between gap-4">
+        <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
+          <div className="flex h-14 items-center justify-between gap-2 sm:h-16 sm:gap-4">
             <a href="#overview" className="flex min-w-0 items-center gap-3">
               <Image
                 src="/logos/ae-logo-horiz-bg.png"
                 alt="Admiral Energy"
                 width={132}
                 height={34}
-                className="h-8 w-auto rounded-lg p-0.5 shadow-sm ring-1 ring-black/5"
+                className="h-7 w-auto rounded-lg p-0.5 shadow-sm ring-1 ring-black/5 sm:h-8"
                 priority
               />
               <span className="hidden text-xs font-semibold uppercase text-admiral-gold sm:inline">
@@ -159,11 +168,11 @@ function SidekickHeader({ mobileOpen, setMobileOpen }: SidekickHeaderProps) {
               <a
                 href="#buy"
                 onClick={() => trackSidekickBuyClick('nav')}
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-admiral-gold px-3 py-2 text-sm font-bold text-admiral-navy transition-colors hover:bg-gold-light sm:px-4"
+                className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-admiral-gold px-3 py-2 text-xs font-bold text-admiral-navy transition-colors hover:bg-gold-light sm:gap-2 sm:px-4 sm:text-sm"
               >
                 <ShoppingBag className="h-4 w-4" />
                 <span className="hidden sm:inline">Get Sidekick - $69.99</span>
-                <span className="sm:hidden">Buy $69.99</span>
+                <span className="sm:hidden">Buy $69</span>
               </a>
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}

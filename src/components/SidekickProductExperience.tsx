@@ -443,15 +443,15 @@ export default function SidekickProductExperience({ product }: SidekickProductEx
   }
 
   return (
-    <div className="bg-admiral-white text-gray-900">
+    <div className="w-full overflow-x-hidden bg-admiral-white text-gray-900">
       <section
         id="overview"
         ref={heroRef}
         className="bg-admiral-navy text-white"
       >
-        <div className="mx-auto grid min-h-[calc(100svh-152px)] max-w-7xl items-center gap-10 px-4 py-8 sm:px-6 md:py-12 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
-          <div className="order-1 lg:order-2">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-lg border border-white/10 bg-[#111820]">
+        <div className="mx-auto grid w-full max-w-7xl items-center gap-6 px-4 py-5 sm:px-6 md:gap-10 md:py-12 lg:min-h-[calc(100svh-152px)] lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
+          <div className="min-w-0 lg:order-2">
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg border border-white/10 bg-white sm:bg-[#111820]">
               <button
                 type="button"
                 onClick={() => setLightboxImage(activeImage)}
@@ -465,17 +465,17 @@ export default function SidekickProductExperience({ product }: SidekickProductEx
                 alt={activeImage.alt}
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                className="object-contain transition-transform duration-500 group-hover:scale-[1.02] sm:object-cover"
                 priority
               />
             </div>
-            <div className="mt-4 flex gap-3 overflow-x-auto pb-2">
+            <div className="mt-3 hidden max-w-full snap-x gap-2 overflow-x-auto pb-2 sm:flex md:mt-4 md:gap-3">
               {galleryImages.map((image) => (
                 <button
                   key={image.src}
                   type="button"
                   onClick={() => selectGalleryImage(image)}
-                  className={`relative h-20 w-24 shrink-0 overflow-hidden rounded-lg border transition ${
+                  className={`relative h-16 w-20 shrink-0 snap-start overflow-hidden rounded-lg border transition sm:h-20 sm:w-24 ${
                     activeImage.src === image.src
                       ? "border-admiral-gold"
                       : "border-white/20 hover:border-white/50"
@@ -495,47 +495,65 @@ export default function SidekickProductExperience({ product }: SidekickProductEx
                 </button>
               ))}
             </div>
-            <p className="mt-2 text-xs text-white/65">{activeImage.caption}</p>
+            <p className="mt-1 hidden text-xs leading-5 text-white/65 sm:block md:mt-2">{activeImage.caption}</p>
           </div>
 
-          <div className="order-2 lg:order-1">
-            <p className="mb-3 text-sm font-bold uppercase text-admiral-gold">
+          <div className="min-w-0 lg:order-1">
+            <p className="mb-2 text-xs font-bold uppercase text-admiral-gold sm:text-sm">
               Portable Field Power
             </p>
-            <h1 className="max-w-3xl text-4xl font-black leading-[1.02] sm:text-5xl lg:text-6xl">
-              Your Phone Shouldn&apos;t Clock Out Before You Do.
+            <h1 className="max-w-full text-[1.7rem] font-black leading-[1.08] sm:text-5xl lg:max-w-3xl lg:text-6xl">
+              <span className="block sm:inline">Your Phone Shouldn&apos;t</span>{" "}
+              <span className="block sm:inline">Clock Out Before</span>{" "}
+              <span className="block sm:inline">You Do.</span>
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-white/82">
+            <div className="mt-5 rounded-lg border border-white/10 bg-white/[0.06] p-3 sm:hidden">
+              <div className="flex items-end justify-between gap-3">
+                <div>
+                  <p className="text-xs font-semibold uppercase text-white/60">SIDEKICK PowerBank</p>
+                  <p className="mt-1 text-3xl font-black">${product.price.toFixed(2)}</p>
+                </div>
+                <p className="pb-1 text-sm font-bold text-admiral-gold">Free Shipping</p>
+              </div>
+              <CheckoutButton
+                location="hero-mobile"
+                className="mt-3 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-admiral-gold px-5 py-3 text-sm font-black text-admiral-navy transition-colors hover:bg-gold-light disabled:cursor-not-allowed disabled:opacity-70"
+              >
+                <ShoppingBag className="h-5 w-5" />
+                GET YOUR SIDEKICK
+              </CheckoutButton>
+            </div>
+            <p className="mt-4 max-w-full text-base leading-7 text-white/82 sm:text-lg sm:leading-8 lg:max-w-2xl">
               Sidekick gives you portable backup power when the job, road, or day takes you away
               from an outlet.
             </p>
-            <p className="mt-4 max-w-2xl text-base font-semibold text-white">
+            <p className="mt-3 max-w-full text-sm font-semibold leading-6 text-white sm:text-base lg:max-w-2xl">
               40,000mAh capacity. Built-in charging cables. Emergency lighting. Multiple ways to
               recharge.
             </p>
-            <p className="mt-5 text-2xl font-bold text-admiral-gold">
+            <p className="mt-4 text-xl font-bold leading-7 text-admiral-gold sm:text-2xl">
               The Only PowerBank You&apos;ll Ever Need.
             </p>
-            <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center">
-              <div>
-                <p className="text-4xl font-black">${product.price.toFixed(2)}</p>
+            <div className="mt-7 hidden gap-4 sm:flex sm:flex-row sm:items-center">
+              <div className="flex items-end justify-between gap-4 sm:block">
+                <p className="text-3xl font-black sm:text-4xl">${product.price.toFixed(2)}</p>
                 <p className="mt-1 text-sm font-semibold text-white/70">Free Shipping</p>
               </div>
               <CheckoutButton
                 location="hero"
-                className="inline-flex min-h-14 items-center justify-center gap-2 rounded-lg bg-admiral-gold px-7 py-4 text-base font-black text-admiral-navy transition-colors hover:bg-gold-light disabled:cursor-not-allowed disabled:opacity-70"
+                className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-lg bg-admiral-gold px-5 py-4 text-sm font-black text-admiral-navy transition-colors hover:bg-gold-light disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:px-7 sm:text-base"
               >
                 <ShoppingBag className="h-5 w-5" />
                 GET YOUR SIDEKICK
               </CheckoutButton>
               <a
                 href="#video"
-                className="inline-flex min-h-14 items-center justify-center rounded-lg border border-white/30 px-6 py-4 text-base font-bold text-white transition-colors hover:border-white hover:bg-white/10"
+                className="inline-flex min-h-12 w-full items-center justify-center rounded-lg border border-white/30 px-5 py-3 text-sm font-bold text-white transition-colors hover:border-white hover:bg-white/10 sm:min-h-14 sm:w-auto sm:px-6 sm:py-4 sm:text-base"
               >
                 See It In Action
               </a>
             </div>
-            <div className="mt-6 flex flex-wrap gap-3 text-sm text-white/75">
+            <div className="mt-5 grid gap-2 text-xs text-white/75 sm:flex sm:flex-wrap sm:gap-3 sm:text-sm">
               <span className="inline-flex items-center gap-2">
                 <ShieldCheck className="h-4 w-4 text-admiral-gold" />
                 Secure Stripe Checkout
@@ -549,7 +567,7 @@ export default function SidekickProductExperience({ product }: SidekickProductEx
 
       <section className="bg-[#071c2c] py-9 text-white">
         <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-black uppercase sm:text-3xl">
+          <h2 className="text-xl font-black uppercase leading-tight sm:text-3xl">
             Your Truck. Your Bag. Your Toolbox. Your Sidekick.
           </h2>
           <p className="mt-3 text-white/70">Sidekick was made for the places outlets aren&apos;t.</p>
@@ -571,8 +589,8 @@ export default function SidekickProductExperience({ product }: SidekickProductEx
       </section>
 
       <section className="sidekick-reveal py-16 md:py-20" data-sidekick-reveal>
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
-          <div className="relative min-h-[360px] overflow-hidden rounded-lg bg-gray-200">
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-10 lg:px-8">
+          <div className="relative min-h-[260px] overflow-hidden rounded-lg bg-gray-200 sm:min-h-[360px]">
             <Image
               src="/images/sidekick/field-real-20260812.webp"
               alt="Sidekick PowerBank on a tabletop showing the solar face and flashlight edge"
@@ -583,7 +601,7 @@ export default function SidekickProductExperience({ product }: SidekickProductEx
           </div>
           <div className="flex flex-col justify-center">
             <p className="mb-3 text-sm font-bold uppercase text-admiral-gold">The Problem</p>
-            <h2 className="text-4xl font-black text-admiral-navy">8% Battery. Three Jobs Left.</h2>
+            <h2 className="text-3xl font-black leading-tight text-admiral-navy sm:text-4xl">8% Battery. Three Jobs Left.</h2>
             <p className="mt-5 text-lg leading-8 text-gray-700">
               Your phone isn&apos;t just your phone when you&apos;re working in the field. It is your GPS,
               camera, communication, schedule, invoices, payments, authentication, hotspot, and
