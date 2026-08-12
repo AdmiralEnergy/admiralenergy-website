@@ -24,7 +24,7 @@ Set these in **Netlify → Site Settings → Environment Variables** before depl
 | `STRIPE_WEBHOOK_SECRET` | `whsec_...` (production webhook signing secret) |
 | `NEXT_PUBLIC_SITE_URL` | `https://admiralenergy.ai` |
 
-> **Optional:** `STRIPE_PRICE_ID_HS43` — set if you created a Price object in Stripe Dashboard instead of using inline `price_data`.
+> **Optional:** `STRIPE_PRICE_ID_SIDEKICK` — set if you created a Sidekick Price object in Stripe Dashboard instead of using inline `price_data`.
 
 ---
 
@@ -57,10 +57,10 @@ If `npm run lint` fails on pre-existing warnings, note them — do not block lau
 
 Perform on **Deploy Preview** first, then repeat on production.
 
-### 4.1 Visit HS-43 Product Page
+### 4.1 Visit Sidekick Product Page
 
-1. Navigate to `/shop/hs-43-solar-power-bank`
-2. Confirm: product name, price ($59.99), images, and "Buy Now" button render.
+1. Navigate to `/shop/sidekick`
+2. Confirm: product name, price ($69.99), images, and "Buy Now" button render.
 
 ### 4.2 Buy Now → Stripe Checkout
 
@@ -85,7 +85,7 @@ Perform on **Deploy Preview** first, then repeat on production.
 2. Confirm `=== ORDER COMPLETED ===` log entry with:
    - Session ID
    - Customer email
-   - Amount total ($59.99)
+   - Amount total ($69.99)
    - Payment status: `paid`
    - Shipping address
 
@@ -109,6 +109,7 @@ Run immediately after production deploy.
 | `/privacy.html` | → `/policies/privacy` |
 | `/terms.html` | → `/policies/terms` |
 | `/index.html` | → `/` |
+| `/shop/hs-43-solar-power-bank` | → `/shop/sidekick` |
 
 ### 5.2 Contact Form Submission
 
@@ -126,7 +127,7 @@ Run immediately after production deploy.
 
 Run [PageSpeed Insights](https://pagespeed.web.dev/) on:
 - Homepage (`/`)
-- HS-43 product page (`/shop/hs-43-solar-power-bank`)
+- Sidekick product page (`/shop/sidekick`)
 - Contact page (`/contact`)
 
 **Target:** Performance ≥ 80, no critical CLS or LCP issues.

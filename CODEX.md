@@ -296,7 +296,7 @@ interface Product {
 
 | ID | Name | Slug | Price | Stripe |
 |----|------|------|-------|--------|
-| `hs-43-solar-power-bank` | Multifunctional Solar Power Bank | `hs-43-solar-power-bank` | $59.99 | ✅ |
+| `hs-43-solar-power-bank` | SIDEKICK PowerBank | `sidekick` | $69.99 | ✅ |
 | `solar-panel-100w` | 100W Portable Solar Panel | `100w-solar-panel` | $199.99 | ❌ |
 | `emergency-kit-001` | Storm Ready Emergency Kit | `storm-ready-kit` | $79.99 | ❌ |
 
@@ -371,7 +371,7 @@ Stripe redirects to /shop/success?session_id={CHECKOUT_SESSION_ID}
 - **Success URL:** `${SITE_URL}/shop/success?session_id={CHECKOUT_SESSION_ID}`
 - **Cancel URL:** `${SITE_URL}/shop/${slug}`
 - **Quantity limit:** 1–5 per checkout (enforced server-side)
-- **Price source:** Either inline `price_data` OR a `STRIPE_PRICE_ID_HS43` env var (optional)
+- **Price source:** Either inline `price_data` OR a `STRIPE_PRICE_ID_SIDEKICK` env var (optional)
 
 ### Adding Stripe to a New Product
 1. Add the product to `src/data/products.ts` with `stripeEnabled: true`
@@ -449,7 +449,7 @@ Blog posts inject:
 
 | Variable | Description |
 |----------|-------------|
-| `STRIPE_PRICE_ID_HS43` | Stripe Price ID for HS-43 product (if using pre-created prices) |
+| `STRIPE_PRICE_ID_SIDEKICK` | Stripe Price ID for Sidekick product (if using pre-created prices) |
 
 ### Notes
 - `NEXT_PUBLIC_*` variables are exposed to the browser bundle

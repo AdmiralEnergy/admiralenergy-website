@@ -6,15 +6,15 @@ import { getProductById } from "../../src/data/products";
  * PRICE SYNC REQUIRED
  * These prices MUST match priceCents in src/data/products.ts.
  * Discrepancy = wrong charge. Audit both files on every product change.
- * Last verified: 2026-02-24
+ * Last verified: 2026-08-12
  */
 // Product prices are defined here as the single source of truth.
 // These must match the priceCents in src/data/products.ts.
 const PRODUCT_PRICES: Record<string, { name: string; priceCents: number; description: string }> = {
   "hs-43-solar-power-bank": {
-    name: "HS-43 Multifunctional Solar Power Bank",
-    priceCents: 5999,
-    description: "40,000 mAh rugged solar power bank with hand crank, built-in cables, and emergency flashlight.",
+    name: "SIDEKICK PowerBank",
+    priceCents: 6999,
+    description: "40,000 mAh portable backup power with built-in cables, emergency lighting, solar backup, and hand-crank generation.",
   },
 };
 
@@ -124,7 +124,7 @@ const handler: Handler = async (event: HandlerEvent) => {
     const qty = Math.max(1, Math.min(5, normalizedQuantity));
 
     // Optional: use a Stripe Price ID from env if configured
-    const stripePriceId = process.env.STRIPE_PRICE_ID_HS43;
+    const stripePriceId = process.env.STRIPE_PRICE_ID_SIDEKICK;
 
     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = stripePriceId
       ? [{ price: stripePriceId, quantity: qty }]
@@ -135,7 +135,7 @@ const handler: Handler = async (event: HandlerEvent) => {
               product_data: {
                 name: product.name,
                 description: product.description,
-                images: [`${SITE_URL}/images/products/solar-power-bank.svg`],
+                images: [`${SITE_URL}/images/sidekick/hero-real-20260812.webp`],
               },
               unit_amount: product.priceCents,
             },
@@ -164,9 +164,10 @@ const handler: Handler = async (event: HandlerEvent) => {
         },
       ],
       success_url: `${SITE_URL}/shop/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${SITE_URL}/shop/hs-43-solar-power-bank?canceled=1`,
+      cancel_url: `${SITE_URL}/shop/sidekick?canceled=1`,
       metadata: {
         product_id: resolvedProductId,
+        product_slug: "sidekick",
         source: "admiral-energy-website",
       },
     });

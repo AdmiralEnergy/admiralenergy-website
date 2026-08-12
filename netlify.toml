@@ -82,6 +82,16 @@
   to = "/404"
   status = 301
 
+[[redirects]]
+  from = "/shop/hs-43-solar-power-bank"
+  to = "/shop/sidekick"
+  status = 301
+
+[[redirects]]
+  from = "/shop/solar-power-bank"
+  to = "/shop/sidekick"
+  status = 301
+
 # Security headers
 [[headers]]
   for = "/*"

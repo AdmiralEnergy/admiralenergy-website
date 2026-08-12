@@ -53,8 +53,8 @@ const checklistItems = [
     title: "Portable Power Station",
     description:
       "A 500Wh–1kWh LiFePO4 unit keeps phones, CPAP, Wi-Fi, and a mini-fridge running for 8-24 hours.",
-    link: "/shop/solar-power-bank",
-    linkText: "See our 500Wh Power Bank",
+    link: "/shop/sidekick",
+    linkText: "See Sidekick PowerBank",
   },
   {
     title: "Solar Charging Panel",

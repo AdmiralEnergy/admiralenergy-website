@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { products, getProductBySlug } from "@/data/products";
 import { ArrowLeft, CheckCircle, Battery, Truck, RotateCcw, Shield, Eye } from "lucide-react";
 import { SITE_URL } from "@/lib/site";
 import BuyNowButton from "@/components/BuyNowButton";
+import SidekickProductExperience from "@/components/SidekickProductExperience";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -17,9 +19,44 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = getProductBySlug(
+    slug === "hs-43-solar-power-bank" || slug === "solar-power-bank" ? "sidekick" : slug,
+  );
   if (!product) return {};
   const canonicalUrl = `${SITE_URL}/shop/${product.slug}`;
+  if (product.id === "hs-43-solar-power-bank") {
+    return {
+      title: {
+        absolute: "Sidekick PowerBank | Portable Field Power by Admiral Energy",
+      },
+      description:
+        "Meet Sidekick PowerBank by Admiral Energy. 40,000mAh portable backup power with built-in charging cables, emergency lighting, solar backup and hand-crank generation.",
+      alternates: {
+        canonical: canonicalUrl,
+      },
+      openGraph: {
+        title: "SIDEKICK PowerBank - The Only PowerBank You'll Ever Need",
+        description: "Portable power built for professionals who work beyond the outlet.",
+        type: "website",
+        url: canonicalUrl,
+        images: [
+          {
+            url: `${SITE_URL}/images/sidekick/og-sidekick-real-20260812.webp`,
+            width: 1200,
+            height: 630,
+            alt: "SIDEKICK PowerBank by Admiral Energy",
+          },
+        ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: "SIDEKICK PowerBank - The Only PowerBank You'll Ever Need",
+        description: "Portable power built for professionals who work beyond the outlet.",
+        images: [`${SITE_URL}/images/sidekick/og-sidekick-real-20260812.webp`],
+      },
+    };
+  }
+
   return {
     title: product.model ? `${product.name} (${product.model})` : product.name,
     description: product.shortDescription,
@@ -42,6 +79,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
+  if (slug === "hs-43-solar-power-bank" || slug === "solar-power-bank") {
+    redirect("/shop/sidekick");
+  }
+
   const product = getProductBySlug(slug);
   if (!product) notFound();
   const canonicalProductUrl = `${SITE_URL}/shop/${product.slug}`;
@@ -99,6 +140,10 @@ export default async function ProductPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
+
+      {product.id === "hs-43-solar-power-bank" ? (
+        <SidekickProductExperience product={product} />
+      ) : (
 
       <section className="py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -215,6 +260,7 @@ export default async function ProductPage({ params }: Props) {
           </div>
         </div>
       </section>
+      )}
     </>
   );
 }

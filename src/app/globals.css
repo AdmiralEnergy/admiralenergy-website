@@ -67,4 +67,27 @@ html {
   color: #555;
 }
 
+.sidekick-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 500ms ease, transform 500ms ease;
+}
+
+.sidekick-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .sidekick-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 
