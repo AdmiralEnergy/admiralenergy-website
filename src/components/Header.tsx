@@ -109,8 +109,8 @@ interface SidekickHeaderProps {
 const sidekickLinks = [
   { href: '#overview', label: 'Overview' },
   { href: '#features', label: 'Features' },
+  { href: '#utility', label: 'Utility' },
   { href: '#field', label: 'In the Field' },
-  { href: '#reviews', label: 'Reviews' },
   { href: '#faq', label: 'FAQ' },
 ];
 

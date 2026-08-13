@@ -119,16 +119,16 @@ export const products: Product[] = [
     sku: "AE-HS43-001",
     stripeEnabled: true,
     description:
-      "Sidekick gives professionals, travelers, outdoor users, and emergency kits reliable portable backup power when the job, road, or day takes them away from an outlet.",
+      "Portable power for people who work beyond the outlet. Sidekick combines 40,000mAh backup power, built-in charging cables, emergency lighting, solar backup, hand-crank generation, and convenient compass and bubble-level reference tools.",
     shortDescription:
-      "40,000 mAh portable backup power with built-in cables, emergency lighting, solar backup, and hand-crank generation.",
+      "40,000mAh portable power with built-in cables, emergency lighting, solar backup, hand crank, compass, and bubble level.",
     features: [
       "40,000 mAh / 148Wh rechargeable lithium polymer battery",
       "3-way charging: wall, solar panel, hand crank",
       "Fast charge: PD 20W (USB-C) + SCP 22.5W (USB-A)",
       "Built-in cables: USB-C, Micro-USB, and Lightning",
       "Emergency flashlight: 480 lumens, SOS/strobe modes, up to 25 hours",
-      "Built-in compass and bubble level",
+      "Built-in compass and bubble level reference tools",
       "Rugged, outdoor-ready frame",
       "Compact: fits in your hand (173 × 84 × 42 mm)",
     ],

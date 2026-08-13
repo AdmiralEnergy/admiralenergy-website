@@ -27,16 +27,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (product.id === "hs-43-solar-power-bank") {
     return {
       title: {
-        absolute: "Sidekick PowerBank | Portable Field Power by Admiral Energy",
+        absolute: "Sidekick PowerBank | Portable Field Power | Admiral Energy",
       },
       description:
-        "Meet Sidekick PowerBank by Admiral Energy. 40,000mAh portable backup power with built-in charging cables, emergency lighting, solar backup and hand-crank generation.",
+        "Meet Sidekick PowerBank by Admiral Energy. 40,000mAh portable power with built-in cables, emergency lighting, solar backup, hand-crank generation, compass and bubble level.",
       alternates: {
         canonical: canonicalUrl,
       },
       openGraph: {
-        title: "SIDEKICK PowerBank - The Only PowerBank You'll Ever Need",
-        description: "Portable power built for professionals who work beyond the outlet.",
+        title: "Sidekick PowerBank | Portable Field Power | Admiral Energy",
+        description:
+          "40,000mAh portable power with built-in cables, emergency lighting, solar backup, hand-crank generation, compass and bubble level.",
         type: "website",
         url: canonicalUrl,
         images: [
@@ -50,8 +51,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
       twitter: {
         card: "summary_large_image",
-        title: "SIDEKICK PowerBank - The Only PowerBank You'll Ever Need",
-        description: "Portable power built for professionals who work beyond the outlet.",
+        title: "Sidekick PowerBank | Portable Field Power | Admiral Energy",
+        description:
+          "40,000mAh portable power with built-in cables, emergency lighting, solar backup, hand-crank generation, compass and bubble level.",
         images: [`${SITE_URL}/images/sidekick/og-sidekick-real-20260812.webp`],
       },
     };
@@ -99,8 +101,8 @@ export default async function ProductPage({ params }: Props) {
       "@type": "Brand",
       name: "Admiral Energy",
     },
-    ...(product.model && { model: product.model }),
-    ...(product.sku && { sku: product.sku }),
+    ...(product.id !== "hs-43-solar-power-bank" && product.model && { model: product.model }),
+    ...(product.id !== "hs-43-solar-power-bank" && product.sku && { sku: product.sku }),
     offers: {
       "@type": "Offer",
       price: product.price.toFixed(2),
@@ -126,7 +128,7 @@ export default async function ProductPage({ params }: Props) {
           businessDays: {
             "@type": "QuantitativeValue",
             minValue: 5,
-            maxValue: 10,
+            maxValue: 7,
           },
         },
       },

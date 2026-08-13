@@ -14,7 +14,8 @@ const PRODUCT_PRICES: Record<string, { name: string; priceCents: number; descrip
   "hs-43-solar-power-bank": {
     name: "SIDEKICK PowerBank",
     priceCents: 6999,
-    description: "40,000 mAh portable backup power with built-in cables, emergency lighting, solar backup, and hand-crank generation.",
+    description:
+      "40,000mAh portable power with built-in cables, emergency lighting, solar backup, hand crank, compass, and bubble level.",
   },
 };
 
@@ -158,7 +159,7 @@ const handler: Handler = async (event: HandlerEvent) => {
             display_name: "Free shipping",
             delivery_estimate: {
               minimum: { unit: "business_day", value: 5 },
-              maximum: { unit: "business_day", value: 10 },
+              maximum: { unit: "business_day", value: 7 },
             },
           },
         },
