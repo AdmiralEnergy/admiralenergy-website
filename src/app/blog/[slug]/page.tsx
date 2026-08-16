@@ -4,6 +4,7 @@ import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
 import { ArrowLeft, Clock, User } from "lucide-react";
+import { SITE_URL } from "@/lib/site";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -20,11 +21,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: post.title,
     description: post.excerpt,
+    alternates: { canonical: `${SITE_URL}/blog/${post.slug}` },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: "article",
       publishedTime: post.date,
+      url: `${SITE_URL}/blog/${post.slug}`,
+      images: [],
+    },
+    twitter: {
+      card: "summary",
+      title: post.title,
+      description: post.excerpt,
+      images: [],
     },
   };
 }
@@ -101,10 +111,10 @@ export default async function BlogPostPage({ params }: Props) {
               Have questions about this topic?
             </p>
             <Link
-              href="/contact"
+              href="/home-backup"
               className="bg-admiral-gold text-admiral-navy px-6 py-2 rounded-lg font-semibold hover:bg-gold-light transition-colors inline-block"
             >
-              Talk to an Adviser
+              Explore Home Backup
             </Link>
           </footer>
         </div>

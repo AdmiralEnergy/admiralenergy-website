@@ -1,112 +1,35 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CheckCircle, Mail, ArrowRight, Phone } from "lucide-react";
+import { ArrowRight, CheckCircle, Mail, PackageCheck, Truck } from "lucide-react";
+import PostPurchaseExperience from "@/components/PostPurchaseExperience";
 
 export const metadata: Metadata = {
-  title: "Order Confirmed",
-  description: "Your Admiral Energy order has been placed successfully.",
+  title: "SideKick Order Confirmed",
+  description: "Your Admiral Energy SideKick order has been placed.",
   robots: { index: false, follow: false },
 };
 
-export default function SuccessPage() {
+export default async function SuccessPage({ searchParams }: { searchParams: Promise<{ session_id?: string }> }) {
+  const { session_id: sessionId } = await searchParams;
   return (
-    <>
-      <section className="py-20">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Success icon */}
-          <div className="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle className="w-10 h-10 text-green-600" />
-          </div>
+    <section className="py-20 md:py-24">
+      <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-emerald-100"><CheckCircle className="h-10 w-10 text-emerald-700" /></div>
+        <h1 className="mt-7 text-4xl font-black text-admiral-navy md:text-5xl">Your SideKick order is confirmed.</h1>
+        <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-slate-600">Thank you for choosing Admiral Energy. Stripe will send your payment receipt, and Admiral Energy will send tracking after the order ships.</p>
 
-          <h1 className="text-3xl md:text-4xl font-bold text-admiral-navy mb-4">
-            Order Confirmed!
-          </h1>
-
-          <p className="text-lg text-gray-600 mb-8">
-            Thank you for your purchase. Your order is being processed and
-            you&apos;ll receive a shipping confirmation email within 24 hours.
-          </p>
-
-          {/* What happens next */}
-          <div className="bg-gray-50 rounded-2xl p-8 mb-8 text-left">
-            <h2 className="text-xl font-semibold text-admiral-navy mb-4">
-              What happens next?
-            </h2>
-            <ol className="space-y-4">
-              <li className="flex items-start gap-3">
-                <span className="bg-admiral-navy text-white text-sm w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  1
-                </span>
-                <div>
-                  <p className="font-medium text-gray-900">Order confirmation</p>
-                  <p className="text-sm text-gray-600">
-                    You&apos;ll receive an email receipt from Stripe shortly.
-                  </p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="bg-admiral-navy text-white text-sm w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  2
-                </span>
-                <div>
-                  <p className="font-medium text-gray-900">Shipping notification</p>
-                  <p className="text-sm text-gray-600">
-                    We&apos;ll send tracking information within 1–2 business days.
-                  </p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="bg-admiral-navy text-white text-sm w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  3
-                </span>
-                <div>
-                  <p className="font-medium text-gray-900">Delivery</p>
-                  <p className="text-sm text-gray-600">
-                    Estimated delivery: 5–10 business days (free shipping to US addresses).
-                  </p>
-                </div>
-              </li>
-            </ol>
-          </div>
-
-          {/* Support */}
-          <div className="bg-blue-50 border border-blue-100 rounded-xl p-6 mb-8">
-            <h3 className="font-semibold text-admiral-navy mb-2">
-              Need help with your order?
-            </h3>
-            <div className="flex flex-col sm:flex-row justify-center gap-4 text-sm">
-              <a
-                href="mailto:info@admiralenergy.ai"
-                className="inline-flex items-center gap-2 text-admiral-navy hover:text-admiral-gold transition-colors"
-              >
-                <Mail className="w-4 h-4" /> info@admiralenergy.ai
-              </a>
-              <a
-                href="tel:+19842384187"
-                className="inline-flex items-center gap-2 text-admiral-navy hover:text-admiral-gold transition-colors"
-              >
-                <Phone className="w-4 h-4" /> (984) 238-4187
-              </a>
-            </div>
-          </div>
-
-          {/* CTA */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/shop"
-              className="bg-admiral-gold text-admiral-navy px-6 py-3 rounded-lg font-semibold hover:bg-gold-light transition-colors inline-flex items-center gap-2 justify-center"
-            >
-              Continue Shopping <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              href="/"
-              className="bg-white text-admiral-navy px-6 py-3 rounded-lg font-semibold border border-gray-200 hover:bg-gray-50 transition-colors inline-flex items-center gap-2 justify-center"
-            >
-              Back to Home
-            </Link>
-          </div>
+        <div className="my-10 grid gap-4 text-left sm:grid-cols-3">
+          <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200"><Mail className="h-6 w-6 text-admiral-gold" /><h2 className="mt-4 font-black text-admiral-navy">Receipt</h2><p className="mt-2 text-sm leading-6 text-slate-600">Sent to the email used at checkout.</p></div>
+          <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200"><PackageCheck className="h-6 w-6 text-admiral-gold" /><h2 className="mt-4 font-black text-admiral-navy">Processing</h2><p className="mt-2 text-sm leading-6 text-slate-600">Normally 1–2 business days.</p></div>
+          <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200"><Truck className="h-6 w-6 text-admiral-gold" /><h2 className="mt-4 font-black text-admiral-navy">Delivery</h2><p className="mt-2 text-sm leading-6 text-slate-600">Estimated 5–7 business days after processing.</p></div>
         </div>
-      </section>
-    </>
+
+        <PostPurchaseExperience sessionId={sessionId} />
+
+        <div className="mt-8 rounded-2xl bg-admiral-navy p-6 text-white"><h2 className="text-xl font-black">Need order help?</h2><p className="mt-2 text-slate-300">Email <a href="mailto:david@admiralenergy.ai" className="font-bold text-admiral-gold">david@admiralenergy.ai</a> or call <a href="tel:+19842384187" className="font-bold text-admiral-gold">(984) 238-4187</a>.</p></div>
+
+        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row"><Link href="/resources" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-admiral-gold px-6 py-3 font-extrabold text-admiral-navy">Read Backup Guides <ArrowRight className="h-4 w-4" /></Link><Link href="/home-backup" className="inline-flex min-h-12 items-center justify-center rounded-xl border border-slate-300 px-6 py-3 font-bold text-admiral-navy">Explore Home Backup</Link></div>
+      </div>
+    </section>
   );
 }

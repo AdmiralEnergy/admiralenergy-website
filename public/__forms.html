@@ -1,29 +1,37 @@
-<!-- 
-  Hidden form declarations for Netlify Forms detection.
-  Netlify's Next.js Runtime v5 requires static HTML forms for discovery.
-  The actual forms live in src/app/contact/page.tsx and submit via JS fetch.
--->
-<!DOCTYPE html>
-<html>
-<head><title>Form Placeholders</title></head>
-<body>
-  <form name="homeowner-inquiry" netlify netlify-honeypot="bot-field" hidden>
-    <input type="text" name="bot-field" style="display:none" aria-hidden="true" />
-    <input name="first-name" />
-    <input name="last-name" />
-    <input name="email" />
-    <input name="phone" />
-    <input name="interest" />
-    <textarea name="message"></textarea>
-  </form>
-
-  <form name="partner-inquiry" netlify netlify-honeypot="bot-field" hidden>
-    <input type="text" name="bot-field" style="display:none" aria-hidden="true" />
-    <input name="company" />
-    <input name="contact-name" />
-    <input name="email" />
-    <input name="partnership-type" />
-    <textarea name="details"></textarea>
-  </form>
-</body>
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8" /><title>Admiral Energy Form Definitions</title></head>
+  <body>
+    <!-- Static declarations allow Netlify Forms to discover the client-rendered forms. -->
+    <form name="resilience-list" netlify netlify-honeypot="bot-field" hidden>
+      <input name="bot-field" />
+      <input name="email" type="email" />
+      <input name="source" />
+    </form>
+    <form name="home-backup-assessment" netlify netlify-honeypot="bot-field" hidden>
+      <input name="bot-field" />
+      <input name="name" />
+      <input name="email" type="email" />
+      <input name="phone" />
+      <input name="zip" />
+      <input name="homeowner" />
+      <input name="priority" />
+      <textarea name="message"></textarea>
+    </form>
+    <form name="bulk-order-inquiry" netlify netlify-honeypot="bot-field" hidden>
+      <input name="bot-field" />
+      <input name="name" />
+      <input name="company" />
+      <input name="email" type="email" />
+      <input name="phone" />
+      <input name="quantity" />
+      <input name="timeline" />
+      <textarea name="notes"></textarea>
+    </form>
+    <form name="sidekick-interest" netlify netlify-honeypot="bot-field" hidden>
+      <input name="bot-field" />
+      <input name="session-id" />
+      <input name="reason" />
+    </form>
+  </body>
 </html>

@@ -15,7 +15,7 @@ const PRODUCT_PRICES: Record<string, { name: string; priceCents: number; descrip
     name: "SIDEKICK PowerBank",
     priceCents: 6999,
     description:
-      "40,000mAh portable power with built-in cables, emergency lighting, solar backup, hand crank, compass, and bubble level.",
+      "Portable backup power with built-in cables, emergency lighting, and supplemental solar and hand-crank charging.",
   },
 };
 
@@ -165,7 +165,7 @@ const handler: Handler = async (event: HandlerEvent) => {
         },
       ],
       success_url: `${SITE_URL}/shop/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${SITE_URL}/shop/sidekick?canceled=1`,
+      cancel_url: `${SITE_URL}/sidekick?canceled=1`,
       metadata: {
         product_id: resolvedProductId,
         product_slug: "sidekick",

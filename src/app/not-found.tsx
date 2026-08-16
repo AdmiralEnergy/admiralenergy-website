@@ -17,7 +17,7 @@ export default function NotFound() {
           Page not found
         </h2>
         <p className="text-blue-100 max-w-2xl mx-auto mb-10">
-          We couldn&apos;t locate that page. Head back to safer waters or browse the shop.
+          We couldn&apos;t locate that page. Head home, see SideKick, or explore whole-home backup.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
@@ -27,10 +27,10 @@ export default function NotFound() {
             Back to Home
           </Link>
           <Link
-            href="/shop"
+            href="/sidekick"
             className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-admiral-navy transition-colors"
           >
-            Visit the Shop
+            See SideKick
           </Link>
         </div>
       </div>

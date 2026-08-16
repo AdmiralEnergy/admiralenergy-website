@@ -11,15 +11,85 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-# Old static site redirects → new routes
+# Legacy URLs consolidated into the focused customer journey.
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/shop"
+  to = "/sidekick"
+  status = 301
+
+[[redirects]]
+  from = "/shop/sidekick"
+  to = "/sidekick"
+  status = 301
+
+[[redirects]]
+  from = "/shop/hs-43-solar-power-bank"
+  to = "/sidekick"
+  status = 301
+
+[[redirects]]
+  from = "/shop/solar-power-bank"
+  to = "/sidekick"
+  status = 301
+
+[[redirects]]
+  from = "/shop/gb1000"
+  to = "/resources"
+  status = 301
+
+[[redirects]]
+  from = "/shop/200w-solar-panel"
+  to = "/resources"
+  status = 301
+
+[[redirects]]
+  from = "/shop/100w-solar-panel"
+  to = "/resources"
+  status = 301
+
+[[redirects]]
+  from = "/shop/storm-ready-kit"
+  to = "/resources"
+  status = 301
+
 [[redirects]]
   from = "/services.html"
-  to = "/home-resilience"
+  to = "/home-backup"
   status = 301
 
 [[redirects]]
   from = "/services"
-  to = "/home-resilience"
+  to = "/home-backup"
+  status = 301
+
+[[redirects]]
+  from = "/quote.html"
+  to = "/home-backup"
+  status = 301
+
+[[redirects]]
+  from = "/quote"
+  to = "/home-backup"
+  status = 301
+
+[[redirects]]
+  from = "/contact"
+  to = "/home-backup"
+  status = 301
+
+[[redirects]]
+  from = "/portable-power"
+  to = "/resources"
+  status = 301
+
+[[redirects]]
+  from = "/home-resilience"
+  to = "/resources"
   status = 301
 
 [[redirects]]
@@ -33,23 +103,23 @@
   status = 301
 
 [[redirects]]
-  from = "/quote.html"
-  to = "/contact"
-  status = 301
-
-[[redirects]]
-  from = "/quote"
-  to = "/contact"
-  status = 301
-
-[[redirects]]
   from = "/about.html"
   to = "/about"
   status = 301
 
 [[redirects]]
   from = "/case-studies.html"
-  to = "/case-studies"
+  to = "/about"
+  status = 301
+
+[[redirects]]
+  from = "/case-studies"
+  to = "/about"
+  status = 301
+
+[[redirects]]
+  from = "/partners/ecoflow/delta-pro-ultra"
+  to = "/home-backup"
   status = 301
 
 [[redirects]]
@@ -73,8 +143,8 @@
   status = 301
 
 [[redirects]]
-  from = "/index.html"
-  to = "/"
+  from = "/policies/affiliate-disclosure"
+  to = "/policies/terms"
   status = 301
 
 [[redirects]]
@@ -82,22 +152,10 @@
   to = "/404"
   status = 301
 
-[[redirects]]
-  from = "/shop/hs-43-solar-power-bank"
-  to = "/shop/sidekick"
-  status = 301
-
-[[redirects]]
-  from = "/shop/solar-power-bank"
-  to = "/shop/sidekick"
-  status = 301
-
-# Security headers
 [[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
-    X-XSS-Protection = "1; mode=block"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"

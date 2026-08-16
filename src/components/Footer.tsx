@@ -1,64 +1,54 @@
 import Image from "next/image";
 import Link from "next/link";
 
+const primaryLinks = [
+  ["SideKick", "/sidekick"],
+  ["Home Backup", "/home-backup"],
+  ["About", "/about"],
+  ["Resources", "/resources"],
+];
+
+const policyLinks = [
+  ["Shipping", "/policies/shipping"],
+  ["Returns", "/policies/returns"],
+  ["Warranty", "/policies/warranty"],
+  ["Privacy", "/policies/privacy"],
+  ["Terms", "/policies/terms"],
+];
+
 export default function Footer() {
   return (
-    <footer className="bg-gray-800 text-white py-12">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-4 gap-8">
-          {/* Brand */}
-          <div className="md:col-span-2">
-            <div className="flex items-center mb-4">
-              <Image
-                src="/logos/ae-logo-horiz-bg.png"
-                alt="Admiral Energy"
-                width={140}
-                height={28}
-                className="h-7 w-auto rounded-md p-0.5 shadow-sm ring-1 ring-black/5"
-              />
-              <span className="ml-3 text-xl font-bold">Admiral Energy</span>
-            </div>
-            <p className="text-gray-300 mb-4">
-              Portable Backup Power, Generac Home Generators &amp; Home Resilience for North Carolina.
-              No pitch. Just math. Be the Admiral of Your Energy.
-            </p>
-            <p className="text-sm text-gray-400">Kings Mountain, NC</p>
+    <footer className="bg-[#071f31] py-14 text-white">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 md:grid-cols-[1.4fr_0.8fr_0.9fr] lg:px-8">
+        <div>
+          <div className="mb-5 flex items-center gap-3">
+            <Image src="/logos/ae-logo-horiz-bg.png" alt="Admiral Energy" width={140} height={34} className="h-8 w-auto rounded-md" />
+            <span className="text-xl font-bold">Admiral Energy</span>
           </div>
-
-          {/* Quick Links */}
-          <div>
-            <h3 className="font-semibold mb-4">Explore</h3>
-            <ul className="space-y-2 text-gray-300">
-              <li><Link href="/shop" className="hover:text-admiral-gold transition-colors">Shop</Link></li>
-              <li><Link href="/shop/gb1000" className="hover:text-admiral-gold transition-colors">Generac GB1000</Link></li>
-              <li><Link href="/shop/200w-solar-panel" className="hover:text-admiral-gold transition-colors">200W Solar Panel</Link></li>
-              <li><Link href="/blog" className="hover:text-admiral-gold transition-colors">Home Resilience Blog</Link></li>
-              <li><Link href="/about" className="hover:text-admiral-gold transition-colors">About</Link></li>
-              <li><Link href="/case-studies" className="hover:text-admiral-gold transition-colors">Resilience Stories</Link></li>
-              <li><Link href="/home-resilience" className="hover:text-admiral-gold transition-colors">Home Resilience Guide</Link></li>
-            </ul>
-          </div>
-
-          {/* Contact & Policies */}
-          <div>
-            <h3 className="font-semibold mb-4">Contact &amp; Policies</h3>
-            <ul className="space-y-2 text-gray-300">
-              <li><Link href="/contact" className="hover:text-admiral-gold transition-colors font-semibold text-admiral-gold">Get a Quote</Link></li>
-              <li><a href="mailto:david@admiralenergy.ai" className="hover:text-admiral-gold transition-colors">david@admiralenergy.ai</a></li>
-              <li><Link href="/policies/shipping" className="hover:text-admiral-gold transition-colors">Shipping</Link></li>
-              <li><Link href="/policies/returns" className="hover:text-admiral-gold transition-colors">Returns</Link></li>
-              <li><Link href="/policies/warranty" className="hover:text-admiral-gold transition-colors">Warranty</Link></li>
-              <li><Link href="/policies/privacy" className="hover:text-admiral-gold transition-colors">Privacy</Link></li>
-              <li><Link href="/policies/terms" className="hover:text-admiral-gold transition-colors">Terms</Link></li>
-              <li><Link href="/policies/affiliate-disclosure" className="hover:text-admiral-gold transition-colors">Affiliate Disclosure</Link></li>
-            </ul>
-          </div>
+          <p className="max-w-md leading-7 text-slate-300">A North Carolina home-energy resilience company. Start with portable personal power. Go further with an honest whole-home backup conversation.</p>
+          <p className="mt-4 text-sm font-semibold text-admiral-gold">No pitch. No exaggerated claims. Clear next steps.</p>
         </div>
 
-        <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col sm:flex-row justify-between items-center text-gray-400 text-sm">
-          <p>&copy; {new Date().getFullYear()} Admiral Energy LLC. All rights reserved.</p>
-          <p className="mt-2 sm:mt-0">Kings Mountain, North Carolina</p>
+        <div>
+          <h2 className="mb-4 text-sm font-extrabold uppercase tracking-[0.16em] text-admiral-gold">Explore</h2>
+          <ul className="space-y-3 text-slate-300">
+            {primaryLinks.map(([label, href]) => <li key={href}><Link href={href} className="transition hover:text-white">{label}</Link></li>)}
+          </ul>
         </div>
+
+        <div>
+          <h2 className="mb-4 text-sm font-extrabold uppercase tracking-[0.16em] text-admiral-gold">Contact & policies</h2>
+          <ul className="space-y-3 text-slate-300">
+            <li><a href="tel:+19842384187" className="transition hover:text-white">(984) 238-4187</a></li>
+            <li><a href="mailto:david@admiralenergy.ai" className="transition hover:text-white">david@admiralenergy.ai</a></li>
+            {policyLinks.map(([label, href]) => <li key={href}><Link href={href} className="transition hover:text-white">{label}</Link></li>)}
+          </ul>
+        </div>
+      </div>
+
+      <div className="mx-auto mt-10 flex max-w-7xl flex-col gap-2 border-t border-white/10 px-4 pt-7 text-sm text-slate-400 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
+        <p>© {new Date().getFullYear()} Admiral Energy LLC. Kings Mountain, North Carolina.</p>
+        <p>SideKick is not manufactured by Generac.</p>
       </div>
     </footer>
   );

@@ -27,6 +27,39 @@ body {
   overflow-x: hidden;
 }
 
+::selection {
+  background: rgba(201, 166, 72, 0.35);
+}
+
+:focus-visible {
+  outline: 3px solid var(--admiral-gold);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: -5rem;
+  z-index: 100;
+  border-radius: 0.5rem;
+  background: white;
+  color: var(--admiral-navy);
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+.eyebrow {
+  color: var(--admiral-gold);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
