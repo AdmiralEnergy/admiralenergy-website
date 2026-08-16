@@ -1,4 +1,4 @@
-# Launch Checklist — New Site (Portable Autonomy Rebrand)
+# Launch Checklist — Focused SideKick Storefront
 
 > Flip the "launch switch" from old static site → new Next.js site on Netlify.
 
@@ -59,8 +59,8 @@ Perform on **Deploy Preview** first, then repeat on production.
 
 ### 4.1 Visit Sidekick Product Page
 
-1. Navigate to `/shop/sidekick`
-2. Confirm: product name, price ($69.99), images, and "Buy Now" button render.
+1. Navigate to `/sidekick`.
+2. Confirm: SideKick product name, price ($69.99 USD), in-stock status, real product images, and purchase button render.
 
 ### 4.2 Buy Now → Stripe Checkout
 
@@ -99,23 +99,26 @@ Run immediately after production deploy.
 
 | Old URL | Expected Redirect |
 |---------|------------------|
-| `/services.html` | → `/home-resilience` |
-| `/services` | → `/home-resilience` |
+| `/services.html` | → `/home-backup` |
+| `/services` | → `/home-backup` |
 | `/powerpair.html` | → `/blog/powerpair-solar-battery-explained` |
 | `/powerpair` | → `/blog/powerpair-solar-battery-explained` |
-| `/quote.html` | → `/contact` |
+| `/quote.html` | → `/home-backup` |
 | `/about.html` | → `/about` |
-| `/case-studies.html` | → `/case-studies` |
+| `/case-studies.html` | → `/about` |
 | `/privacy.html` | → `/policies/privacy` |
 | `/terms.html` | → `/policies/terms` |
 | `/index.html` | → `/` |
-| `/shop/hs-43-solar-power-bank` | → `/shop/sidekick` |
+| `/shop` | → `/sidekick` |
+| `/shop/sidekick` | → `/sidekick` |
+| `/shop/hs-43-solar-power-bank` | → `/sidekick` |
+| Retired product URLs | → `/resources` |
 
 ### 5.2 Contact Form Submission
 
-1. Navigate to `/contact`.
-2. Fill in name, email, message.
-3. Submit — confirm success feedback (Netlify Forms or configured handler).
+1. Navigate to `/home-backup`.
+2. Fill in the home-backup assessment.
+3. Submit and confirm success feedback.
 
 ### 5.3 Blog Page Loads
 
@@ -127,8 +130,8 @@ Run immediately after production deploy.
 
 Run [PageSpeed Insights](https://pagespeed.web.dev/) on:
 - Homepage (`/`)
-- Sidekick product page (`/shop/sidekick`)
-- Contact page (`/contact`)
+- SideKick product page (`/sidekick`)
+- Home Backup page (`/home-backup`)
 
 **Target:** Performance ≥ 80, no critical CLS or LCP issues.
 
@@ -138,11 +141,10 @@ Run [PageSpeed Insights](https://pagespeed.web.dev/) on:
 |------|-------|
 | Homepage | `/` |
 | About | `/about` |
-| Home Resilience | `/home-resilience` |
-| Case Studies | `/case-studies` |
-| Shop | `/shop` |
+| SideKick | `/sidekick` |
+| Home Backup | `/home-backup` |
+| Resources | `/resources` |
 | Blog | `/blog` |
-| Contact | `/contact` |
 | Privacy | `/policies/privacy` |
 | Terms | `/policies/terms` |
 

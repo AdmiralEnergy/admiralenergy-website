@@ -43,7 +43,37 @@
   status = 301
 
 [[redirects]]
+  from = "/shop/generac-gb1000"
+  to = "/resources"
+  status = 301
+
+[[redirects]]
+  from = "/shop/gb1000-portable-power-station"
+  to = "/resources"
+  status = 301
+
+[[redirects]]
+  from = "/shop/generac-gb1000-portable-power-station"
+  to = "/resources"
+  status = 301
+
+[[redirects]]
   from = "/shop/200w-solar-panel"
+  to = "/resources"
+  status = 301
+
+[[redirects]]
+  from = "/shop/admiral-200w-solar-panel"
+  to = "/resources"
+  status = 301
+
+[[redirects]]
+  from = "/shop/200w-foldable-solar-panel"
+  to = "/resources"
+  status = 301
+
+[[redirects]]
+  from = "/shop/admiral-200w-foldable-solar-panel"
   to = "/resources"
   status = 301
 

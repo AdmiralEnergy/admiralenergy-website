@@ -118,6 +118,8 @@ export default function SidekickProductExperience({ product }: Props) {
   const [activeImage, setActiveImage] = useState(gallery[0]);
   const [stickyVisible, setStickyVisible] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
+  const formattedPrice = product.price.toFixed(2);
+  const availabilityLabel = product.inStock ? "In stock" : "Out of stock";
 
   useEffect(() => {
     trackEvent("view_item", { ecommerce: { currency: "USD", value: product.price, items: [sidekickAnalyticsItem] } });
@@ -139,10 +141,10 @@ export default function SidekickProductExperience({ product }: Props) {
             <p className="eyebrow">SideKick PowerBank</p>
             <h1 className="mt-4 text-4xl font-black leading-[1.04] tracking-tight sm:text-5xl lg:text-6xl">The Power Bank You Actually Keep With You.</h1>
             <p className="mt-6 max-w-xl text-lg leading-8 text-slate-200">You buy it for emergencies. Then the built-in cables, flashlight, and portable design make it useful for work, travel, vehicles, and everyday life.</p>
-            <div className="mt-7 flex flex-wrap items-end gap-4"><p className="text-5xl font-black text-admiral-gold">$69.99</p><p className="pb-1 text-sm font-semibold text-slate-300">In stock • Free standard shipping</p></div>
+            <div className="mt-7 flex flex-wrap items-end gap-4"><p className="text-5xl font-black text-admiral-gold"><data value={formattedPrice}>${formattedPrice} USD</data></p><p className="pb-1 text-sm font-semibold text-slate-300">New • {availabilityLabel} • Free standard shipping</p></div>
             <div id="buy" className="mt-7 scroll-mt-28">
               <CheckoutButton product={product} location="sidekick_hero" className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-admiral-gold px-7 py-4 text-base font-extrabold text-admiral-navy transition hover:bg-gold-light disabled:opacity-60 sm:w-auto">
-                <ShoppingBag className="h-5 w-5" aria-hidden="true" /> Get Your SideKick — $69.99
+                <ShoppingBag className="h-5 w-5" aria-hidden="true" /> Get Your SideKick — ${formattedPrice}
               </CheckoutButton>
             </div>
             <div className="mt-6 grid gap-2 text-sm text-slate-300 sm:grid-cols-3">{["Secure Stripe checkout", "30-day returns", "1-year limited warranty"].map((item) => <p key={item} className="flex items-center gap-2"><Check className="h-4 w-4 text-admiral-gold" />{item}</p>)}</div>
@@ -205,11 +207,11 @@ export default function SidekickProductExperience({ product }: Props) {
       </section>
 
       <section className="bg-admiral-gold py-16 text-admiral-navy">
-        <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 lg:grid-cols-[1fr_auto] lg:items-center lg:px-8"><div><h2 className="text-4xl font-black">Keep power within reach.</h2><p className="mt-3 text-lg">SideKick PowerBank • $69.99 • Free standard shipping</p></div><CheckoutButton product={product} location="sidekick_final" className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-admiral-navy px-7 py-4 font-extrabold text-white transition hover:bg-navy-light sm:w-auto"><ShoppingBag className="h-5 w-5" /> Get Your SideKick</CheckoutButton></div>
+        <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 lg:grid-cols-[1fr_auto] lg:items-center lg:px-8"><div><h2 className="text-4xl font-black">Keep power within reach.</h2><p className="mt-3 text-lg">SideKick PowerBank • ${formattedPrice} USD • {availabilityLabel} • Free standard shipping</p></div><CheckoutButton product={product} location="sidekick_final" className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-admiral-navy px-7 py-4 font-extrabold text-white transition hover:bg-navy-light sm:w-auto"><ShoppingBag className="h-5 w-5" /> Get Your SideKick</CheckoutButton></div>
       </section>
 
       <div className={`fixed inset-x-3 bottom-[calc(0.75rem+env(safe-area-inset-bottom))] z-40 md:hidden ${stickyVisible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-5 opacity-0"} transition duration-300`}>
-        <div className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-[#071f31] p-3 text-white shadow-2xl"><div><p className="text-sm font-black">SideKick</p><p className="text-sm font-extrabold text-admiral-gold">$69.99</p></div><CheckoutButton product={product} location="sidekick_sticky" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-admiral-gold px-5 py-2 text-sm font-extrabold text-admiral-navy"><ShoppingBag className="h-4 w-4" /> Buy now</CheckoutButton></div>
+        <div className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-[#071f31] p-3 text-white shadow-2xl"><div><p className="text-sm font-black">SideKick</p><p className="text-sm font-extrabold text-admiral-gold">${formattedPrice} USD</p></div><CheckoutButton product={product} location="sidekick_sticky" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-admiral-gold px-5 py-2 text-sm font-extrabold text-admiral-navy"><ShoppingBag className="h-4 w-4" /> Buy now</CheckoutButton></div>
       </div>
     </div>
   );

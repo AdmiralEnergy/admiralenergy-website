@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "audit:product-discovery": "node scripts/audit-product-discovery.mjs"
   },
   "dependencies": {
     "@netlify/plugin-nextjs": "^5.15.8",

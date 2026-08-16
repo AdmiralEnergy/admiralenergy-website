@@ -63,13 +63,6 @@ export const sidekickProduct: Product = {
   badge: "Admiral Energy Pick",
 };
 
-// The direct storefront intentionally contains one product.
-export const products: Product[] = [sidekickProduct];
-
-export function getProductBySlug(slug: string): Product | undefined {
-  return products.find((product) => product.slug === slug);
-}
-
 export function getProductById(id: string): Product | undefined {
-  return products.find((product) => product.id === id);
+  return id === sidekickProduct.id ? sidekickProduct : undefined;
 }

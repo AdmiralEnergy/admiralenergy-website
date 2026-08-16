@@ -117,20 +117,21 @@ admiralenergy-website/
 │   │   │   ├── shipping/page.tsx
 │   │   │   ├── terms/page.tsx
 │   │   │   └── warranty/page.tsx
-│   │   └── shop/
-│   │       ├── page.tsx            # Product listing
-│   │       ├── [slug]/page.tsx     # Individual product page
-│   │       └── success/page.tsx    # Post-checkout success page
+│   │   ├── sidekick/page.tsx       # Sole retail product page + Product JSON-LD
+│   │   ├── home-backup/page.tsx    # Lead-generation service page
+│   │   ├── resources/page.tsx      # Educational content hub
+│   │   └── shop/success/page.tsx   # Post-checkout success page
 │   ├── components/
 │   │   ├── Header.tsx              # Sticky nav, mobile hamburger
 │   │   ├── Footer.tsx              # Links, policies, contact info
-│   │   └── BuyNowButton.tsx        # Stripe checkout trigger (client component)
+│   │   ├── SidekickProductExperience.tsx # Product UI + Stripe checkout trigger
+│   │   └── LeadForms.tsx           # Netlify lead forms
 │   ├── content/
 │   │   └── blog/                   # MDX blog posts (frontmatter + content)
 │   │       ├── nc-storm-prep-checklist.mdx
 │   │       └── powerpair-solar-battery-explained.mdx
 │   ├── data/
-│   │   └── products.ts             # SSOT for all product data + Stripe prices
+│   │   └── products.ts             # SSOT for the SideKick product
 │   └── lib/
 │       ├── blog.ts                 # getAllPosts() / getPostBySlug() utilities
 │       └── site.ts                 # SITE_URL constant (reads NEXT_PUBLIC_SITE_URL)
@@ -139,7 +140,7 @@ admiralenergy-website/
 │       ├── create-checkout-session.ts  # Stripe checkout session creator
 │       └── stripe-webhook.ts           # Stripe webhook handler
 ├── public/
-│   ├── images/products/            # Product SVGs (solar-power-bank.svg, etc.)
+│   ├── images/sidekick/            # Real SideKick product photography
 │   ├── logos/                      # Brand logos, favicons, webmanifest
 │   ├── icons/
 │   ├── scripts/
@@ -153,8 +154,7 @@ admiralenergy-website/
 ├── tsconfig.json
 ├── postcss.config.mjs
 ├── eslint.config.mjs
-├── .env.example                    # Required env vars reference
-└── REBRAND_IMPLEMENTATION_GUIDE.md # Rebrand decisions and rationale
+└── .env.example                    # Required env vars reference
 ```
 
 ---
@@ -206,17 +206,13 @@ All routes use **Next.js App Router** (`src/app/`). Every `page.tsx` exports bot
 | Route | File | Description |
 |-------|------|-------------|
 | `/` | `app/page.tsx` | Homepage — hero, 3 paths, featured product, FAQ, CTA |
-| `/shop` | `app/shop/page.tsx` | Product grid from `products.ts` |
-| `/shop/[slug]` | `app/shop/[slug]/page.tsx` | Individual product detail + `BuyNowButton` |
+| `/sidekick` | `app/sidekick/page.tsx` | Sole retail product page with server-rendered Product schema |
+| `/home-backup` | `app/home-backup/page.tsx` | Home-backup lead-generation service page |
+| `/resources` | `app/resources/page.tsx` | Preparedness and energy education hub |
 | `/shop/success` | `app/shop/success/page.tsx` | Post-checkout confirmation |
-| `/portable-power` | `app/portable-power/page.tsx` | Portable power education page |
-| `/home-resilience` | `app/home-resilience/page.tsx` | Home resilience planning guide |
 | `/blog` | `app/blog/page.tsx` | Blog listing (reads from `src/content/blog/*.mdx`) |
 | `/blog/[slug]` | `app/blog/[slug]/page.tsx` | MDX blog post rendered with `next-mdx-remote` |
 | `/about` | `app/about/page.tsx` | About Admiral Energy / David Edwards |
-| `/case-studies` | `app/case-studies/page.tsx` | Customer stories |
-| `/contact` | `app/contact/page.tsx` | Contact form (Netlify Forms) |
-| `/partners/ecoflow/delta-pro-ultra` | `app/partners/ecoflow/delta-pro-ultra/page.tsx` | EcoFlow partner/affiliate page |
 | `/policies/privacy` | — | Privacy policy |
 | `/policies/terms` | — | Terms of service |
 | `/policies/returns` | — | Return policy |
@@ -243,8 +239,8 @@ All handled in `netlify.toml` with HTTP 301:
 - `'use client'` component (uses `useState` for mobile menu)
 - Sticky nav (`sticky top-0 z-50`)
 - Logo: `/logos/ae-logo-horiz-bg.png` rendered with `next/image`
-- Nav links: Home, Shop, Portable Power, Home Resilience, Blog, About
-- Contact CTA button (gold) always visible
+- Nav links: Home, SideKick, Home Backup, About, Resources
+- SideKick purchase CTA (gold) always visible
 - Mobile: hamburger toggle with slide-down menu
 - Responsive breakpoint: `lg:` for desktop nav
 
@@ -254,57 +250,52 @@ All handled in `netlify.toml` with HTTP 301:
 - Phone: `+1-984-238-4187` | Email: `info@admiralenergy.ai`
 - Location: Kings Mountain, NC
 
-### `BuyNowButton.tsx` — `src/components/BuyNowButton.tsx`
+### `SidekickProductExperience.tsx` — `src/components/SidekickProductExperience.tsx`
 - `'use client'` component
-- Props: `productId`, `productName`, `price`, `inStock`, `maxQty` (default: 5)
-- Renders quantity selector (+ / − buttons, min 1, max `maxQty`)
+- Receives the authoritative SideKick `Product` record
 - On click: `POST /.netlify/functions/create-checkout-session` with `{ productId, quantity }`
 - Redirects to Stripe Checkout URL on success
 - Shows inline error message on failure
 - Shows `<Loader2>` spinner during checkout creation
-- Only rendered for products with `stripeEnabled: true`
 
 ---
 
 ## 7. Data Layer
 
-### `src/data/products.ts` — SINGLE SOURCE OF TRUTH for all products
+### `src/data/products.ts` — SINGLE SOURCE OF TRUTH for SideKick
 
 **`Product` interface:**
 ```typescript
 interface Product {
   id: string;             // unique ID, matches Netlify function PRODUCT_PRICES key
   name: string;
-  slug: string;           // URL slug for /shop/[slug]
+  slug: string;           // canonical product slug (`sidekick`)
   price: number;          // display price in dollars
   priceCents: number;     // price in cents (must match Netlify function)
   description: string;    // long description (product page)
-  shortDescription: string; // short description (shop grid)
+  shortDescription: string; // concise product summary
   features: string[];
   specs: Record<string, string>;
   images: string[];       // paths relative to /public
   category: string;
   inStock: boolean;
-  badge?: string;         // e.g. "Flagship" — shown on shop grid card
+  badge?: string;
   model?: string;
   sku?: string;
-  stripeEnabled?: boolean; // if true, BuyNowButton is rendered
+  stripeEnabled?: boolean;
 }
 ```
 
-**Current Products (3):**
+**Current retail products (1):**
 
 | ID | Name | Slug | Price | Stripe |
 |----|------|------|-------|--------|
-| `hs-43-solar-power-bank` | SIDEKICK PowerBank | `sidekick` | $69.99 | ✅ |
-| `solar-panel-100w` | 100W Portable Solar Panel | `100w-solar-panel` | $199.99 | ❌ |
-| `emergency-kit-001` | Storm Ready Emergency Kit | `storm-ready-kit` | $79.99 | ❌ |
+| `hs-43-solar-power-bank` | SideKick PowerBank | `sidekick` | $69.99 | ✅ |
 
 **⚠️ IMPORTANT:** When adding a new product with `stripeEnabled: true`, you **must** also add its entry to `PRODUCT_PRICES` in `netlify/functions/create-checkout-session.ts`. The `priceCents` values must match exactly.
 
-**Helper functions:**
+**Helper function:**
 ```typescript
-getProductBySlug(slug: string): Product | undefined
 getProductById(id: string): Product | undefined
 ```
 
@@ -348,9 +339,9 @@ category: "Preparedness"     # e.g., Preparedness, Education, Products, NC Grid
 
 ### Flow
 ```
-User clicks "Buy Now" on /shop/[slug]
+User clicks "Buy now" on /sidekick
     ↓
-BuyNowButton.tsx (client)
+SidekickProductExperience.tsx (client)
 POST /.netlify/functions/create-checkout-session
     { productId: "hs-43-solar-power-bank", quantity: 1 }
     ↓
@@ -503,7 +494,7 @@ Blog posts inject:
 ### File & Export Patterns
 - Page components: **default export**, named after the page (e.g., `export default function ShopPage()`)
 - Server components by default — add `'use client'` only when needed (state, events, browser APIs)
-- `BuyNowButton` and `Header` are `'use client'` — everything else is server components
+- `SidekickProductExperience`, form components, and `Header` are `'use client'`; page metadata and JSON-LD stay server-rendered
 
 ### TypeScript
 - All props must be typed with interfaces or inline types
@@ -526,7 +517,7 @@ Blog posts inject:
 - Always use `next/image` (`<Image>`) for images in `public/`
 - External images must be allowlisted in `next.config.ts` under `remotePatterns`
 - Currently allowlisted: `www.ecoflow.com`
-- SVG product images are in `public/images/products/`
+- SideKick product photos are in `public/images/sidekick/`
 
 ### Metadata
 - Every page file should export `metadata` with at minimum `title` and `description`
@@ -547,7 +538,7 @@ Blog posts inject:
 ## 16. Known Patterns & Gotchas
 
 ### Product Page → Stripe Link
-Only products with `stripeEnabled: true` in `products.ts` render the `BuyNowButton`. The `100w-solar-panel` and `storm-ready-kit` products are **not yet Stripe-enabled** — they show an "out of stock" or contact CTA instead. To enable checkout for them, add to both `products.ts` AND `PRODUCT_PRICES` in the Netlify function.
+SideKick is the sole retail product. Its visible price, `products.ts` record, Product JSON-LD, analytics item, and `PRODUCT_PRICES` entry must remain synchronized.
 
 ### Blog Posts Are Server-Rendered
 `getAllPosts()` uses `fs.readFileSync` — this is a server-only call. Never import `blog.ts` in a client component.
@@ -559,10 +550,10 @@ Netlify Forms requires the form to be present in a **static HTML file** for dete
 `src/lib/site.ts` reads `NEXT_PUBLIC_SITE_URL` env var and falls back to `https://admiralenergy.ai`. Always use this constant — never hardcode the domain.
 
 ### Image Paths
-Product images are SVGs at `/images/products/`. They are rendered with `next/image` using `fill` + `object-contain` in the shop grid. New product images should follow the same pattern: place SVG in `public/images/products/` and reference as `/images/products/filename.svg`.
+Product images are real photographs at `/images/sidekick/`. Product JSON-LD must use absolute `https://admiralenergy.ai/images/sidekick/...` URLs and the primary image must show the actual SideKick product.
 
 ### Stripe Quantity Bounds
-Quantity is clamped server-side: `Math.max(1, Math.min(5, parseInt(...)))`. The client `BuyNowButton` defaults `maxQty` to 5. These should stay in sync.
+Quantity is clamped server-side between 1 and 5 in the checkout function.
 
 ### Remote Image Domains
 `next.config.ts` only allows `www.ecoflow.com` as a remote image domain. If you use external images from other domains, add them to `remotePatterns`.
@@ -571,21 +562,16 @@ Quantity is clamped server-side: `Math.max(1, Math.min(5, parseInt(...)))`. The 
 
 ## 17. Feature Roadmap / TODO
 
-Based on `REBRAND_IMPLEMENTATION_GUIDE.md` and `docs/LAUNCH_CHECKLIST.md`:
+Based on the current focused storefront and `docs/LAUNCH_CHECKLIST.md`:
 
 ### High Priority
-- [ ] Add real product photography to replace SVG placeholders
-- [ ] Enable Stripe for `100w-solar-panel` and `storm-ready-kit`
 - [ ] Implement `stripe-webhook.ts` order fulfillment (email confirmation, order logging)
 - [ ] Add more blog posts (NC energy tips, incentive guides, product comparisons)
 - [ ] `/shop/success` page — fetch Stripe session details to show order summary
 
 ### Medium Priority
-- [ ] Add `portable-power` page content (currently scaffolded)
-- [ ] Add EcoFlow affiliate links to `/partners/ecoflow/delta-pro-ultra/`
-- [ ] Add more partner pages (Bluetti, Jackery, Goal Zero)
 - [ ] Implement email capture / newsletter (via Netlify Forms or third-party)
-- [ ] Add product reviews/testimonials to shop pages
+- [ ] Add verified customer reviews only when genuine review data exists
 
 ### Low Priority / Future
 - [ ] Add a home resilience calculator (battery runtime math tool)
@@ -605,13 +591,12 @@ Based on `REBRAND_IMPLEMENTATION_GUIDE.md` and `docs/LAUNCH_CHECKLIST.md`:
 - Stripe webhook verified: signature enforcement uses raw body and `STRIPE_WEBHOOK_SECRET` guard.
 - Environment guard audit: no server-only secrets referenced in client code.
 - Security headers: `X-XSS-Protection` added to `netlify.toml` header block.
-- App pages: `src/app/not-found.tsx`, `src/app/error.tsx`, and `src/app/shop/loading.tsx` added.
-- Netlify forms: honeypot fields added in `src/app/contact/page.tsx` and `public/__forms.html`.
-- SEO: sitemap now includes `lastModified` for static and product routes; blog uses post date.
+- App pages: `src/app/not-found.tsx` and `src/app/error.tsx` provide error handling.
+- Netlify forms are statically declared in `public/__forms.html`.
+- SEO: sitemap includes the canonical `/sidekick` product URL; blog uses post dates.
 - Lint scope: `.netlify/**` and `netlify/functions/**/*.js` are ignored to avoid generated/legacy JS noise.
 - Cleanup: `.netlify/` ignored in `.gitignore`.
 - Cleanup: unused imports removed from `src/app/partners/ecoflow/delta-pro-ultra/page.tsx`.
-- Cleanup: `productName` prefixed with underscore in `src/components/BuyNowButton.tsx`.
 - Cleanup: Footer logo converted to `next/image`.
 - Cleanup: `public/scripts/admiral-chat-ui.js` empty catch updated.
 - Verification: `npm run lint`, `npm run build`, and `npm audit` are clean; commit `5a7fc20` pushed to `origin/main`.
@@ -636,11 +621,11 @@ npm run start     # Run production build locally
 npm run lint      # ESLint
 ```
 
-### Add a Product (Checklist)
-1. Add to `src/data/products.ts` (follow `Product` interface)
-2. Add SVG image to `public/images/products/`
-3. If Stripe-enabled: add to `PRODUCT_PRICES` in `netlify/functions/create-checkout-session.ts`
-4. Test checkout locally with `stripe listen --forward-to localhost:8888/.netlify/functions/stripe-webhook`
+### Change SideKick Product Data (Checklist)
+1. Update `src/data/products.ts`.
+2. Keep visible page data, Product JSON-LD, analytics, and `PRODUCT_PRICES` synchronized.
+3. Use real product photography in `public/images/sidekick/`.
+4. Re-run the raw-HTML Product schema checks documented in `docs/GOOGLE_PRODUCT_DISCOVERY_AUDIT.md`.
 
 ### Add a Blog Post (Checklist)
 1. Create `src/content/blog/your-slug.mdx`

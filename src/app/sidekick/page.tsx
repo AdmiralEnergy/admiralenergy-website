@@ -29,6 +29,7 @@ export const metadata: Metadata = {
 const productSchema = {
   "@context": "https://schema.org",
   "@type": "Product",
+  "@id": `${canonicalUrl}#product`,
   name: sidekickProduct.name,
   description: sidekickProduct.description,
   image: sidekickProduct.images.map((image) => `${SITE_URL}${image}`),
@@ -36,12 +37,16 @@ const productSchema = {
   model: sidekickProduct.model,
   sku: sidekickProduct.sku,
   url: canonicalUrl,
+  mainEntityOfPage: canonicalUrl,
   offers: {
     "@type": "Offer",
+    "@id": `${canonicalUrl}#offer`,
     url: canonicalUrl,
     priceCurrency: "USD",
     price: sidekickProduct.price.toFixed(2),
-    availability: "https://schema.org/InStock",
+    availability: sidekickProduct.inStock
+      ? "https://schema.org/InStock"
+      : "https://schema.org/OutOfStock",
     itemCondition: "https://schema.org/NewCondition",
     seller: { "@type": "Organization", name: "Admiral Energy LLC" },
     shippingDetails: {
@@ -67,7 +72,12 @@ const productSchema = {
 export default function SidekickPage() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(productSchema).replace(/</g, "\\u003c"),
+        }}
+      />
       <SidekickProductExperience product={sidekickProduct} />
     </>
   );
