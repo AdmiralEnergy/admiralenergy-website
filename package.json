@@ -7,18 +7,24 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "audit:product-discovery": "node scripts/audit-product-discovery.mjs"
+    "audit:product-discovery": "node scripts/audit-product-discovery.mjs",
+    "test": "tsx --test tests/*.test.ts",
+    "commerce:hash-password": "tsx scripts/hash-commerce-password.ts"
   },
   "dependencies": {
-    "@netlify/plugin-nextjs": "^5.15.8",
+    "@netlify/database": "^1.1.0",
+    "@netlify/plugin-nextjs": "^5.15.13",
+    "bcryptjs": "^3.0.3",
     "gray-matter": "^4.0.3",
+    "jose": "^6.2.9",
     "lucide-react": "^0.575.0",
-    "next": "16.1.6",
+    "next": "^16.3.1",
     "next-mdx-remote": "^6.0.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "reading-time": "^1.5.0",
-    "stripe": "^20.3.1"
+    "stripe": "^20.3.1",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@netlify/functions": "^5.1.2",
@@ -27,8 +33,9 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.1.6",
+    "eslint-config-next": "^16.3.1",
     "tailwindcss": "^4",
+    "tsx": "^4.23.12",
     "typescript": "^5"
   },
   "overrides": {

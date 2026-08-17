@@ -27,6 +27,17 @@ body {
   overflow-x: hidden;
 }
 
+body:has(.commerce-admin-root) > header,
+body:has(.commerce-admin-root) > footer,
+body:has(.commerce-admin-root) > .skip-link {
+  display: none;
+}
+
+body:has(.commerce-admin-root),
+body:has(.commerce-admin-root) > main {
+  background: #f1f5f9;
+}
+
 ::selection {
   background: rgba(201, 166, 72, 0.35);
 }
