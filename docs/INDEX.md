@@ -43,6 +43,8 @@
 
 ### 🔧 Technical Implementation
 
+- [COMMERCE_ADMIN.md](COMMERCE_ADMIN.md) - Internal commerce dashboard, Netlify Database, Stripe ingestion, inventory, COGS, and operations
+
 #### **Critical Systems** (Change with Caution)
 - [NETLIFY_FORMS_GUIDE.md](NETLIFY_FORMS_GUIDE.md) - Form implementation (hidden template pattern)
 - [TRACKING_CONFIGURATION.md](TRACKING_CONFIGURATION.md) - GTM/GA4/Reddit Pixel setup

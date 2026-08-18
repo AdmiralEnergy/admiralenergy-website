@@ -5,6 +5,9 @@
 [build.environment]
   NODE_VERSION = "22"
 
+[context.deploy-preview.environment]
+  COMMERCE_TIMEZONE = "America/New_York"
+
 [functions]
   directory = "netlify/functions"
 

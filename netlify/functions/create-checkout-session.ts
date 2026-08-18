@@ -1,4 +1,5 @@
 import type { Handler, HandlerEvent } from "@netlify/functions";
+import { randomUUID } from "node:crypto";
 import Stripe from "stripe";
 import { getProductById } from "../../src/data/products";
 
@@ -21,6 +22,11 @@ const PRODUCT_PRICES: Record<string, { name: string; priceCents: number; descrip
 
 const ALLOWED_ORIGIN = process.env.NEXT_PUBLIC_SITE_URL || "https://admiralenergy.ai";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.URL || "https://admiralenergy.ai";
+
+function metadataValue(value: unknown, maxLength = 500) {
+  if (typeof value !== "string") return "";
+  return value.trim().slice(0, maxLength);
+}
 
 const handler: Handler = async (event: HandlerEvent) => {
   const origin = event.headers["origin"] || event.headers["Origin"] || "";
@@ -76,7 +82,7 @@ const handler: Handler = async (event: HandlerEvent) => {
   }
 
   const stripe = new Stripe(stripeSecretKey, {
-    apiVersion: "2025-01-27.acacia",
+    apiVersion: "2026-01-28.clover",
   });
 
   try {
@@ -91,7 +97,11 @@ const handler: Handler = async (event: HandlerEvent) => {
       };
     }
 
-    const { productId, quantity } = body as { productId?: unknown; quantity?: unknown };
+    const { productId, quantity, attribution } = body as {
+      productId?: unknown;
+      quantity?: unknown;
+      attribution?: Record<string, unknown>;
+    };
     const sanitizedProductId =
       typeof productId === "string" ? productId.replace(/[^a-zA-Z0-9_-]/g, "") : "";
 
@@ -123,6 +133,24 @@ const handler: Handler = async (event: HandlerEvent) => {
       typeof quantity === "number" ? quantity : Number.parseInt(String(quantity), 10);
     const normalizedQuantity = Number.isFinite(quantityNumber) ? Math.trunc(quantityNumber) : 1;
     const qty = Math.max(1, Math.min(5, normalizedQuantity));
+    const internalOrderReference = randomUUID();
+    const checkoutMetadata: Record<string, string> = {
+      internal_order_reference: internalOrderReference,
+      product_id: resolvedProductId,
+      product_slug: catalogProduct.slug,
+      sku: catalogProduct.sku,
+      quantity: String(qty),
+      source_channel: "website",
+      source: "admiral-energy-website",
+      acquisition_channel: metadataValue(attribution?.acquisitionChannel, 160),
+      utm_source: metadataValue(attribution?.utmSource, 160),
+      utm_medium: metadataValue(attribution?.utmMedium, 160),
+      utm_campaign: metadataValue(attribution?.utmCampaign, 160),
+      utm_term: metadataValue(attribution?.utmTerm, 160),
+      utm_content: metadataValue(attribution?.utmContent, 160),
+      landing_page: metadataValue(attribution?.landingPage),
+      referrer: metadataValue(attribution?.referrer),
+    };
 
     // Optional: use a Stripe Price ID from env if configured
     const stripePriceId = process.env.STRIPE_PRICE_ID_SIDEKICK;
@@ -146,6 +174,7 @@ const handler: Handler = async (event: HandlerEvent) => {
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
+      client_reference_id: internalOrderReference,
       line_items: lineItems,
       allow_promotion_codes: true,
       shipping_address_collection: {
@@ -166,11 +195,8 @@ const handler: Handler = async (event: HandlerEvent) => {
       ],
       success_url: `${SITE_URL}/shop/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${SITE_URL}/sidekick?canceled=1`,
-      metadata: {
-        product_id: resolvedProductId,
-        product_slug: "sidekick",
-        source: "admiral-energy-website",
-      },
+      metadata: checkoutMetadata,
+      payment_intent_data: { metadata: checkoutMetadata },
     });
 
     return {

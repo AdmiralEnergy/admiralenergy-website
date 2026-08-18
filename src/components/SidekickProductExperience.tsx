@@ -92,10 +92,20 @@ function CheckoutButton({ product, location, children, className }: { product: P
     setLoading(true);
     setError(false);
     try {
+      const attribution = {
+        acquisitionChannel: sessionStorage.getItem("ae_utm_source") || "direct",
+        utmSource: sessionStorage.getItem("ae_utm_source"),
+        utmMedium: sessionStorage.getItem("ae_utm_medium"),
+        utmCampaign: sessionStorage.getItem("ae_utm_campaign"),
+        utmTerm: sessionStorage.getItem("ae_utm_term"),
+        utmContent: sessionStorage.getItem("ae_utm_content"),
+        landingPage: sessionStorage.getItem("ae_landing_page"),
+        referrer: sessionStorage.getItem("ae_referrer"),
+      };
       const response = await fetch("/.netlify/functions/create-checkout-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId: product.id, quantity: 1 }),
+        body: JSON.stringify({ productId: product.id, quantity: 1, attribution }),
       });
       const data = (await response.json()) as { url?: string };
       if (!response.ok || !data.url) throw new Error("Checkout unavailable");
