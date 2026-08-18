@@ -25,6 +25,12 @@
 
 ## 📚 Core Documentation (Active)
 
+### Search and Google indexing
+- [SEO_SEARCH_INTENT_MAP.md](SEO_SEARCH_INTENT_MAP.md) - Canonical page, query, internal-link, and schema ownership map
+- [SEO_SERP_TARGETS.md](SEO_SERP_TARGETS.md) - Target titles, descriptions, visible headings, and measurement plan
+- [GOOGLE_REINDEXING_CHECKLIST.md](GOOGLE_REINDEXING_CHECKLIST.md) - Production verification and Search Console owner actions
+- [GOOGLE_PRODUCT_DISCOVERY_AUDIT.md](GOOGLE_PRODUCT_DISCOVERY_AUDIT.md) - SideKick merchant and retired-catalog signal audit
+
 ### 🚀 Getting Started
 - [PROJECT_MASTER_MEMORY.md](PROJECT_MASTER_MEMORY.md) - **READ THIS FIRST** - Architecture, patterns, lessons learned
 - [README.md](../README.md) - Project overview and setup

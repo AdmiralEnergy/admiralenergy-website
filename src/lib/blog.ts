@@ -12,6 +12,8 @@ export interface BlogPost {
   excerpt: string;
   author: string;
   category: string;
+  ctaHref: string;
+  ctaLabel: string;
   readingTime: string;
   content: string;
 }
@@ -34,6 +36,8 @@ export function getAllPosts(): BlogPost[] {
       excerpt: data.excerpt ?? "",
       author: data.author ?? "Admiral Energy Team",
       category: data.category ?? "General",
+      ctaHref: data.ctaHref ?? "/resources",
+      ctaLabel: data.ctaLabel ?? "Explore Backup Power Resources",
       readingTime: rt.text,
       content,
     } satisfies BlogPost;

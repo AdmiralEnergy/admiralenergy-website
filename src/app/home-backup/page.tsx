@@ -5,19 +5,21 @@ import { HomeBackupForm } from "@/components/LeadForms";
 import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Generac Home Standby Generator Assessment | North Carolina",
+  title: "Home Standby Generator Assessment in North Carolina",
   description: "Explore professionally installed whole-home backup with Admiral Energy, a Generac Aligned Contractor serving the Charlotte and Kings Mountain, NC area.",
-  keywords: ["Generac installer", "home standby generator", "whole home generator", "backup power", "home backup power", "generator installation North Carolina"],
   alternates: { canonical: "/home-backup" },
   openGraph: {
-    title: "When a Power Bank Isn’t Enough | Admiral Energy",
+    title: "Home Standby Generator Assessment in North Carolina",
     description: "Start a practical whole-home backup conversation with a North Carolina Generac Aligned Contractor.",
     url: `${SITE_URL}/home-backup`,
+    type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Admiral Energy whole-home backup assessment" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Whole-Home Backup | Admiral Energy",
+    title: "Home Standby Generator Assessment in North Carolina",
     description: "A short, no-pressure home backup assessment for North Carolina homeowners.",
+    images: ["/og.png"],
   },
 };
 
@@ -35,7 +37,7 @@ export default function HomeBackupPage() {
     "@context": "https://schema.org",
     "@type": "Service",
     name: "Home Backup Power Assessment",
-    provider: { "@type": "Organization", name: "Admiral Energy LLC", url: SITE_URL },
+    provider: { "@id": `${SITE_URL}/#organization` },
     areaServed: { "@type": "State", name: "North Carolina" },
     serviceType: "Home standby generator assessment",
     url: `${SITE_URL}/home-backup`,

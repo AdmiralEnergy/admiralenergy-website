@@ -36,12 +36,12 @@ interface Props {
 }
 
 const gallery = [
-  { src: "/images/sidekick/hero-real-20260812.webp", alt: "SideKick PowerBank standing beside its retail box", label: "SideKick and box" },
-  { src: "/images/sidekick/front-real-20260812.webp", alt: "Front solar-panel face of the SideKick PowerBank", label: "Front" },
-  { src: "/images/sidekick/cables-real-20260812.webp", alt: "Built-in charging cables on the back of the SideKick PowerBank", label: "Cables" },
-  { src: "/images/sidekick/flashlight-real-20260812.webp", alt: "Integrated SideKick PowerBank flashlight switched on", label: "Flashlight" },
-  { src: "/images/sidekick/solar-real-20260812.webp", alt: "Integrated solar panel on the SideKick PowerBank", label: "Solar" },
-  { src: "/images/sidekick/crank-real-20260812.webp", alt: "SideKick PowerBank side profile with compass and hand crank", label: "Crank" },
+  { src: "/images/sidekick/hero-real-20260812.webp", alt: "SideKick portable power bank beside its retail packaging", label: "SideKick and box" },
+  { src: "/images/sidekick/front-real-20260812.webp", alt: "Integrated solar panel on the front of the SideKick power bank", label: "Front" },
+  { src: "/images/sidekick/cables-real-20260812.webp", alt: "Built-in charging cables on the SideKick portable charger", label: "Cables" },
+  { src: "/images/sidekick/flashlight-real-20260812.webp", alt: "SideKick emergency power bank flashlight switched on", label: "Flashlight" },
+  { src: "/images/sidekick/solar-real-20260812.webp", alt: "Small integrated solar panel on the SideKick portable charger", label: "Solar" },
+  { src: "/images/sidekick/crank-real-20260812.webp", alt: "SideKick emergency charger hand crank and compass", label: "Crank" },
 ];
 
 const everydayUses = [
@@ -73,10 +73,13 @@ const rechargeMethods = [
 const faqs = [
   ["What can SideKick charge?", "SideKick is designed for phones and compatible small USB-powered electronics. It is not intended for household appliances."],
   ["How should I recharge it?", "Wired USB charging is the primary method. The integrated solar panel and hand crank are backup or emergency methods."],
+  ["Does the solar panel fully charge SideKick?", "The small integrated panel can add supplemental charge in useful sunlight, but it is not intended for fast or routine full recharging. Use wired USB charging whenever it is available."],
+  ["What is the hand crank for?", "The crank is a last-resort way to generate a small amount of input when wired charging and useful sunlight are unavailable. It is not a fast or practical way to refill the power bank."],
   ["Is SideKick a replacement for a generator?", "No. SideKick is personal portable power. It does not replace a portable power station, standby generator, or whole-home battery."],
   ["Did Admiral Energy manufacture SideKick?", "Admiral Energy selected, sells, and supports this product. Admiral Energy does not claim to have invented or manufactured the underlying hardware."],
   ["Is SideKick a Generac product?", "No. SideKick is an Admiral Energy product offering and is not manufactured, endorsed, or warrantied by Generac."],
-  ["What support is included?", "The current offer includes free standard shipping in the continental U.S., a published 30-day return policy, and a 1-year limited warranty."],
+  ["Is shipping included?", "Yes. The current offer includes free standard shipping in the continental United States. See the published shipping policy for processing and delivery details."],
+  ["What support is included?", "Admiral Energy publishes a 30-day return policy and a 1-year limited warranty for SideKick. Contact information is available in the site footer and policy pages."],
 ];
 
 function CheckoutButton({ product, location, children, className }: { product: Product; location: string; children: ReactNode; className: string }) {
@@ -139,8 +142,9 @@ export default function SidekickProductExperience({ product }: Props) {
         <div className="mx-auto grid w-full min-w-0 max-w-7xl gap-10 px-4 py-10 sm:px-6 md:py-16 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:px-8">
           <div className="order-2 min-w-0 lg:order-1">
             <p className="eyebrow">SideKick PowerBank</p>
-            <h1 className="mt-4 text-4xl font-black leading-[1.04] tracking-tight sm:text-5xl lg:text-6xl">The Power Bank You Actually Keep With You.</h1>
-            <p className="mt-6 max-w-xl text-lg leading-8 text-slate-200">You buy it for emergencies. Then the built-in cables, flashlight, and portable design make it useful for work, travel, vehicles, and everyday life.</p>
+            <h1 className="mt-4 text-4xl font-black leading-[1.04] tracking-tight sm:text-5xl lg:text-6xl">Portable Emergency Power You Actually Keep With You.</h1>
+            <p className="mt-6 max-w-xl text-lg leading-8 text-slate-200">SideKick is a portable emergency power bank and phone charger with built-in cables and a flashlight—useful for outages, work, travel, vehicle kits, and everyday backup.</p>
+            <p className="mt-3 max-w-xl text-sm leading-6 text-slate-300">Recharge by wired USB first. The integrated solar panel is supplemental, and the hand crank is for last-resort input.</p>
             <div className="mt-7 flex flex-wrap items-end gap-4"><p className="text-5xl font-black text-admiral-gold"><data value={formattedPrice}>${formattedPrice} USD</data></p><p className="pb-1 text-sm font-semibold text-slate-300">New • {availabilityLabel} • Free standard shipping</p></div>
             <div id="buy" className="mt-7 scroll-mt-28">
               <CheckoutButton product={product} location="sidekick_hero" className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-admiral-gold px-7 py-4 text-base font-extrabold text-admiral-navy transition hover:bg-gold-light disabled:opacity-60 sm:w-auto">
@@ -169,7 +173,7 @@ export default function SidekickProductExperience({ product }: Props) {
 
       <section className="bg-white py-20 md:py-28">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:px-8">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-slate-100"><Image src="/images/sidekick/sidekick-field-features.jpg" alt="SideKick features including solar panel, compass, hand crank, flashlight, cables, and bubble level" fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" /></div>
+          <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-slate-100"><Image src="/images/sidekick/sidekick-field-features.jpg" alt="SideKick built-in cables, flashlight, solar panel, hand crank, compass, and bubble level" fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" /></div>
           <div><p className="eyebrow">Built-in convenience</p><h2 className="mt-4 text-4xl font-black tracking-tight text-admiral-navy md:text-5xl">Fewer loose parts. More useful backup.</h2><div className="mt-9 grid gap-6 sm:grid-cols-2">{features.map((feature) => <div key={feature.title}><div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-admiral-navy text-admiral-gold"><feature.icon className="h-5 w-5" /></span><h3 className="font-black text-admiral-navy">{feature.title}</h3></div><p className="mt-3 text-sm leading-6 text-slate-600">{feature.copy}</p></div>)}</div></div>
         </div>
       </section>
@@ -178,6 +182,7 @@ export default function SidekickProductExperience({ product }: Props) {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl"><p className="eyebrow">Three ways to recharge</p><h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">Wired first. Backup methods when needed.</h2><p className="mt-5 text-lg leading-8 text-slate-300">The honest explanation matters: the small solar panel and hand crank are emergency tools, not the primary way to refill SideKick.</p></div>
           <div className="mt-12 grid gap-5 md:grid-cols-3">{rechargeMethods.map((method) => <article key={method.step} className="rounded-2xl border border-white/10 bg-white/5 p-7"><div className="flex items-center justify-between"><method.icon className="h-8 w-8 text-admiral-gold" /><span className="font-mono text-sm text-white/45">{method.step}</span></div><p className="mt-8 text-xs font-extrabold uppercase tracking-[0.14em] text-admiral-gold">{method.tag}</p><h3 className="mt-2 text-2xl font-black">{method.title}</h3><p className="mt-3 leading-7 text-slate-300">{method.copy}</p></article>)}</div>
+          <p className="mt-8 text-slate-300">Read the detailed guides to <Link href="/blog/how-solar-power-banks-work" className="font-bold text-admiral-gold underline underline-offset-4">how solar power banks work</Link> and <Link href="/blog/hand-crank-power-bank-guide" className="font-bold text-admiral-gold underline underline-offset-4">what hand-crank charging can realistically do</Link>.</p>
         </div>
       </section>
 

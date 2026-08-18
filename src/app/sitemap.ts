@@ -3,7 +3,6 @@ import { getAllPosts } from "@/lib/blog";
 import { SITE_URL } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
   const staticPages = [
     ["", "weekly", 1.0],
     ["/sidekick", "weekly", 0.95],
@@ -20,7 +19,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const pages: MetadataRoute.Sitemap = staticPages.map(([path, changeFrequency, priority]) => ({
     url: `${SITE_URL}${path || "/"}`,
-    lastModified: now,
     changeFrequency,
     priority,
   }));

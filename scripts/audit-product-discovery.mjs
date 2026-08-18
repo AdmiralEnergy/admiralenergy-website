@@ -14,7 +14,7 @@ const sidekickRedirects = [
   "/shop/solar-power-bank",
 ];
 
-const retiredRedirects = [
+const retiredRoutes = [
   "/shop/gb1000",
   "/shop/generac-gb1000",
   "/shop/gb1000-portable-power-station",
@@ -136,7 +136,10 @@ const { html: homeHtml } = await fetchPage("/");
 assert(/<a[^>]+href=["']\/sidekick(?:#buy)?["']/i.test(homeHtml), "Homepage does not contain a crawlable SideKick link");
 
 for (const path of sidekickRedirects) await assertRedirect(path, "/sidekick");
-for (const path of retiredRedirects) await assertRedirect(path, "/resources");
+for (const path of retiredRoutes) {
+  const response = await fetch(`${baseUrl}${path}`, { redirect: "manual" });
+  assert(response.status === 404, `${path} returned ${response.status}, expected 404`);
+}
 
 const unknownProduct = await fetch(`${baseUrl}/shop/retired-product`, { redirect: "manual" });
 assert(unknownProduct.status === 404, `/shop/retired-product returned ${unknownProduct.status}, expected 404`);
@@ -149,4 +152,4 @@ for (const path of ["/", "/home-backup", "/resources", "/about", "/blog"]) {
 
 console.log(`Product discovery audit passed for ${baseUrl}`);
 console.log("- exactly one Product entity: SideKick PowerBank");
-console.log("- canonical, sitemap, robots, images, visible offer data, and permanent redirects verified");
+console.log("- canonical, sitemap, robots, images, visible offer data, redirects, and retired-route 404s verified");
