@@ -14,7 +14,7 @@ export default async function CommerceLoginPage({ searchParams }: {
   return (
     <div className="commerce-admin-root flex min-h-screen items-center justify-center bg-[#081f32] px-4 py-12">
       <div className="w-full max-w-md rounded-2xl border border-white/10 bg-white p-6 shadow-2xl sm:p-8">
-        <Image src="/logos/ae-logo-horiz-bg.png" alt="Admiral Energy" width={160} height={40} className="mb-8 h-10 w-auto rounded" priority />
+        <Image src="/logos/ae-logo-horiz-bg.png" alt="Admiral Energy" width={160} height={40} className="mb-8 h-10 w-auto rounded" style={{ width: "auto" }} priority />
         <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-[#8a6b19]">Internal access</p>
         <h1 className="mt-2 text-2xl font-extrabold text-[#0c2f4a]">Commerce Operations</h1>
         <p className="mt-2 text-sm leading-6 text-slate-600">Sign in with the server-configured administrator account.</p>

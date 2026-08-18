@@ -23,7 +23,9 @@ export function Card({ children, className = "", id }: { children: ReactNode; cl
 }
 
 export function StatusBadge({ value }: { value: string }) {
-  const normalized = value.replaceAll("_", " ");
+  const normalized = value
+    .replaceAll("_", " ")
+    .replace(/\b\w/g, (character) => character.toUpperCase());
   const positive = ["paid", "fulfilled", "complete", "connected", "active", "completed"].includes(value);
   const negative = ["failed", "canceled", "error", "missing_cost"].includes(value);
   const classes = positive
@@ -31,7 +33,7 @@ export function StatusBadge({ value }: { value: string }) {
     : negative
       ? "border-red-200 bg-red-50 text-red-800"
       : "border-amber-200 bg-amber-50 text-amber-800";
-  return <span className={`inline-flex rounded-full border px-2 py-1 text-xs font-bold capitalize ${classes}`}>{normalized}</span>;
+  return <span className={`inline-flex rounded-full border px-2 py-1 text-xs font-bold ${classes}`}>{normalized}</span>;
 }
 
 export function Alert({ children, tone = "info" }: { children: ReactNode; tone?: "info" | "error" | "warning" | "success" }) {

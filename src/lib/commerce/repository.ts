@@ -399,7 +399,7 @@ export async function createSupplier(input: {
 
 export async function listInventory() {
   const pool = getCommercePool();
-  const [products, lots] = await Promise.all([
+  const [products, lots, movements] = await Promise.all([
     listProducts(),
     pool.query<UnknownRow>(
       `SELECT l.*, p.name AS product_name, p.sku, s.name AS supplier_name
@@ -408,8 +408,19 @@ export async function listInventory() {
        LEFT JOIN commerce_suppliers s ON s.id = l.supplier_id
        ORDER BY l.received_at DESC, l.created_at DESC`,
     ),
+    pool.query<UnknownRow>(
+      `SELECT m.*, p.name AS product_name, p.sku,
+              l.reference AS lot_reference, l.supplier_order_number,
+              o.order_number
+       FROM commerce_inventory_movements m
+       JOIN commerce_products p ON p.id = m.product_id
+       LEFT JOIN commerce_inventory_lots l ON l.id = m.lot_id
+       LEFT JOIN commerce_orders o ON o.id = m.order_id
+       ORDER BY m.occurred_at DESC, m.created_at DESC
+       LIMIT 100`,
+    ),
   ]);
-  return { products, lots: lots.rows };
+  return { products, lots: lots.rows, movements: movements.rows };
 }
 
 export async function createInventoryLot(input: InventoryLotInput, createdBy: string) {

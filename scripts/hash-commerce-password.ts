@@ -32,8 +32,15 @@ async function readHidden(prompt: string) {
   });
 }
 
-const password = await readHidden("New commerce admin password (hidden): ");
-if (password.length < 14) throw new Error("Use at least 14 characters.");
-const confirmation = await readHidden("Confirm password (hidden): ");
-if (password !== confirmation) throw new Error("Passwords did not match.");
-console.log(await hash(password, 12));
+async function main() {
+  const password = await readHidden("New commerce admin password (hidden): ");
+  if (password.length < 14) throw new Error("Use at least 14 characters.");
+  const confirmation = await readHidden("Confirm password (hidden): ");
+  if (password !== confirmation) throw new Error("Passwords did not match.");
+  console.log(await hash(password, 12));
+}
+
+main().catch((error: unknown) => {
+  console.error(error instanceof Error ? error.message : "Unable to hash password.");
+  process.exitCode = 1;
+});

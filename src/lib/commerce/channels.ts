@@ -27,10 +27,22 @@ export const channelCatalog: ChannelHealth[] = [
     message: "Website payments, refunds, fees, webhooks, and protected manual reconciliation.",
   },
   {
-    key: "manual",
-    label: "Manual / Marketplace",
+    key: "facebook_marketplace",
+    label: "Facebook Marketplace",
     status: "active",
-    message: "Operational entry path for Facebook Marketplace, local/D2D, cash, wholesale, and other sales.",
+    message: "Record Marketplace leads as their own sales source, even when the customer pays through Stripe.",
+  },
+  {
+    key: "d2d_local",
+    label: "D2D / Local",
+    status: "active",
+    message: "Record local delivery, pickup, door-to-door, cash, or externally paid sales.",
+  },
+  {
+    key: "manual",
+    label: "Manual / Wholesale",
+    status: "active",
+    message: "Owner-entered path for wholesale and other real sales that do not originate on the website.",
   },
   {
     key: "tiktok_shop",
@@ -42,6 +54,6 @@ export const channelCatalog: ChannelHealth[] = [
     key: "meta_shop",
     label: "Meta Shop",
     status: "not_connected",
-    message: "Future adapter seam only; Facebook Marketplace remains a manual source today.",
+    message: "Future shop integration only; Facebook Marketplace remains an active manual sales source today.",
   },
 ];

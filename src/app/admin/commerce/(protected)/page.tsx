@@ -48,18 +48,18 @@ export default async function CommerceOverviewPage({ searchParams }: {
           eyebrow="Owner dashboard"
           title="Commerce overview"
           description={`${period.label}. Operational metrics only; taxes remain separate from revenue and this is not a substitute for bookkeeping.`}
-          actions={<><Link href="/admin/commerce/orders/new" className={secondaryButtonClass}>Add manual order</Link><Link href="/admin/commerce/inventory#add-lot" className={secondaryButtonClass}>Receive inventory</Link></>}
+          actions={<><Link href="/admin/commerce/orders/new" className={secondaryButtonClass}>Add manual order</Link><Link href="/admin/commerce/inventory#add-lot" className={secondaryButtonClass}>Add purchase lot</Link></>}
         />
 
         <form className="mb-6 flex flex-wrap items-end gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
           <label className="text-sm font-bold text-slate-700">Period
-            <select name="period" defaultValue={period.period} className="ml-2 min-h-10 rounded-lg border border-slate-300 bg-white px-3">
+            <select name="period" defaultValue={period.period} className="ml-2 min-h-11 rounded-lg border border-slate-300 bg-white px-3">
               <option value="today">Today</option><option value="7">7 days</option><option value="30">30 days</option><option value="ytd">Year to date</option><option value="all">All time</option><option value="custom">Custom</option>
             </select>
           </label>
-          <label className="text-sm font-bold text-slate-700">From <input type="date" name="from" defaultValue={period.from} className="ml-1 min-h-10 rounded-lg border border-slate-300 px-2" /></label>
-          <label className="text-sm font-bold text-slate-700">To <input type="date" name="to" defaultValue={period.to} className="ml-1 min-h-10 rounded-lg border border-slate-300 px-2" /></label>
-          <button className="min-h-10 rounded-lg bg-[#0c2f4a] px-4 text-sm font-bold text-white">Apply</button>
+          <label className="text-sm font-bold text-slate-700">From <input type="date" name="from" defaultValue={period.from} className="ml-1 min-h-11 rounded-lg border border-slate-300 px-2" /></label>
+          <label className="text-sm font-bold text-slate-700">To <input type="date" name="to" defaultValue={period.to} className="ml-1 min-h-11 rounded-lg border border-slate-300 px-2" /></label>
+          <button className="min-h-11 rounded-lg bg-[#0c2f4a] px-4 text-sm font-bold text-white">Apply</button>
         </form>
 
         {(warnings.missing_cost_orders > 0 || warnings.unmatched_transactions > 0 || warnings.awaiting_fulfillment > 0 || warnings.low_stock_products > 0) && (
