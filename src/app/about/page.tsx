@@ -2,11 +2,25 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Anchor, ArrowRight, BookOpen, Check, MapPin, Scale, ShieldCheck } from "lucide-react";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About Admiral Energy | Veteran-Owned Energy Resilience",
   description: "Meet Admiral Energy, a veteran-owned North Carolina home-energy resilience company built around honest education, practical products, and clear guidance.",
   alternates: { canonical: "/about" },
+  openGraph: {
+    title: "About Admiral Energy | Veteran-Owned Energy Resilience",
+    description: "Meet the veteran-owned North Carolina company behind SideKick and practical whole-home backup guidance.",
+    url: `${SITE_URL}/about`,
+    type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Admiral Energy" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Admiral Energy",
+    description: "Veteran-owned, North Carolina-based guidance for practical energy resilience.",
+    images: ["/og.png"],
+  },
 };
 
 const principles = [

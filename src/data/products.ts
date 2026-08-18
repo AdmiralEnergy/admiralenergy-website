@@ -27,9 +27,9 @@ export const sidekickProduct: Product = {
   sku: "AE-HS43-001",
   stripeEnabled: true,
   description:
-    "A rechargeable portable power bank selected and supported by Admiral Energy, with built-in charging cables, USB outputs, an integrated flashlight, and supplemental solar and hand-crank charging for emergencies.",
+    "A rechargeable portable emergency power bank selected and supported by Admiral Energy, with built-in charging cables, USB outputs, an integrated flashlight, and supplemental solar and hand-crank charging.",
   shortDescription:
-    "Portable backup power with built-in cables, emergency lighting, and backup solar and hand-crank charging.",
+    "Portable emergency phone charging with built-in cables, a flashlight, and supplemental solar and hand-crank input.",
   features: [
     "Built-in USB-C, Micro-USB, and Lightning charging cables",
     "USB-A and USB-C charging connections",

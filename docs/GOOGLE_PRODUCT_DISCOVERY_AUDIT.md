@@ -81,14 +81,14 @@ Permanent redirects to SideKick:
 | `/shop/hs-43-solar-power-bank` | `/sidekick` |
 | `/shop/solar-power-bank` | `/sidekick` |
 
-Permanent redirects to the non-product Resources page:
+Retired product URLs intentionally return a real HTTP 404 instead of redirecting to a loosely related page:
 
-| Retired route family | Destination |
+| Retired route family | Response |
 |---|---|
-| GB1000 route variants | `/resources` |
-| 200W panel route variants | `/resources` |
-| `/shop/100w-solar-panel` | `/resources` |
-| `/shop/storm-ready-kit` | `/resources` |
+| GB1000 route variants | HTTP 404 |
+| 200W panel route variants | HTTP 404 |
+| `/shop/100w-solar-panel` | HTTP 404 |
+| `/shop/storm-ready-kit` | HTTP 404 |
 
 Unknown shop slugs, such as `/shop/retired-product`, return HTTP 404. They do not soft-redirect to SideKick and do not emit Product schema.
 
@@ -109,7 +109,7 @@ The optimized production build was started locally and `/sidekick` was fetched a
 
 Results:
 
-- Two JSON-LD scripts were present in the initial response: the sitewide Admiral Energy `Organization`/`LocalBusiness` entity and one SideKick `Product` entity.
+- Two JSON-LD scripts were present in the initial response: the sitewide Admiral Energy `Organization` entity and one SideKick `Product` entity.
 - The Product JSON parsed successfully.
 - Exactly one `Product` entity and one nested `Offer` were present.
 - Product name, `$69.99 USD` price, `In stock` availability, and new condition agree with the visible page.

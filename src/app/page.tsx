@@ -3,11 +3,25 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, BatteryCharging, Check, Home, ShieldCheck, ShoppingBag, Smartphone, Wrench, Zap } from "lucide-react";
 import { EmailCapture } from "@/components/LeadForms";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Home Energy Resilience | SideKick & Whole-Home Backup",
-  description: "Start with the SideKick PowerBank for personal portable backup, or talk with Admiral Energy about Generac whole-home standby power in North Carolina.",
+  title: { absolute: "Admiral Energy | Portable Power & Whole-Home Backup" },
+  description: "Shop the SideKick portable power bank or explore professionally installed whole-home backup with Admiral Energy in North Carolina.",
   alternates: { canonical: "/" },
+  openGraph: {
+    title: "Admiral Energy | Portable Power & Whole-Home Backup",
+    description: "Practical portable power, honest outage-preparation guidance, and professionally installed whole-home backup in North Carolina.",
+    url: SITE_URL,
+    type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Admiral Energy portable and whole-home backup power" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Admiral Energy | Portable Power & Whole-Home Backup",
+    description: "Start with SideKick portable power or explore whole-home backup in North Carolina.",
+    images: ["/og.png"],
+  },
 };
 
 const ladder = [
@@ -16,9 +30,41 @@ const ladder = [
   { level: "Level 3", title: "Whole-Home Power", copy: "A professionally installed standby system is built for larger, longer resilience needs.", icon: Home },
 ];
 
+const homeGuides = [
+  {
+    title: "How Solar Power Banks Work",
+    copy: "Understand wired charging, small integrated solar panels, and the limits that matter before an outage.",
+    href: "/blog/how-solar-power-banks-work",
+  },
+  {
+    title: "Keep a Phone Charged During an Outage",
+    copy: "Build a simple charging plan around preparation, conservation, and more than one backup option.",
+    href: "/blog/keep-phone-charged-during-power-outage",
+  },
+  {
+    title: "NC Storm Prep Checklist",
+    copy: "Work through practical steps for communication, supplies, and backup power before severe weather arrives.",
+    href: "/blog/nc-storm-prep-checklist",
+  },
+] as const;
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${SITE_URL}/#website`,
+  url: SITE_URL,
+  name: "Admiral Energy",
+  alternateName: "AdmiralEnergy.ai",
+  publisher: { "@id": `${SITE_URL}/#organization` },
+};
+
 export default function HomePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema).replace(/</g, "\\u003c") }}
+      />
       <section className="relative overflow-hidden bg-admiral-navy text-white">
         <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(circle_at_20%_20%,#d4b85c_0,transparent_34%),radial-gradient(circle_at_80%_85%,#1a4a6e_0,transparent_32%)]" />
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[1.03fr_0.97fr] lg:px-8 lg:py-28">
@@ -100,6 +146,27 @@ export default function HomePage() {
       </section>
 
       <section className="py-20 md:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <p className="eyebrow">Plan before the power goes out</p>
+            <h2 className="mt-4 text-4xl font-black tracking-tight text-admiral-navy md:text-5xl">Clear answers for practical backup decisions.</h2>
+            <p className="mt-5 text-lg leading-8 text-slate-600">Learn what personal charging tools can realistically do, then decide whether your needs stop at a phone or extend to the home.</p>
+          </div>
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
+            {homeGuides.map((guide) => (
+              <article key={guide.href} className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
+                <h3 className="text-xl font-black text-admiral-navy">{guide.title}</h3>
+                <p className="mt-3 leading-7 text-slate-600">{guide.copy}</p>
+                <Link href={guide.href} className="mt-5 inline-flex items-center gap-2 font-extrabold text-admiral-navy underline decoration-admiral-gold decoration-2 underline-offset-4">
+                  Read the guide <ArrowRight className="h-4 w-4" />
+                </Link>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#e9edf0] py-20 md:py-24">
         <div className="mx-auto grid max-w-6xl gap-10 rounded-3xl bg-white px-6 py-10 shadow-sm ring-1 ring-slate-200 sm:px-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:px-14">
           <div><p className="eyebrow">Free practical guide</p><h2 className="mt-4 text-3xl font-black text-admiral-navy">Join the Admiral Resilience List</h2><p className="mt-4 leading-7 text-slate-600">Get the backup-power checklist, outage-preparation tips, SideKick updates, and straightforward home-backup education.</p></div>
           <EmailCapture source="homepage" />

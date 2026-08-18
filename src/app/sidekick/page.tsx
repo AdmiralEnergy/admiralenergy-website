@@ -7,21 +7,20 @@ const canonicalUrl = `${SITE_URL}/sidekick`;
 const socialImage = `${SITE_URL}/images/sidekick/og-sidekick-real-20260812.webp`;
 
 export const metadata: Metadata = {
-  title: { absolute: "SideKick PowerBank | Portable Emergency Phone Charger | Admiral Energy" },
-  description: "SideKick is the $69.99 portable power bank you keep close: built-in charging cables, USB-C support, flashlight, supplemental solar, emergency hand crank, compass, and bubble level.",
-  keywords: ["portable power bank", "emergency power bank", "power bank with built-in cables", "emergency phone charger", "power bank with flashlight", "travel power bank"],
+  title: { absolute: "SideKick Solar Power Bank & Emergency Charger | Admiral Energy" },
+  description: "SideKick is a portable emergency power bank with built-in charging cables, a flashlight, supplemental solar charging, and a hand crank for last-resort power.",
   alternates: { canonical: canonicalUrl },
   openGraph: {
-    title: "SideKick PowerBank | The Power Bank You Actually Keep With You",
-    description: "Everyday portable backup power with built-in cables, lighting, and honest emergency recharge options. $69.99 from Admiral Energy.",
+    title: "SideKick Solar Power Bank & Emergency Charger",
+    description: "Portable phone backup with built-in cables, a flashlight, supplemental solar charging, and a last-resort hand crank. $69.99 from Admiral Energy.",
     url: canonicalUrl,
     type: "website",
     images: [{ url: socialImage, width: 1200, height: 630, alt: "SideKick PowerBank by Admiral Energy" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "SideKick PowerBank | Everyday Portable Backup",
-    description: "Built-in cables, lighting, USB charging, and backup solar and hand-crank options. $69.99.",
+    title: "SideKick Solar Power Bank & Emergency Charger",
+    description: "Built-in cables, a flashlight, wired USB charging, and honest backup solar and hand-crank options. $69.99.",
     images: [socialImage],
   },
 };
@@ -48,7 +47,7 @@ const productSchema = {
       ? "https://schema.org/InStock"
       : "https://schema.org/OutOfStock",
     itemCondition: "https://schema.org/NewCondition",
-    seller: { "@type": "Organization", name: "Admiral Energy LLC" },
+    seller: { "@id": `${SITE_URL}/#organization` },
     shippingDetails: {
       "@type": "OfferShippingDetails",
       shippingRate: { "@type": "MonetaryAmount", value: "0", currency: "USD" },

@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "audit:product-discovery": "node scripts/audit-product-discovery.mjs"
+    "typecheck": "tsc --noEmit",
+    "audit:product-discovery": "node scripts/audit-product-discovery.mjs",
+    "audit:seo": "node scripts/audit-seo.mjs"
   },
   "dependencies": {
     "@netlify/plugin-nextjs": "^5.15.8",

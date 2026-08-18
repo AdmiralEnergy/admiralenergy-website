@@ -10,7 +10,7 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: { default: "Admiral Energy | Portable & Whole-Home Backup Power", template: "%s | Admiral Energy" },
+  title: { default: "Admiral Energy | Portable Power & Whole-Home Backup", template: "%s | Admiral Energy" },
   description: "Admiral Energy helps North Carolina families build practical power resilience—from the SideKick PowerBank to professionally installed whole-home backup.",
   metadataBase: new URL(SITE_URL),
   openGraph: {
@@ -40,14 +40,24 @@ export const metadata: Metadata = {
 
 const organizationSchema = {
   "@context": "https://schema.org",
-  "@type": ["Organization", "LocalBusiness"],
+  "@type": "Organization",
+  "@id": `${SITE_URL}/#organization`,
   name: "Admiral Energy LLC",
   url: SITE_URL,
-  logo: `${SITE_URL}/logos/ae-logo-horiz-bg.png`,
+  logo: {
+    "@type": "ImageObject",
+    url: `${SITE_URL}/logos/ae-logo-horiz-bg.png`,
+  },
   description: "A veteran-owned North Carolina home-energy resilience company offering portable power and whole-home backup guidance.",
   email: "david@admiralenergy.ai",
   telephone: "+1-984-238-4187",
-  address: { "@type": "PostalAddress", addressLocality: "Kings Mountain", addressRegion: "NC", addressCountry: "US" },
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+1-984-238-4187",
+    email: "david@admiralenergy.ai",
+    contactType: "customer service",
+    availableLanguage: "English",
+  },
   areaServed: { "@type": "State", name: "North Carolina" },
 };
 

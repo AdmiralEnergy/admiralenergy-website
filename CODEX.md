@@ -360,7 +360,7 @@ Stripe redirects to /shop/success?session_id={CHECKOUT_SESSION_ID}
 ### Stripe Configuration
 - **Checkout mode:** `payment` (one-time, not subscription)
 - **Success URL:** `${SITE_URL}/shop/success?session_id={CHECKOUT_SESSION_ID}`
-- **Cancel URL:** `${SITE_URL}/shop/${slug}`
+- **Cancel URL:** `${SITE_URL}/sidekick`
 - **Quantity limit:** 1–5 per checkout (enforced server-side)
 - **Price source:** Either inline `price_data` OR a `STRIPE_PRICE_ID_SIDEKICK` env var (optional)
 

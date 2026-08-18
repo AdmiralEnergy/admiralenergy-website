@@ -2,11 +2,25 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllPosts } from "@/lib/blog";
 import { Clock, ArrowRight, BookOpen } from "lucide-react";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Home Resilience Blog",
-  description:
-    "Generators, portable power, outage prep, and NC incentives — practical guides for North Carolina homeowners from Admiral Energy.",
+  title: "Emergency Power & Home Resilience Guides",
+  description: "Practical guides to emergency phone charging, solar power banks, outage preparation, battery backup, and home standby power.",
+  alternates: { canonical: "/blog" },
+  openGraph: {
+    title: "Emergency Power & Home Resilience Guides",
+    description: "Honest, practical guidance for portable charging, outage preparation, and whole-home backup.",
+    url: `${SITE_URL}/blog`,
+    type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Admiral Energy guides" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Emergency Power & Home Resilience Guides",
+    description: "Practical answers about emergency charging, outages, and home backup power.",
+    images: ["/og.png"],
+  },
 };
 
 export default function BlogPage() {
@@ -18,13 +32,13 @@ export default function BlogPage() {
       <section className="bg-admiral-navy text-white py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <BookOpen className="w-10 h-10 text-admiral-gold mx-auto mb-4" />
-          <h1 className="text-4xl font-bold mb-4">Home Resilience Blog</h1>
+          <h1 className="text-4xl font-bold mb-4">Emergency Power & Home Resilience Guides</h1>
           <p className="text-gray-300 text-lg mb-6">
-            Practical guides, honest takes, and real information — no fluff,
-            no sales pitches, just what NC homeowners actually need to know.
+            Practical answers about keeping a phone charged, preparing for an outage,
+            and deciding when whole-home backup makes sense.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            {["Generators (Generac)", "Portable Power", "Outage Prep", "NC Incentives (PowerPair)"].map((cat) => (
+            {["Emergency Charging", "Solar Power Banks", "Outage Prep", "Whole-Home Backup"].map((cat) => (
               <span key={cat} className="bg-white/10 text-white text-xs font-medium px-3 py-1.5 rounded-full">
                 {cat}
               </span>
@@ -56,6 +70,7 @@ export default function BlogPage() {
                         year: "numeric",
                         month: "long",
                         day: "numeric",
+                        timeZone: "UTC",
                       })}
                     </span>
                     <span className="text-gray-400 flex items-center gap-1">
