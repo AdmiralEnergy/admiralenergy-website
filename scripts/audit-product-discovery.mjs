@@ -1,4 +1,5 @@
 const baseUrl = (process.argv[2] || process.env.AUDIT_BASE_URL || "http://localhost:3000").replace(/\/$/, "");
+const isNetlifyPreview = new URL(baseUrl).hostname.endsWith(".netlify.app");
 
 const retiredTerms = [
   "Generac GB1000 Portable Power Station",
@@ -74,7 +75,9 @@ async function assertRedirect(path, expectedDestination) {
 
 const { response: sidekickResponse, html: sidekickHtml } = await fetchPage("/sidekick");
 assert(sidekickResponse.status === 200, `/sidekick returned ${sidekickResponse.status}`);
-assert(!/noindex|nofollow/i.test(sidekickResponse.headers.get("x-robots-tag") || ""), "/sidekick has a restrictive X-Robots-Tag");
+if (!isNetlifyPreview) {
+  assert(!/noindex|nofollow/i.test(sidekickResponse.headers.get("x-robots-tag") || ""), "/sidekick has a restrictive X-Robots-Tag");
+}
 
 const canonicals = canonicalUrls(sidekickHtml);
 assert(canonicals.length === 1, `/sidekick emitted ${canonicals.length} canonical tags`);
@@ -153,3 +156,4 @@ for (const path of ["/", "/home-backup", "/resources", "/about", "/blog"]) {
 console.log(`Product discovery audit passed for ${baseUrl}`);
 console.log("- exactly one Product entity: SideKick PowerBank");
 console.log("- canonical, sitemap, robots, images, visible offer data, redirects, and retired-route 404s verified");
+if (isNetlifyPreview) console.log("- intentional Netlify preview noindex header accepted; production remains strict");

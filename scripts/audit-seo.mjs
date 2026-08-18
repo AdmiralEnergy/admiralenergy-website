@@ -1,5 +1,6 @@
 const baseUrl = (process.argv[2] || process.env.AUDIT_BASE_URL || "http://localhost:3000").replace(/\/$/, "");
 const canonicalOrigin = (process.env.AUDIT_CANONICAL_ORIGIN || "https://admiralenergy.ai").replace(/\/$/, "");
+const isNetlifyPreview = new URL(baseUrl).hostname.endsWith(".netlify.app");
 
 const pages = [
   { path: "/", schema: "WebSite", social: true },
@@ -146,7 +147,9 @@ const descriptions = new Map();
 for (const page of pages) {
   const { response, html } = await fetchManual(page.path);
   assert(response.status === 200, `${page.path} returned ${response.status}`);
-  assert(!/noindex|nofollow/i.test(response.headers.get("x-robots-tag") || ""), `${page.path} has a restrictive X-Robots-Tag`);
+  if (!isNetlifyPreview) {
+    assert(!/noindex|nofollow/i.test(response.headers.get("x-robots-tag") || ""), `${page.path} has a restrictive X-Robots-Tag`);
+  }
 
   const title = titleText(html);
   const description = metaContent(html, "description");
@@ -269,3 +272,4 @@ console.log(`- ${pages.length} canonical, indexable pages have unique titles, de
 console.log("- WebSite, Organization, Product, Service, and BlogPosting schema boundaries verified");
 console.log(`- ${internalPaths.size} internal destinations return canonical HTTP 200 pages`);
 console.log("- sitemap, robots, social metadata, redirects, retired-route 404s, and private-route handling verified");
+if (isNetlifyPreview) console.log("- intentional Netlify preview noindex header accepted; production remains strict");
