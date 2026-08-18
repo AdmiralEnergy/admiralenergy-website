@@ -1,9 +1,9 @@
-import { Alert, Card, DatabaseUnavailable, PageHeader, buttonClass, fieldClass } from "@/components/commerce/AdminUI";
+import Link from "next/link";
+import { Alert, Card, DatabaseUnavailable, PageHeader, buttonClass, fieldClass, secondaryButtonClass } from "@/components/commerce/AdminUI";
+import { businessDateInputValue } from "@/lib/commerce/dates";
 import { listInventory, listSuppliers } from "@/lib/commerce/repository";
 
 export const dynamic = "force-dynamic";
-
-const today = new Date().toISOString().slice(0, 10);
 
 export default async function NewManualOrderPage({ searchParams }: {
   searchParams: Promise<{
@@ -18,9 +18,10 @@ export default async function NewManualOrderPage({ searchParams }: {
   const data = await Promise.all([listInventory(), listSuppliers()]).catch(() => null);
   if (!data) return <><PageHeader title="Add manual order" /><DatabaseUnavailable /></>;
   const [{ products, lots }, suppliers] = data;
+  const today = businessDateInputValue();
   return (
       <>
-        <PageHeader title="Add manual order" description="Record Marketplace, local/D2D, cash, wholesale, or another owner-entered sale. Dollar fields are converted to integer cents on the server." />
+        <PageHeader title="Add manual order" description="Record Marketplace, local/D2D, cash, wholesale, or another owner-entered sale. Dollar fields are converted to integer cents on the server." actions={<Link href="/admin/commerce/orders" className={secondaryButtonClass}>Back to orders</Link>} />
         <div className="mb-5 space-y-3">{params.unmatchedId && <Alert tone="warning">You are assigning an unmatched Stripe payment. Choose the real product, quantity, source, and cost facts; the payment amount is intentionally not used to guess them.</Alert>}{params.error && <Alert tone="error">The order was not saved. Review required values and cost/fulfillment details, then try again.</Alert>}</div>
         <form action="/api/admin/commerce/orders" method="post" className="grid gap-6 xl:grid-cols-2">
           <input type="hidden" name="unmatchedTransactionId" value={params.unmatchedId ?? ""} />

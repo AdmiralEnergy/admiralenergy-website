@@ -44,7 +44,9 @@ export async function getCommerceAdmin(): Promise<CommerceSession | null> {
   const cookieStore = await cookies();
   const token = cookieStore.get(COMMERCE_SESSION_COOKIE)?.value;
   if (!token) return null;
-  return verifySessionToken(token, config.sessionSecret);
+  const session = await verifySessionToken(token, config.sessionSecret);
+  if (session?.email.trim().toLowerCase() !== config.email) return null;
+  return session;
 }
 
 export async function requireCommerceAdmin() {
