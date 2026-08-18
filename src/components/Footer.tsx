@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import BrandLockup from "@/components/BrandLockup";
 
 const primaryLinks = [
   ["SideKick", "/sidekick"],
@@ -21,10 +21,9 @@ export default function Footer() {
     <footer className="bg-[#071f31] py-14 text-white">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 md:grid-cols-[1.4fr_0.8fr_0.9fr] lg:px-8">
         <div>
-          <div className="mb-5 flex items-center gap-3">
-            <Image src="/logos/ae-logo-horiz-bg.png" alt="Admiral Energy" width={140} height={34} className="h-8 w-auto rounded-md" />
-            <span className="text-xl font-bold">Admiral Energy</span>
-          </div>
+          <Link href="/" aria-label="Admiral Energy home" className="mb-5 inline-flex rounded-xl">
+            <BrandLockup context="footer" />
+          </Link>
           <p className="max-w-md leading-7 text-slate-300">A North Carolina home-energy resilience company. Start with portable personal power. Go further with an honest whole-home backup conversation.</p>
           <p className="mt-4 text-sm font-semibold text-admiral-gold">No pitch. No exaggerated claims. Clear next steps.</p>
         </div>
