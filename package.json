@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
     "audit:product-discovery": "node scripts/audit-product-discovery.mjs",
+    "audit:seo": "node scripts/audit-seo.mjs",
     "test": "tsx --test tests/*.test.ts",
     "commerce:hash-password": "tsx scripts/hash-commerce-password.ts"
   },

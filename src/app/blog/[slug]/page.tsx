@@ -28,13 +28,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "article",
       publishedTime: post.date,
       url: `${SITE_URL}/blog/${post.slug}`,
-      images: [],
+      images: [{ url: "/og.png", width: 1200, height: 630, alt: post.title }],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title: post.title,
       description: post.excerpt,
-      images: [],
+      images: ["/og.png"],
     },
   };
 }
@@ -53,19 +53,19 @@ export default async function BlogPostPage({ params }: Props) {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BlogPosting",
+            "@id": `${SITE_URL}/blog/${post.slug}#article`,
             headline: post.title,
             description: post.excerpt,
             datePublished: post.date,
+            mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,
             author: {
               "@type": "Person",
               name: post.author,
             },
             publisher: {
-              "@type": "Organization",
-              name: "Admiral Energy",
-              url: "https://admiralenergy.ai",
+              "@id": `${SITE_URL}/#organization`,
             },
-          }),
+          }).replace(/</g, "\\u003c"),
         }}
       />
 
@@ -94,6 +94,7 @@ export default async function BlogPostPage({ params }: Props) {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
+                  timeZone: "UTC",
                 })}
               </span>
               <span className="flex items-center gap-1">
@@ -111,10 +112,10 @@ export default async function BlogPostPage({ params }: Props) {
               Have questions about this topic?
             </p>
             <Link
-              href="/home-backup"
+              href={post.ctaHref}
               className="bg-admiral-gold text-admiral-navy px-6 py-2 rounded-lg font-semibold hover:bg-gold-light transition-colors inline-block"
             >
-              Explore Home Backup
+              {post.ctaLabel}
             </Link>
           </footer>
         </div>
