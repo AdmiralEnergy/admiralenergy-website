@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, ShoppingBag, X } from "lucide-react";
 import { useState } from "react";
+import BrandLockup from "@/components/BrandLockup";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -24,9 +24,8 @@ export default function Header() {
         Veteran-owned • North Carolina • Practical power resilience
       </div>
       <nav aria-label="Primary navigation" className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex shrink-0 items-center gap-3" onClick={() => setMobileOpen(false)}>
-          <Image src="/logos/ae-logo-horiz-bg.png" alt="Admiral Energy home" width={138} height={34} priority className="h-8 w-auto rounded-md" />
-          <span className="hidden text-lg font-bold xl:inline">Admiral Energy</span>
+        <Link href="/" aria-label="Admiral Energy home" className="flex shrink-0 items-center" onClick={() => setMobileOpen(false)}>
+          <BrandLockup context="header" />
         </Link>
 
         <div className="hidden items-center gap-5 lg:flex">
