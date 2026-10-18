@@ -12,7 +12,7 @@ import { getProductById } from "../../src/data/products";
 // These must match the priceCents in src/data/products.ts.
 const PRODUCT_PRICES: Record<string, { name: string; priceCents: number; description: string }> = {
   "hs-43-solar-power-bank": {
-    name: "SIDEKICK PowerBank",
+    name: "SideKick PowerBank",
     priceCents: 6999,
     description:
       "Portable backup power with built-in cables, emergency lighting, and supplemental solar and hand-crank charging.",

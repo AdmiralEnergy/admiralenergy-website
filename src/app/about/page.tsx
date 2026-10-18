@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 const principles = [
   { title: "Explain the limits", copy: "Customers should understand what a product can do, what it cannot do, and how to use it realistically.", icon: Scale },
   { title: "Start with the need", copy: "A phone charger, a portable battery, and a standby generator solve very different problems. We begin with yours.", icon: BookOpen },
-  { title: "Support what we sell", copy: "SideKick is selected, stocked, sold, and supported by Admiral Energy—not presented as hardware we invented.", icon: ShieldCheck },
+  { title: "Support what we sell", copy: "SideKick is selected, sold, and supported by Admiral Energy—not presented as hardware we invented.", icon: ShieldCheck },
 ];
 
 export default function AboutPage() {

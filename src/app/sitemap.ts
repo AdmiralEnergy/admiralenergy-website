@@ -6,6 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [
     ["", "weekly", 1.0],
     ["/sidekick", "weekly", 0.95],
+    ["/kings-mountain/home-backup", "monthly", 0.95],
     ["/home-backup", "monthly", 0.9],
     ["/resources", "monthly", 0.8],
     ["/about", "monthly", 0.6],

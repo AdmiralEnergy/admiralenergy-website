@@ -1,26 +1,21 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { CheckCircle, Loader2 } from "lucide-react";
-import { sidekickAnalyticsItem, trackEvent } from "@/lib/analytics";
+import { trackEvent } from "@/lib/analytics";
 
 export default function PostPurchaseExperience({ sessionId }: { sessionId?: string }) {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-
-  useEffect(() => {
-    if (!sessionId) return;
-    const key = `ae_purchase_${sessionId}`;
-    if (sessionStorage.getItem(key)) return;
-    trackEvent("purchase", {
-      ecommerce: { transaction_id: sessionId, currency: "USD", items: [sidekickAnalyticsItem] },
-    });
-    sessionStorage.setItem(key, "1");
-  }, [sessionId]);
+  const [error, setError] = useState(false);
+  const submitLock = useRef(false);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (submitLock.current) return;
+    submitLock.current = true;
     setSubmitting(true);
+    setError(false);
     const encoded = new URLSearchParams();
     new FormData(event.currentTarget).forEach((value, key) => {
       if (typeof value === "string") encoded.append(key, value);
@@ -34,8 +29,11 @@ export default function PostPurchaseExperience({ sessionId }: { sessionId?: stri
       if (!response.ok) throw new Error("Submission failed");
       trackEvent("post_purchase_interest_submitted", { form_name: "sidekick-interest" });
       setSubmitted(true);
+    } catch {
+      setError(true);
     } finally {
       setSubmitting(false);
+      submitLock.current = false;
     }
   }
 
@@ -52,6 +50,7 @@ export default function PostPurchaseExperience({ sessionId }: { sessionId?: stri
       <p className="mt-2 text-sm leading-6 text-slate-600">One quick answer helps us tailor future education.</p>
       <label className="mt-5 grid gap-2 text-sm font-semibold text-slate-700">Primary reason<select name="reason" required defaultValue="" className="rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none focus:border-admiral-gold focus:ring-4 focus:ring-admiral-gold/20"><option value="" disabled>Select one</option><option>Everyday use</option><option>Travel</option><option>Work</option><option>Camping</option><option>Storms</option><option>Power outages</option><option>Emergency preparedness</option><option>Gift</option></select></label>
       <button type="submit" disabled={submitting} className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-xl bg-admiral-navy px-5 py-3 font-bold text-white disabled:opacity-60">{submitting && <Loader2 className="h-4 w-4 animate-spin" />}Share My Reason</button>
+      {error && <p role="alert" className="mt-3 text-sm text-red-700">We could not save that response. You can try again.</p>}
     </form>
   );
 }

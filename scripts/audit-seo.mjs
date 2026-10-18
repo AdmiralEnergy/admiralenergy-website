@@ -8,6 +8,7 @@ const pages = [
   { path: "/resources", social: true },
   { path: "/blog", social: true },
   { path: "/home-backup", schema: "Service", social: true },
+  { path: "/kings-mountain/home-backup", schema: "Service", social: true },
   { path: "/about", social: true },
   { path: "/blog/how-solar-power-banks-work", schema: "BlogPosting" },
   { path: "/blog/hand-crank-power-bank-guide", schema: "BlogPosting" },

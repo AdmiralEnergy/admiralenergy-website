@@ -27,24 +27,22 @@ const handler: Handler = async (event: HandlerEvent) => {
 
   try {
     stripeEvent = stripe.webhooks.constructEvent(event.body || "", sig, webhookSecret);
-  } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Unknown error";
-    console.error("Webhook signature verification failed:", message);
-    return { statusCode: 400, body: `Webhook Error: ${message}` };
+  } catch {
+    // Stripe's verification error can include request details. Keep both the
+    // public response and function logs intentionally generic.
+    console.warn("Stripe webhook signature verification failed");
+    return { statusCode: 400, body: "Invalid webhook signature" };
   }
 
   // Handle the event
   switch (stripeEvent.type) {
     case "checkout.session.completed": {
       const session = stripeEvent.data.object as Stripe.Checkout.Session;
-      console.log("=== ORDER COMPLETED ===");
-      console.log("Session ID:", session.id);
-      console.log("Customer email:", session.customer_details?.email);
-      console.log("Amount total:", session.amount_total ? `$${(session.amount_total / 100).toFixed(2)}` : "N/A");
-      console.log("Payment status:", session.payment_status);
-      console.log("Shipping:", JSON.stringify(session.shipping_details));
-      console.log("Metadata:", JSON.stringify(session.metadata));
-      console.log("=======================");
+      console.info("Stripe checkout event processed", {
+        eventType: stripeEvent.type,
+        livemode: stripeEvent.livemode,
+        paymentStatus: session.payment_status,
+      });
 
       // TODO: Send order confirmation email when email provider is configured
       // TODO: Write to Supabase orders table if credentials exist
@@ -52,8 +50,10 @@ const handler: Handler = async (event: HandlerEvent) => {
     }
 
     case "checkout.session.expired": {
-      const session = stripeEvent.data.object as Stripe.Checkout.Session;
-      console.log("Checkout session expired:", session.id);
+      console.info("Stripe checkout event processed", {
+        eventType: stripeEvent.type,
+        livemode: stripeEvent.livemode,
+      });
       break;
     }
 

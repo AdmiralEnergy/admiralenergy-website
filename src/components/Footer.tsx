@@ -1,9 +1,11 @@
 import Link from "next/link";
 import BrandLockup from "@/components/BrandLockup";
+import { BUSINESS } from "@/lib/business";
 
 const primaryLinks = [
   ["SideKick", "/sidekick"],
   ["Home Backup", "/home-backup"],
+  ["Kings Mountain Backup", "/kings-mountain/home-backup"],
   ["About", "/about"],
   ["Resources", "/resources"],
 ];
@@ -24,7 +26,7 @@ export default function Footer() {
           <Link href="/" aria-label="Admiral Energy home" className="mb-5 inline-flex rounded-xl">
             <BrandLockup context="footer" />
           </Link>
-          <p className="max-w-md leading-7 text-slate-300">A North Carolina home-energy resilience company. Start with portable personal power. Go further with an honest whole-home backup conversation.</p>
+          <p className="max-w-md leading-7 text-slate-300">A veteran-owned energy-resilience business based in Kings Mountain, North Carolina. Start with portable personal power. Go further with a transparent home-backup conversation.</p>
           <p className="mt-4 text-sm font-semibold text-admiral-gold">No pitch. No exaggerated claims. Clear next steps.</p>
         </div>
 
@@ -38,15 +40,15 @@ export default function Footer() {
         <div>
           <h2 className="mb-4 text-sm font-extrabold uppercase tracking-[0.16em] text-admiral-gold">Contact & policies</h2>
           <ul className="space-y-3 text-slate-300">
-            <li><a href="tel:+19842384187" className="transition hover:text-white">(984) 238-4187</a></li>
-            <li><a href="mailto:david@admiralenergy.ai" className="transition hover:text-white">david@admiralenergy.ai</a></li>
+            <li><a href={BUSINESS.contact.phoneHref} className="transition hover:text-white">{BUSINESS.contact.phoneDisplay}</a></li>
+            <li><a href={BUSINESS.contact.emailHref} className="transition hover:text-white">{BUSINESS.contact.email}</a></li>
             {policyLinks.map(([label, href]) => <li key={href}><Link href={href} className="transition hover:text-white">{label}</Link></li>)}
           </ul>
         </div>
       </div>
 
       <div className="mx-auto mt-10 flex max-w-7xl flex-col gap-2 border-t border-white/10 px-4 pt-7 text-sm text-slate-400 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
-        <p>© {new Date().getFullYear()} Admiral Energy LLC. Kings Mountain, North Carolina.</p>
+        <p>© {new Date().getFullYear()} {BUSINESS.name}. Kings Mountain, North Carolina.</p>
         <p>SideKick is not manufactured by Generac.</p>
       </div>
     </footer>

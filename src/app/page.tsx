@@ -1,25 +1,25 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BatteryCharging, Check, Home, ShieldCheck, ShoppingBag, Smartphone, Wrench, Zap } from "lucide-react";
+import { ArrowRight, BatteryCharging, Check, Home, MapPin, ShieldCheck, ShoppingBag, Smartphone, Wrench, Zap } from "lucide-react";
 import { EmailCapture } from "@/components/LeadForms";
 import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: { absolute: "Admiral Energy | Portable Power & Whole-Home Backup" },
-  description: "Shop the SideKick portable power bank or explore professionally installed whole-home backup with Admiral Energy in North Carolina.",
+  title: { absolute: "Admiral Energy | Backup Power Planning in Kings Mountain, NC" },
+  description: "Veteran-owned Admiral Energy helps Kings Mountain homeowners understand personal power and professionally installed home-backup options.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Admiral Energy | Portable Power & Whole-Home Backup",
-    description: "Practical portable power, honest outage-preparation guidance, and professionally installed whole-home backup in North Carolina.",
+    title: "Admiral Energy | Backup Power Planning in Kings Mountain, NC",
+    description: "Practical personal power products and transparent home-backup planning from a veteran-owned Kings Mountain business.",
     url: SITE_URL,
     type: "website",
     images: [{ url: "/og.png", width: 1200, height: 630, alt: "Admiral Energy portable and whole-home backup power" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Admiral Energy | Portable Power & Whole-Home Backup",
-    description: "Start with SideKick portable power or explore whole-home backup in North Carolina.",
+    title: "Admiral Energy | Backup Power Planning in Kings Mountain, NC",
+    description: "Start with SideKick personal power or explore a home-backup consultation in Kings Mountain.",
     images: ["/og.png"],
   },
 };
@@ -69,19 +69,19 @@ export default function HomePage() {
         <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(circle_at_20%_20%,#d4b85c_0,transparent_34%),radial-gradient(circle_at_80%_85%,#1a4a6e_0,transparent_32%)]" />
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[1.03fr_0.97fr] lg:px-8 lg:py-28">
           <div>
-            <p className="eyebrow">Home energy resilience, made practical</p>
+            <p className="eyebrow">VETERAN-OWNED • BASED IN KINGS MOUNTAIN, NC</p>
             <h1 className="mt-5 max-w-3xl text-5xl font-black leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
-              Power Starts Small. <span className="text-admiral-gold">Resilience Goes Further.</span>
+              Kings Mountain Backup Power <span className="text-admiral-gold">Starts With a Plan.</span>
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-200 sm:text-xl">
-              Admiral Energy helps you prepare for power disruptions—starting with a SideKick you can carry every day and extending to professionally installed whole-home backup.
+              From emergency charging for your phone to exploring professionally installed whole-home standby power, Admiral Energy helps local homeowners understand their backup options before the next outage.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="/sidekick#buy" className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-admiral-gold px-7 py-4 text-base font-extrabold text-admiral-navy transition hover:bg-gold-light">
-                <ShoppingBag className="h-5 w-5" aria-hidden="true" /> Shop SideKick — $69.99
+              <Link href="/kings-mountain/home-backup" data-analytics-event="home_backup_cta_click" data-analytics-location="homepage_hero" data-analytics-destination="/kings-mountain/home-backup" className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-admiral-gold px-7 py-4 text-base font-extrabold text-admiral-navy transition hover:bg-gold-light">
+                Explore Home Backup Options <ArrowRight className="h-5 w-5" aria-hidden="true" />
               </Link>
-              <Link href="/home-backup" className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl border border-white/40 px-7 py-4 text-base font-bold text-white transition hover:border-white hover:bg-white hover:text-admiral-navy">
-                Explore Whole-Home Backup <ArrowRight className="h-5 w-5" aria-hidden="true" />
+              <Link href="/sidekick#buy" data-analytics-event="sidekick_referral_click" data-analytics-location="homepage_hero" data-analytics-destination="/sidekick#buy" className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl border border-white/40 px-7 py-4 text-base font-bold text-white transition hover:border-white hover:bg-white hover:text-admiral-navy">
+                <ShoppingBag className="h-5 w-5" aria-hidden="true" /> Shop the SideKick — $69.99
               </Link>
             </div>
             <ul className="mt-8 grid gap-3 text-sm font-semibold text-slate-200 sm:grid-cols-3">
@@ -106,6 +106,22 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="border-b border-slate-200 bg-[#e9edf0] py-14 md:py-16">
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.72fr_1.28fr] lg:items-center lg:px-8">
+          <div className="flex items-start gap-4">
+            <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-admiral-navy text-admiral-gold"><MapPin className="h-6 w-6" aria-hidden="true" /></span>
+            <div><p className="eyebrow">Locally based, locally focused</p><h2 className="mt-2 text-3xl font-black text-admiral-navy">Planning starts in Kings Mountain.</h2></div>
+          </div>
+          <div>
+            <p className="text-lg leading-8 text-slate-700">Admiral Energy is based in Kings Mountain and is building a practical consultation path for homeowners in Kings Mountain, Cleveland County, and nearby Gaston County communities. Follow-up availability depends on location and appropriate licensed-professional coverage.</p>
+            <div className="mt-5 flex flex-wrap gap-x-6 gap-y-3 font-bold text-admiral-navy">
+              <Link href="/about" className="underline decoration-admiral-gold decoration-2 underline-offset-4">About Admiral Energy</Link>
+              <Link href="/resources" className="underline decoration-admiral-gold decoration-2 underline-offset-4">Read backup-power resources</Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section aria-label="Trust signals" className="border-b border-slate-200 bg-white">
         <div className="mx-auto grid max-w-7xl gap-6 px-4 py-7 text-center sm:px-6 md:grid-cols-3 lg:px-8">
           <div className="flex items-center justify-center gap-3"><ShieldCheck className="h-7 w-7 text-admiral-gold" /><div className="text-left"><p className="font-extrabold text-admiral-navy">Generac Aligned Contractor</p><p className="text-sm text-slate-500">For professionally installed standby solutions</p></div></div>
@@ -124,11 +140,11 @@ export default function HomePage() {
           <div className="mt-12 grid gap-6 lg:grid-cols-2">
             <article className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
               <div className="relative aspect-[16/9] overflow-hidden bg-slate-100"><Image src="/images/sidekick/cables-real-20260812.webp" alt="Built-in charging cables on the SideKick PowerBank" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover transition duration-500 group-hover:scale-[1.03]" /></div>
-              <div className="p-7 md:p-9"><p className="eyebrow">Buy today</p><h3 className="mt-3 text-3xl font-black text-admiral-navy">SideKick PowerBank</h3><p className="mt-4 leading-7 text-slate-600">Portable backup for phones and compatible small USB devices—with cables, lighting, and emergency recharge options already built in.</p><Link href="/sidekick" className="mt-6 inline-flex items-center gap-2 font-extrabold text-admiral-navy underline decoration-admiral-gold decoration-2 underline-offset-4">See SideKick <ArrowRight className="h-4 w-4" /></Link></div>
+              <div className="p-7 md:p-9"><p className="eyebrow">Buy today</p><h3 className="mt-3 text-3xl font-black text-admiral-navy">SideKick PowerBank</h3><p className="mt-4 leading-7 text-slate-600">Portable backup for phones and compatible small USB devices—with cables, lighting, and emergency recharge options already built in.</p><Link href="/sidekick" data-analytics-event="sidekick_referral_click" data-analytics-location="homepage_product_card" data-analytics-destination="/sidekick" className="mt-6 inline-flex items-center gap-2 font-extrabold text-admiral-navy underline decoration-admiral-gold decoration-2 underline-offset-4">See SideKick <ArrowRight className="h-4 w-4" /></Link></div>
             </article>
             <article className="rounded-3xl bg-admiral-navy p-7 text-white shadow-sm md:p-9 lg:flex lg:flex-col lg:justify-between">
-              <div><p className="eyebrow">Start a conversation</p><h3 className="mt-3 text-3xl font-black">Whole-home standby power</h3><p className="mt-4 text-lg leading-8 text-slate-200">When refrigeration, medical equipment, a well pump, HVAC, or your home office cannot wait, it may be time to assess a standby system.</p><ul className="mt-7 grid gap-3 text-slate-200 sm:grid-cols-2">{["Short assessment form", "No giant questionnaire", "North Carolina service", "Generac Aligned Contractor"].map((item) => <li key={item} className="flex gap-2"><Check className="mt-1 h-4 w-4 shrink-0 text-admiral-gold" />{item}</li>)}</ul></div>
-              <Link href="/home-backup#assessment" className="mt-10 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-admiral-gold px-6 py-3 font-extrabold text-admiral-navy">Request an Assessment <ArrowRight className="h-5 w-5" /></Link>
+              <div><p className="eyebrow">Start a conversation</p><h3 className="mt-3 text-3xl font-black">Whole-home standby power</h3><p className="mt-4 text-lg leading-8 text-slate-200">When refrigeration, a well pump, HVAC, communications, or your home office are priorities, it may be time to assess a professionally installed standby system.</p><ul className="mt-7 grid gap-3 text-slate-200 sm:grid-cols-2">{["Short assessment form", "No giant questionnaire", "Local planning context", "Generac Aligned Contractor"].map((item) => <li key={item} className="flex gap-2"><Check className="mt-1 h-4 w-4 shrink-0 text-admiral-gold" />{item}</li>)}</ul></div>
+              <Link href="/kings-mountain/home-backup#consultation" data-analytics-event="home_backup_cta_click" data-analytics-location="homepage_home_backup_card" data-analytics-destination="/kings-mountain/home-backup#consultation" className="mt-10 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-admiral-gold px-6 py-3 font-extrabold text-admiral-navy">Request an Initial Consultation <ArrowRight className="h-5 w-5" /></Link>
             </article>
           </div>
         </div>

@@ -1,24 +1,48 @@
 <!doctype html>
 <html lang="en">
-  <head><meta charset="utf-8" /><title>Admiral Energy Form Definitions</title></head>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Admiral Energy form definitions</title>
+  </head>
   <body>
-    <!-- Static declarations allow Netlify Forms to discover the client-rendered forms. -->
-    <form name="resilience-list" netlify netlify-honeypot="bot-field" hidden>
+    <!-- Static declarations let Netlify discover the matching client-rendered forms. -->
+    <form name="resilience-list" data-netlify="true" netlify-honeypot="bot-field" hidden>
       <input name="bot-field" />
       <input name="email" type="email" />
       <input name="source" />
+      <input name="marketing_consent" />
+      <input name="lead_created_at_client" />
     </form>
-    <form name="home-backup-assessment" netlify netlify-honeypot="bot-field" hidden>
+
+    <form name="home-backup-assessment" data-netlify="true" netlify-honeypot="bot-field" hidden>
       <input name="bot-field" />
       <input name="name" />
       <input name="email" type="email" />
       <input name="phone" />
-      <input name="zip" />
-      <input name="homeowner" />
-      <input name="priority" />
-      <textarea name="message"></textarea>
+      <input name="zip_code" />
+      <input name="homeowner_status" />
+      <input name="backup_priority" />
+      <input name="consideration_timeline" />
+      <textarea name="notes"></textarea>
+      <input name="contact_consent" />
+      <input name="marketing_opt_in" />
+      <input name="partner_referral_consent" />
+      <input name="consent_version" />
+      <input name="form_location" />
+      <input name="submission_page" />
+      <input name="utm_source" />
+      <input name="utm_medium" />
+      <input name="utm_campaign" />
+      <input name="utm_content" />
+      <input name="landing_page" />
+      <input name="initial_referrer" />
+      <input name="lead_source" />
+      <input name="attribution_captured_at" />
+      <input name="lead_created_at_client" />
     </form>
-    <form name="bulk-order-inquiry" netlify netlify-honeypot="bot-field" hidden>
+
+    <form name="bulk-order-inquiry" data-netlify="true" netlify-honeypot="bot-field" hidden>
       <input name="bot-field" />
       <input name="name" />
       <input name="company" />
@@ -28,10 +52,22 @@
       <input name="timeline" />
       <textarea name="notes"></textarea>
     </form>
-    <form name="sidekick-interest" netlify netlify-honeypot="bot-field" hidden>
+
+    <form name="sidekick-interest" data-netlify="true" netlify-honeypot="bot-field" hidden>
       <input name="bot-field" />
       <input name="session-id" />
       <input name="reason" />
+    </form>
+
+    <form name="sidekick-bulk-inquiry" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input name="bot-field" />
+      <input name="name" />
+      <input name="company" />
+      <input name="email" type="email" />
+      <input name="phone" />
+      <input name="estimated-quantity" />
+      <input name="timeline" />
+      <textarea name="notes"></textarea>
     </form>
   </body>
 </html>

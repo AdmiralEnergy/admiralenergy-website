@@ -102,15 +102,40 @@ html {
   color: #555;
 }
 
-.sidekick-reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 500ms ease, transform 500ms ease;
+.sidekick-hero-grid {
+  display: grid;
+  grid-template-areas:
+    "intro"
+    "gallery"
+    "offer"
+    "proof";
 }
 
-.sidekick-reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+.sidekick-hero-intro {
+  grid-area: intro;
+}
+
+.sidekick-hero-gallery {
+  grid-area: gallery;
+}
+
+.sidekick-hero-offer {
+  grid-area: offer;
+}
+
+.sidekick-hero-proof {
+  grid-area: proof;
+}
+
+@media (min-width: 64rem) {
+  .sidekick-hero-grid {
+    grid-template-areas:
+      "intro gallery"
+      "offer gallery"
+      "proof gallery";
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    align-items: start;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -118,10 +143,10 @@ html {
     scroll-behavior: auto;
   }
 
-  .sidekick-reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
   }
 }
 

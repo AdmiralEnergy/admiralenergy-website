@@ -21,7 +21,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-admiral-navy text-white shadow-lg">
       <div className="bg-admiral-gold px-4 py-1.5 text-center text-[0.7rem] font-extrabold uppercase tracking-[0.16em] text-admiral-navy sm:text-xs">
-        Veteran-owned • North Carolina • Practical power resilience
+        Veteran-owned • Kings Mountain, NC • Practical power resilience
       </div>
       <nav aria-label="Primary navigation" className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Link href="/" aria-label="Admiral Energy home" className="flex shrink-0 items-center" onClick={() => setMobileOpen(false)}>
@@ -61,7 +61,7 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
-            <Link href="/home-backup#assessment" onClick={() => setMobileOpen(false)} className="mt-2 rounded-lg border border-white/20 px-4 py-3 text-center font-semibold text-white">
+            <Link href="/kings-mountain/home-backup#consultation" data-analytics-event="home_backup_cta_click" data-analytics-location="mobile_navigation" data-analytics-destination="/kings-mountain/home-backup#consultation" onClick={() => setMobileOpen(false)} className="mt-2 rounded-lg border border-white/20 px-4 py-3 text-center font-semibold text-white">
               Explore Home Backup
             </Link>
           </div>
