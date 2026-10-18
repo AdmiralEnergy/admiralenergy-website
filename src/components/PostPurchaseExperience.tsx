@@ -21,7 +21,7 @@ export default function PostPurchaseExperience({ sessionId }: { sessionId?: stri
       if (typeof value === "string") encoded.append(key, value);
     });
     try {
-      const response = await fetch("/", {
+      const response = await fetch("/__forms.html", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: encoded.toString(),
@@ -42,7 +42,7 @@ export default function PostPurchaseExperience({ sessionId }: { sessionId?: stri
   }
 
   return (
-    <form name="sidekick-interest" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" onSubmit={onSubmit} className="rounded-2xl bg-white p-6 text-left shadow-sm ring-1 ring-slate-200">
+    <form name="sidekick-interest" method="POST" action="/__forms.html" data-netlify="true" data-netlify-honeypot="bot-field" onSubmit={onSubmit} className="rounded-2xl bg-white p-6 text-left shadow-sm ring-1 ring-slate-200">
       <input type="hidden" name="form-name" value="sidekick-interest" />
       <input type="hidden" name="session-id" value={sessionId || "not-provided"} />
       <input name="bot-field" className="hidden" tabIndex={-1} autoComplete="off" />

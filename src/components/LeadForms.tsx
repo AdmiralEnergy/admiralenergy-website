@@ -18,7 +18,7 @@ async function submitNetlifyForm(form: HTMLFormElement) {
     encoded.set("lead_created_at_client", new Date().toISOString());
   }
 
-  const response = await fetch("/", {
+  const response = await fetch("/__forms.html", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: encoded.toString(),
@@ -61,7 +61,7 @@ export function EmailCapture({ source = "site" }: { source?: string }) {
   }
 
   return (
-    <form name="resilience-list" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" onSubmit={onSubmit} className="space-y-3">
+    <form name="resilience-list" method="POST" action="/__forms.html" data-netlify="true" data-netlify-honeypot="bot-field" onSubmit={onSubmit} className="space-y-3">
       <input type="hidden" name="form-name" value="resilience-list" />
       <input type="hidden" name="source" value={source} />
       <input type="hidden" name="lead_created_at_client" value="" />
@@ -116,7 +116,7 @@ export function BulkOrderForm() {
   }
 
   return (
-    <form name="bulk-order-inquiry" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" onSubmit={onSubmit} className="grid gap-4">
+    <form name="bulk-order-inquiry" method="POST" action="/__forms.html" data-netlify="true" data-netlify-honeypot="bot-field" onSubmit={onSubmit} className="grid gap-4">
       <input type="hidden" name="form-name" value="bulk-order-inquiry" />
       <input name="bot-field" className="hidden" tabIndex={-1} autoComplete="off" />
       <div className="grid gap-4 sm:grid-cols-2">

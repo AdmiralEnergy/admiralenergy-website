@@ -37,6 +37,7 @@ export default function SidekickBulkInquiry() {
     <form
       name="sidekick-bulk-inquiry"
       method="POST"
+      action="/__forms.html"
       data-netlify="true"
       data-netlify-honeypot="bot-field"
       onSubmit={async (event) => {
@@ -48,7 +49,7 @@ export default function SidekickBulkInquiry() {
         const quantity = new FormData(form).get("estimated-quantity");
 
         try {
-          const response = await fetch("/", {
+          const response = await fetch("/__forms.html", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: encodeForm(form),

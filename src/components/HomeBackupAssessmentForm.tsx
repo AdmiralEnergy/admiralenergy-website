@@ -149,7 +149,7 @@ export default function HomeBackupAssessmentForm({
     const firstTouch = getOrCreateAttribution();
 
     try {
-      const response = await fetch("/", {
+      const response = await fetch("/__forms.html", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: encode(form, {
@@ -209,6 +209,7 @@ export default function HomeBackupAssessmentForm({
     <form
       name={FORM_NAME}
       method="POST"
+      action="/__forms.html"
       data-netlify="true"
       data-netlify-honeypot="bot-field"
       noValidate

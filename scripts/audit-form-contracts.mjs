@@ -104,6 +104,14 @@ for (const [formName, expectedFields] of Object.entries(contracts)) {
 
   const clientPath = path.join(root, clientSources[formName]);
   const clientSource = fs.readFileSync(clientPath, "utf8");
+  assert(
+    clientSource.includes('action="/__forms.html"'),
+    `${formName} client form is missing the verified Netlify fallback action`,
+  );
+  assert(
+    clientSource.includes('fetch("/__forms.html"'),
+    `${formName} client submission is not using the verified Netlify handler`,
+  );
   for (const field of expected) {
     const quotedName = new RegExp(`name=["']${field.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}["']`);
     assert(quotedName.test(clientSource), `${formName} client source is missing field ${field}`);
@@ -117,3 +125,4 @@ for (const staleName of ["homeowner-inquiry", "partner-inquiry", "admiral-contac
 console.log("Netlify form contract audit passed");
 console.log(`- ${Object.keys(contracts).length} static forms have exact expected field sets and honeypots`);
 console.log("- every static field has a matching client-rendered source field");
+console.log("- every client form posts to the verified /__forms.html handler");
